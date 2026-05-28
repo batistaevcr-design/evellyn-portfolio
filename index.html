@@ -2524,40 +2524,51 @@
     });
     // ─── Chat typing animation ───
     (function() {
-      const responseText = "Boa! 🤸‍♀️ Encontrei atualizações de ginástica artística. O que você quer acompanhar?";
-      const typingRow = document.getElementById('typingRow');
-      const responseMsg = document.getElementById('responseMsg');
-      const responseEl = document.getElementById('responseText');
-      if (!typingRow || !responseMsg || !responseEl) return;
+    const responseText = `
+Boa! 🤸‍♀️<br><br>
 
-      // Show typing after delay, then transition to response with typewriter
+Tem muita emoção rolando na ginástica artística!<br><br>
+
+Se liga no que dá pra acompanhar:<br><br>
+
+• Agenda<br>
+• Resultados ao vivo<br>
+• Destaques dos atletas
+`;
+
+    const typingRow = document.getElementById('typingRow');
+    const responseMsg = document.getElementById('responseMsg');
+    const responseEl = document.getElementById('responseText');
+    if (!typingRow || !responseMsg || !responseEl) return;
+
+    setTimeout(() => {
+      typingRow.style.display = 'flex';
+
       setTimeout(() => {
-        typingRow.style.display = 'flex';
+        typingRow.style.opacity = '0';
+        typingRow.style.transition = 'opacity 0.3s ease';
 
         setTimeout(() => {
-          typingRow.style.opacity = '0';
-          typingRow.style.transition = 'opacity 0.3s ease';
-          setTimeout(() => {
-            typingRow.style.display = 'none';
-            responseMsg.style.animation = 'msgIn 0.4s ease forwards';
-            responseMsg.style.opacity = '1';
+          typingRow.style.display = 'none';
+          responseMsg.style.animation = 'msgIn 0.4s ease forwards';
+          responseMsg.style.opacity = '1';
 
-            // Typewriter effect
-            let i = 0;
-            const type = () => {
-              if (i < responseText.length) {
-                responseEl.textContent = responseText.slice(0, ++i);
-                const feed = document.getElementById('chatFeed');
-                if (feed) feed.scrollTop = feed.scrollHeight;
-                setTimeout(type, 18 + Math.random() * 14);
-              }
-            };
-            type();
-          }, 300);
-        }, 2200);
-      }, 2400);
-    })();
+          // Typewriter effect com HTML
+          let i = 0;
+          const type = () => {
+            if (i < responseText.length) {
+              responseEl.innerHTML = responseText.slice(0, ++i);
 
-  </script>
-</body>
-</html>
+              const feed = document.getElementById('chatFeed');
+              if (feed) feed.scrollTop = feed.scrollHeight;
+
+              setTimeout(type, 18 + Math.random() * 14);
+            }
+          };
+
+          type();
+        }, 300);
+      }, 2200);
+    }, 2400);
+  })();
+</script>
