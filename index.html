@@ -297,17 +297,18 @@
 
 .conversation-system {
   position: absolute;
-  top: 3rem;
-  right: 3rem;
+
+  top: 2rem;
+  right: 2rem;
+
+  width: 320px;
 
   z-index: 3;
 
   display: flex;
   flex-direction: column;
-  align-items: center;
-  gap: 18px;
 
-  pointer-events: none;
+  gap: 14px;
 }
 
 .conversation-node {
@@ -396,24 +397,16 @@
 
 .decision-row {
   display: flex;
+  flex-direction: column;
 
-  gap: 18px;
+  gap: 14px;
 }
 
-.intent-node {
-  transform: translateX(-28px);
-}
-
+.fallback-node,
+.response-node,
+.intent-node,
 .context-node {
-  transform: translateX(28px);
-}
-
-.fallback-node {
-  width: 200px;
-}
-
-.response-node {
-  width: 240px;
+  width: 100%;
 }
     }
 
