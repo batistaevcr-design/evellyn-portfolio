@@ -1195,6 +1195,68 @@
 
       footer { padding: 1.5rem; flex-direction: column; align-items: flex-start; gap: 0.8rem; }
     }
+    /* =========================
+   MOBILE HERO FIX
+========================= */
+
+@media (max-width: 768px) {
+
+  .hero-right {
+    height: auto;
+    min-height: auto;
+
+    padding: 2rem 1.5rem;
+  }
+
+  .conversation-system {
+    position: relative;
+
+    top: auto;
+    right: auto;
+
+    width: 100%;
+
+    margin-top: 2rem;
+
+    gap: 12px;
+  }
+
+  .conversation-line {
+    display: none;
+  }
+
+  .decision-row {
+    flex-direction: column;
+
+    gap: 12px;
+  }
+
+  .conversation-node,
+  .intent-node,
+  .context-node,
+  .fallback-node,
+  .response-node {
+    width: 100%;
+
+    padding: 16px;
+
+    border-radius: 18px;
+  }
+
+  .conversation-node p {
+    font-size: 0.82rem;
+    line-height: 1.5;
+  }
+
+  .node-label {
+    font-size: 0.56rem;
+  }
+
+  .hero-stats {
+    margin-top: 2rem;
+  }
+
+}
   </style>
 </head>
 <body>
