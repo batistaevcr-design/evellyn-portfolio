@@ -487,21 +487,21 @@
     .hero-bubbles-mobile { display: none; }
 
     .hero-scroll {
-      margin-top: 2rem;
-      display: flex; align-items: center; gap: 1rem;
-      font-size: 0.68rem; letter-spacing: 0.15em; text-transform: uppercase;
-      color: var(--ink-60);
-      opacity: 0; animation: fadeUp 0.7s ease 1s forwards;
-    }
-    .scroll-bar {
-      width: 1.5px; height: 40px;
-      background: var(--gradient);
-      animation: scrollBar 1.5s ease 1.5s infinite alternate;
-    }
-    @keyframes scrollBar {
-      from { height: 20px; opacity: 0.4; }
-      to { height: 50px; opacity: 1; }
-    }
+  margin-top: 2rem;
+  display: flex; align-items: center;
+  opacity: 0; animation: fadeUp 0.7s ease 1s forwards;
+}
+.hero-scroll-arrow {
+  font-size: 1.2rem;
+  color: var(--blue);
+  animation: bounceDown 1.8s ease-in-out infinite;
+  opacity: 0.6;
+  line-height: 1;
+}
+@keyframes bounceDown {
+  0%, 100% { transform: translateY(0); opacity: 0.6; }
+  50% { transform: translateY(6px); opacity: 1; }
+}
 
     /* MARQUEE */
     .marquee-wrap {
