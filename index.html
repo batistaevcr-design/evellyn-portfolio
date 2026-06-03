@@ -1,0 +1,2375 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+  <head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Evellyn Batista · UX Writer & Designer Conversacional</title>
+  <meta name="description" content="Portfólio de Evellyn Batista — UX Writer e Designer Conversacional especializada em IA, chatbots e experiências digitais. Cases: COB × Meta, Rock in Rio, Lacta, Evycore." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;0,700;1,300;1,400;1,600;1,700&family=Instrument+Sans:ital,wght@0,300;0,400;0,500;0,600;1,300&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --white: #FAFAF8;
+      --off-white: #F2F0EC;
+      --paper: #EBEBЕ6;
+      --ink: #17161A;
+      --ink-60: rgba(23,22,26,0.6);
+      --ink-30: rgba(23,22,26,0.3);
+      --ink-12: rgba(23,22,26,0.12);
+      --blue: #2B4AE8;
+      --blue-light: #E8EEFF;
+      --blue-mid: #6883F0;
+      --purple: #6B3FA0;
+      --purple-light: #F2EBFF;
+      --purple-mid: #9B6DD4;
+      --gradient: linear-gradient(135deg, #2B4AE8 0%, #6B3FA0 100%);
+      --gradient-soft: linear-gradient(135deg, #E8EEFF 0%, #F2EBFF 100%);
+      --ff-display: 'Cormorant Garamond', Georgia, serif;
+      --ff-body: 'Instrument Sans', sans-serif;
+      --ff-serif: 'Instrument Serif', Georgia, serif;
+    }
+
+    html { scroll-behavior: smooth; font-size: 16px; }
+
+    body {
+      background: var(--white);
+      color: var(--ink);
+      font-family: var(--ff-body);
+      line-height: 1.6;
+      overflow-x: hidden;
+      cursor: none;
+    }
+
+    /* CURSOR */
+    .cursor-dot {
+      width: 6px; height: 6px;
+      background: var(--blue);
+      border-radius: 50%;
+      position: fixed; top: 0; left: 0;
+      pointer-events: none; z-index: 9999;
+      transform: translate(-50%, -50%);
+      opacity: 0.6;
+    }
+    .cursor-ring {
+      width: 26px; height: 26px;
+      border: 1px solid var(--blue);
+      border-radius: 50%;
+      position: fixed; top: 0; left: 0;
+      pointer-events: none; z-index: 9998;
+      transform: translate(-50%, -50%);
+      transition: transform 0.18s ease, width 0.3s ease, height 0.3s ease, border-color 0.3s ease, opacity 0.3s ease;
+      opacity: 0.25;
+    }
+    .cursor-ring.hovered {
+      width: 40px; height: 40px; opacity: 0.15;
+      border-color: var(--purple);
+    }
+    @media (hover: none) { .cursor-dot, .cursor-ring { display: none; } body { cursor: auto; } }
+
+    /* NAV */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 200;
+      display: flex; justify-content: space-between; align-items: center;
+      padding: 1.4rem 3.5rem;
+      transition: background 0.35s, border-color 0.35s, box-shadow 0.35s;
+      border-bottom: 1px solid transparent;
+    }
+    nav.scrolled {
+      background: rgba(250,250,248,0.92);
+      backdrop-filter: blur(16px);
+      border-color: var(--ink-12);
+      box-shadow: 0 1px 0 var(--ink-12);
+    }
+    .nav-logo {
+      font-family: var(--ff-display);
+      font-size: 1.25rem;
+      font-weight: 600;
+      letter-spacing: 0.01em;
+      color: var(--ink);
+      text-decoration: none;
+    }
+    .nav-logo span {
+      background: var(--gradient);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    .nav-links { display: flex; gap: 2.5rem; list-style: none; align-items: center; }
+    .nav-links a {
+      font-size: 0.78rem;
+      font-weight: 500;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--ink-60);
+      text-decoration: none;
+      transition: color 0.2s;
+      position: relative;
+    }
+    .nav-links a::after {
+      content: '';
+      position: absolute; bottom: -3px; left: 0; right: 0;
+      height: 1.5px;
+      background: var(--gradient);
+      transform: scaleX(0);
+      transition: transform 0.25s ease;
+      transform-origin: left;
+    }
+    .nav-links a:hover { color: var(--blue); }
+    .nav-links a:hover::after,
+    .nav-links a.active::after { transform: scaleX(1); }
+    .nav-links a.active { color: var(--blue); }
+    .nav-cv {
+      background: var(--gradient);
+      color: #fff !important;
+      padding: 0.55rem 1.3rem;
+      border-radius: 2px;
+      font-size: 0.75rem !important;
+      letter-spacing: 0.12em !important;
+      font-weight: 600 !important;
+    }
+    .nav-cv::after { display: none !important; }
+    .nav-cv:hover { opacity: 0.88; }
+    .nav-hamburger {
+      display: none;
+      flex-direction: column; gap: 5px;
+      background: none; border: none; cursor: none; padding: 4px;
+    }
+    .nav-hamburger span {
+      display: block; width: 22px; height: 1.5px;
+      background: var(--ink);
+      transition: transform 0.3s, opacity 0.3s;
+    }
+    .nav-hamburger.open span:nth-child(1) { transform: translateY(6.5px) rotate(45deg); }
+    .nav-hamburger.open span:nth-child(2) { opacity: 0; }
+    .nav-hamburger.open span:nth-child(3) { transform: translateY(-6.5px) rotate(-45deg); }
+
+    /* PAGES */
+    .page { display: none; min-height: 100vh; padding-top: 72px; }
+    .page.active { display: block; }
+
+    /* ========== HOME ========== */
+
+    /* HERO */
+    .hero {
+      min-height: calc(100vh - 72px);
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      position: relative;
+      overflow: hidden;
+    }
+    .hero-left {
+      display: flex; flex-direction: column; justify-content: center;
+      padding: 5rem 4rem 5rem 3.5rem;
+      position: relative; z-index: 2;
+    }
+    .hero-eyebrow {
+      display: flex; align-items: center; gap: 0.8rem;
+      font-size: 0.7rem; font-weight: 600; letter-spacing: 0.18em;
+      text-transform: uppercase; color: var(--blue);
+      margin-bottom: 2.2rem;
+      opacity: 0; animation: fadeUp 0.7s ease 0.1s forwards;
+    }
+    .hero-eyebrow-line {
+      width: 36px; height: 1.5px;
+      background: var(--gradient);
+    }
+    .hero-name {
+      font-family: var(--ff-display);
+      font-size: clamp(3.8rem, 6.5vw, 6.5rem);
+      font-weight: 700;
+      line-height: 0.92;
+      color: var(--ink);
+      opacity: 0; animation: fadeUp 0.7s ease 0.25s forwards;
+    }
+    .hero-name em {
+      font-style: italic; font-weight: 300;
+      background: var(--gradient);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    .hero-desc {
+      margin-top: 2.2rem;
+      font-size: 1rem; font-weight: 300;
+      color: var(--ink-60); line-height: 1.85;
+      max-width: 420px;
+      opacity: 0; animation: fadeUp 0.7s ease 0.4s forwards;
+    }
+    .hero-badges {
+      margin-top: 2rem;
+      display: flex; flex-wrap: wrap; gap: 0.6rem;
+      opacity: 0; animation: fadeUp 0.7s ease 0.5s forwards;
+    }
+    .badge {
+      font-size: 0.72rem; font-weight: 500;
+      letter-spacing: 0.06em;
+      padding: 0.4rem 0.85rem;
+      border: 1px solid var(--ink-12);
+      color: var(--ink-60);
+      background: var(--off-white);
+      border-radius: 2px;
+    }
+    .badge.blue { background: var(--blue-light); border-color: rgba(43,74,232,0.2); color: var(--blue); }
+    .badge.purple { background: var(--purple-light); border-color: rgba(107,63,160,0.2); color: var(--purple); }
+    .hero-actions {
+      margin-top: 2.8rem;
+      display: flex; gap: 1.2rem; align-items: center;
+      opacity: 0; animation: fadeUp 0.7s ease 0.6s forwards;
+    }
+    .btn-primary {
+      background: var(--gradient);
+      color: #fff;
+      padding: 0.85rem 2rem;
+      font-family: var(--ff-body);
+      font-size: 0.78rem; font-weight: 600;
+      letter-spacing: 0.1em; text-transform: uppercase;
+      text-decoration: none; border-radius: 2px;
+      display: inline-block;
+      transition: opacity 0.2s, transform 0.2s;
+    }
+    .btn-primary:hover { opacity: 0.88; transform: translateY(-2px); }
+    .btn-ghost {
+      color: var(--ink);
+      font-size: 0.78rem; font-weight: 500;
+      letter-spacing: 0.08em; text-transform: uppercase;
+      text-decoration: none;
+      display: flex; align-items: center; gap: 0.6rem;
+      transition: color 0.2s;
+    }
+    .btn-ghost:hover { color: var(--blue); }
+    .btn-ghost-arrow { transition: transform 0.2s; }
+    .btn-ghost:hover .btn-ghost-arrow { transform: translateX(4px); }
+
+    /* ========== CHAT INTERFACE HERO ========== */
+
+    /* Right panel — full-height chat surface */
+    .hero-right {
+      position: relative; overflow: hidden;
+      opacity: 0; animation: fadeIn 0.8s ease 0.4s forwards;
+      display: flex; flex-direction: column;
+    }
+    .hero-bg-grid {
+      position: absolute; inset: 0;
+      background-image:
+        linear-gradient(rgba(43,74,232,0.055) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(43,74,232,0.055) 1px, transparent 1px);
+      background-size: 32px 32px;
+      pointer-events: none;
+    }
+    .hero-bg-gradient {
+      position: absolute; inset: 0;
+      background: linear-gradient(160deg, #EEF1FD 0%, #F5F0FF 55%, #EEF1FD 100%);
+    }
+
+    /* Chat window chrome */
+    .chat-window {
+      position: relative; z-index: 2;
+      display: flex; flex-direction: column;
+      height: 100%;
+    }
+    .chat-topbar {
+      display: flex; align-items: center; gap: 0.75rem;
+      padding: 1rem 1.5rem;
+      border-bottom: 1px solid rgba(43,74,232,0.12);
+      background: rgba(250,250,248,0.7);
+      backdrop-filter: blur(12px);
+      flex-shrink: 0;
+    }
+    .chat-topbar-avatar {
+      width: 28px; height: 28px; border-radius: 50%;
+      background: var(--gradient);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 0.6rem; font-weight: 700; color: #fff;
+      letter-spacing: 0.04em; flex-shrink: 0;
+    }
+    .chat-topbar-info { flex: 1; min-width: 0; }
+    .chat-topbar-name {
+      font-size: 0.72rem; font-weight: 600;
+      color: var(--ink); letter-spacing: 0.02em;
+      line-height: 1.2;
+    }
+    .chat-topbar-status {
+      display: flex; align-items: center; gap: 0.35rem;
+      font-size: 0.58rem; color: var(--ink-60);
+      letter-spacing: 0.04em; margin-top: 1px;
+    }
+    .status-dot {
+      width: 5px; height: 5px; border-radius: 50%;
+      background: #22c55e;
+      box-shadow: 0 0 0 2px rgba(34,197,94,0.2);
+      flex-shrink: 0;
+    }
+    .chat-topbar-model {
+      font-size: 0.56rem; font-weight: 600;
+      letter-spacing: 0.1em; text-transform: uppercase;
+      color: var(--blue);
+      background: var(--blue-light);
+      border: 1px solid rgba(43,74,232,0.18);
+      padding: 0.18rem 0.5rem; border-radius: 2px;
+    }
+
+    /* Scrollable message area */
+    .chat-feed {
+      flex: 1;
+      overflow-y: auto;
+      padding: 1.8rem 1.5rem;
+      display: flex; flex-direction: column; gap: 1rem;
+      scrollbar-width: thin;
+      scrollbar-color: rgba(43,74,232,0.15) transparent;
+    }
+    .chat-feed::-webkit-scrollbar { width: 3px; }
+    .chat-feed::-webkit-scrollbar-thumb { background: rgba(43,74,232,0.2); border-radius: 2px; }
+
+    /* Date separator */
+    .chat-date-sep {
+      display: flex; align-items: center; gap: 0.75rem;
+      opacity: 0; animation: msgIn 0.4s ease 0.5s forwards;
+    }
+    .chat-date-sep::before,
+    .chat-date-sep::after {
+      content: ''; flex: 1; height: 1px;
+      background: rgba(43,74,232,0.12);
+    }
+    .chat-date-sep span {
+      font-size: 0.52rem; font-weight: 600; letter-spacing: 0.12em;
+      text-transform: uppercase; color: var(--ink-30);
+      white-space: nowrap;
+    }
+
+    /* Message rows */
+    .msg-row {
+      display: flex; gap: 0.6rem;
+      opacity: 0; animation: msgIn 0.45s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+    }
+    .msg-row.right { flex-direction: row-reverse; }
+
+    /* Avatar */
+    .msg-avatar {
+      width: 24px; height: 24px; border-radius: 50%;
+      flex-shrink: 0; margin-top: 2px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 0.5rem; font-weight: 700; letter-spacing: 0.02em;
+    }
+    .msg-avatar.user-av {
+      background: var(--off-white);
+      border: 1px solid var(--ink-12);
+      color: var(--ink-60);
+    }
+    .msg-avatar.bot-av {
+      background: var(--gradient);
+      color: #fff;
+    }
+
+    /* Bubble wrapper */
+    .msg-body { display: flex; flex-direction: column; gap: 0.25rem; max-width: 72%; }
+    .msg-row.right .msg-body { align-items: flex-end; }
+
+    /* Type tag */
+    .msg-type {
+      font-size: 0.5rem; font-weight: 700; letter-spacing: 0.14em;
+      text-transform: uppercase; padding: 0.1rem 0.45rem;
+      border-radius: 2px; align-self: flex-start;
+      border-left: 2px solid currentColor;
+      line-height: 1.6;
+    }
+    .msg-row.right .msg-type { align-self: flex-end; border-left: none; border-right: 2px solid currentColor; }
+
+    .msg-type.intent  { color: var(--blue);   background: rgba(43,74,232,0.07); }
+    .msg-type.context { color: var(--purple);  background: rgba(107,63,160,0.07); }
+    .msg-type.fallback{ color: #b45309;        background: rgba(180,83,9,0.07); }
+    .msg-type.response{ color: #15803d;        background: rgba(21,128,61,0.07); }
+
+    /* Bubble */
+    .msg-bubble {
+      padding: 0.72rem 1rem;
+      border-radius: 14px;
+      font-size: 0.8rem; font-weight: 400;
+      line-height: 1.55; color: var(--ink);
+      box-shadow: 0 2px 12px rgba(23,22,26,0.06);
+      position: relative;
+      word-break: break-word;
+    }
+    /* user bubble — left */
+    .msg-bubble.user {
+      background: rgba(250,250,248,0.96);
+      border: 1px solid rgba(43,74,232,0.14);
+      border-radius: 14px 14px 14px 4px;
+    }
+    /* bot bubble — right */
+    .msg-bubble.bot {
+      background: linear-gradient(135deg, rgba(43,74,232,0.08) 0%, rgba(107,63,160,0.06) 100%);
+      border: 1px solid rgba(107,63,160,0.14);
+      border-radius: 14px 14px 4px 14px;
+    }
+    /* fallback bubble */
+    .msg-bubble.warn {
+      background: rgba(255,247,237,0.95);
+      border: 1px solid rgba(180,83,9,0.16);
+      border-radius: 14px 14px 14px 4px;
+    }
+    /* response bubble */
+    .msg-bubble.success {
+      background: rgba(240,253,244,0.95);
+      border: 1px solid rgba(21,128,61,0.16);
+      border-radius: 14px 14px 4px 14px;
+    }
+
+    /* Timestamp + read state */
+    .msg-meta {
+      display: flex; align-items: center; gap: 0.3rem;
+      font-size: 0.5rem; color: var(--ink-30);
+      letter-spacing: 0.04em;
+    }
+    .msg-row.right .msg-meta { flex-direction: row-reverse; }
+    .msg-check { color: var(--blue); font-size: 0.55rem; }
+
+    /* Typing indicator */
+    .typing-row {
+      display: flex; gap: 0.6rem;
+      opacity: 0; animation: msgIn 0.4s ease forwards;
+    }
+    .typing-bubble {
+      display: flex; align-items: center; gap: 5px;
+      background: rgba(240,253,244,0.95);
+      border: 1px solid rgba(21,128,61,0.16);
+      border-radius: 14px 14px 4px 14px;
+      padding: 0.7rem 0.95rem;
+      box-shadow: 0 2px 12px rgba(23,22,26,0.06);
+    }
+    .typing-dot {
+      width: 5px; height: 5px; border-radius: 50%;
+      background: #15803d; opacity: 0.4;
+      animation: typingPulse 1.2s ease infinite;
+    }
+    .typing-dot:nth-child(2) { animation-delay: 0.2s; }
+    .typing-dot:nth-child(3) { animation-delay: 0.4s; }
+    @keyframes typingPulse {
+      0%, 80%, 100% { transform: scale(1); opacity: 0.4; }
+      40%           { transform: scale(1.35); opacity: 1; }
+    }
+
+    /* Chat input bar (decorative) */
+    .chat-inputbar {
+      flex-shrink: 0;
+      display: flex; align-items: center; gap: 0.75rem;
+      padding: 0.9rem 1.2rem;
+      border-top: 1px solid rgba(43,74,232,0.1);
+      background: rgba(250,250,248,0.8);
+      backdrop-filter: blur(12px);
+    }
+    .chat-input-field {
+      flex: 1;
+      background: var(--white);
+      border: 1px solid rgba(43,74,232,0.14);
+      border-radius: 20px;
+      padding: 0.5rem 1rem;
+      font-size: 0.72rem; color: var(--ink-30);
+      font-family: var(--ff-body);
+      letter-spacing: 0.01em;
+      pointer-events: none;
+    }
+    .chat-send-btn {
+      width: 30px; height: 30px; border-radius: 50%;
+      background: var(--gradient);
+      display: flex; align-items: center; justify-content: center;
+      flex-shrink: 0; pointer-events: none;
+    }
+    .chat-send-btn svg { width: 12px; height: 12px; fill: #fff; }
+
+    @keyframes msgIn {
+      from { opacity: 0; transform: translateY(10px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    /* Mobile: hero-bubbles-mobile hidden (we use the redesigned desktop for mobile too) */
+    .hero-bubbles-mobile { display: none; }
+
+    .hero-scroll {
+  margin-top: 2rem;
+  display: flex; align-items: center;
+  opacity: 0; animation: fadeUp 0.7s ease 1s forwards;
+}
+.hero-scroll-arrow {
+  font-size: 1.2rem;
+  color: var(--blue);
+  animation: bounceDown 1.8s ease-in-out infinite;
+  opacity: 0.6;
+  line-height: 1;
+}
+@keyframes bounceDown {
+  0%, 100% { transform: translateY(0); opacity: 0.6; }
+  50% { transform: translateY(6px); opacity: 1; }
+}
+
+    /* MARQUEE */
+    .marquee-wrap {
+      overflow: hidden;
+      padding: 0.9rem 0;
+      border-top: 1px solid var(--ink-12);
+      border-bottom: 1px solid var(--ink-12);
+      background: var(--white);
+    }
+    .marquee-track {
+      display: flex; gap: 2.5rem;
+      animation: marquee 25s linear infinite;
+      white-space: nowrap;
+    }
+    .marquee-item {
+      font-family: var(--ff-display);
+      font-size: 1rem; font-style: italic;
+      color: var(--ink-30); flex-shrink: 0;
+    }
+    .marquee-dot { color: var(--blue); font-style: normal; }
+    @keyframes marquee {
+      from { transform: translateX(0); }
+      to { transform: translateX(-50%); }
+    }
+
+    /* SECTION STYLES */
+    .section-label {
+      font-size: 0.68rem; font-weight: 600;
+      letter-spacing: 0.2em; text-transform: uppercase;
+      color: var(--blue);
+      display: flex; align-items: center; gap: 0.8rem;
+      margin-bottom: 1.5rem;
+    }
+    .section-label-num { color: var(--ink-30); }
+
+    /* HOME ABOUT STRIP */
+    .home-about {
+      display: grid;
+      grid-template-columns: 1fr 2fr;
+      border-top: 1px solid var(--ink-12);
+    }
+    .home-about-left {
+      padding: 5rem 3.5rem;
+      border-right: 1px solid var(--ink-12);
+    }
+    .home-about-left h2 {
+      font-family: var(--ff-display);
+      font-size: clamp(2.2rem, 3.5vw, 3.2rem);
+      font-weight: 700; line-height: 1.1;
+    }
+    .home-about-left h2 em {
+      font-style: italic; font-weight: 300;
+      background: var(--gradient);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    .home-about-right { padding: 5rem 4rem; }
+    .home-about-right p {
+      font-size: 1.05rem; font-weight: 300;
+      color: var(--ink-60); line-height: 1.9;
+      margin-bottom: 1.5rem;
+    }
+    .home-about-right p strong { color: var(--ink); font-weight: 500; }
+
+    /* MEDIA STRIP */
+    .media-strip {
+      border-top: 1px solid var(--ink-12);
+      padding: 3.5rem 3.5rem;
+      background: var(--off-white);
+    }
+    .media-strip-inner {
+      display: flex; align-items: center;
+      gap: 3rem; flex-wrap: wrap;
+    }
+    .media-label {
+      font-size: 0.68rem; font-weight: 600;
+      letter-spacing: 0.18em; text-transform: uppercase;
+      color: var(--ink-30); flex-shrink: 0;
+      padding-right: 3rem;
+      border-right: 1px solid var(--ink-12);
+    }
+    .media-logos { display: flex; gap: 2.5rem; flex-wrap: wrap; align-items: center; }
+    .media-logo {
+      font-family: var(--ff-display);
+      font-size: 0.9rem; font-weight: 600;
+      color: var(--ink-60);
+      text-decoration: none; letter-spacing: 0.04em;
+      transition: color 0.2s;
+      padding: 0.5rem 1rem;
+      border: 1px solid var(--ink-12);
+      background: var(--white);
+      border-radius: 2px;
+    }
+    .media-logo:hover { color: var(--blue); border-color: rgba(43,74,232,0.3); }
+
+    /* FEATURED PROJECT STRIP */
+    .featured-projects {
+      border-top: 1px solid var(--ink-12);
+      padding: 6rem 3.5rem;
+    }
+    .featured-header {
+      display: flex; justify-content: space-between; align-items: flex-end;
+      margin-bottom: 4rem;
+    }
+    .featured-header h2 {
+      font-family: var(--ff-display);
+      font-size: clamp(2.5rem, 4vw, 4rem);
+      font-weight: 700; line-height: 1;
+    }
+    .featured-header h2 em {
+      font-style: italic; font-weight: 300;
+      background: var(--gradient);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    .view-all-link {
+      font-size: 0.78rem; font-weight: 600;
+      letter-spacing: 0.1em; text-transform: uppercase;
+      color: var(--blue); text-decoration: none;
+      display: flex; align-items: center; gap: 0.5rem;
+      border-bottom: 1px solid rgba(43,74,232,0.3);
+      padding-bottom: 2px;
+      transition: gap 0.2s;
+    }
+    .view-all-link:hover { gap: 0.8rem; }
+
+    .project-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0;
+      border: 1px solid var(--ink-12);
+    }
+    .proj-card {
+      padding: 2.5rem;
+      border-right: 1px solid var(--ink-12);
+      border-bottom: 1px solid var(--ink-12);
+      text-decoration: none; color: inherit;
+      position: relative; overflow: hidden;
+      transition: background 0.3s;
+      cursor: none;
+    }
+    .proj-card:nth-child(2n) { border-right: none; }
+    .proj-card:nth-last-child(-n+2):nth-child(2n+1),
+    .proj-card:last-child { border-bottom: none; }
+    .proj-card:nth-last-child(-n+2):nth-child(2n) { border-bottom: none; }
+    .proj-card:hover { background: var(--gradient-soft); }
+    .proj-card-num {
+      font-size: 0.65rem; font-weight: 500; letter-spacing: 0.15em;
+      color: var(--ink-30); text-transform: uppercase;
+      font-family: var(--ff-body);
+      margin-bottom: 1.5rem;
+    }
+    .proj-card-title {
+      font-family: var(--ff-display);
+      font-size: 1.5rem; font-weight: 700; line-height: 1.15;
+      margin-bottom: 1rem; color: var(--ink);
+      transition: color 0.2s;
+    }
+    .proj-card:hover .proj-card-title { color: var(--blue); }
+    .proj-card-desc {
+      font-size: 0.85rem; font-weight: 300;
+      color: var(--ink-60); line-height: 1.75;
+    }
+    .proj-card-tags {
+      margin-top: 1.5rem;
+      display: flex; flex-wrap: wrap; gap: 0.4rem;
+    }
+    .tag {
+      font-size: 0.62rem; font-weight: 500;
+      letter-spacing: 0.08em; text-transform: uppercase;
+      padding: 0.28rem 0.65rem;
+      border: 1px solid var(--ink-12);
+      color: var(--ink-60);
+      border-radius: 2px;
+    }
+    .tag.blue { background: var(--blue-light); border-color: rgba(43,74,232,0.2); color: var(--blue); }
+    .tag.purple { background: var(--purple-light); border-color: rgba(107,63,160,0.2); color: var(--purple); }
+    .proj-card-arrow {
+      position: absolute; bottom: 2.5rem; right: 2.5rem;
+      font-size: 1.2rem; color: var(--blue);
+      opacity: 0; transform: translateX(-8px);
+      transition: opacity 0.2s, transform 0.2s;
+    }
+    .proj-card:hover .proj-card-arrow { opacity: 1; transform: translateX(0); }
+
+    /* ========== PROJETOS PAGE ========== */
+    .page-header {
+      padding: 5rem 3.5rem 4rem;
+      border-bottom: 1px solid var(--ink-12);
+      position: relative; overflow: hidden;
+    }
+    .page-header-bg {
+      position: absolute; inset: 0;
+      background: var(--gradient-soft);
+      opacity: 0.5;
+    }
+    .page-header-content { position: relative; z-index: 1; }
+    .page-header h1 {
+      font-family: var(--ff-display);
+      font-size: clamp(3rem, 5vw, 5.5rem);
+      font-weight: 700; line-height: 0.95;
+      margin-top: 1.2rem;
+    }
+    .page-header h1 em {
+      font-style: italic; font-weight: 300;
+      background: var(--gradient);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    .page-header-desc {
+      margin-top: 1.5rem;
+      font-size: 1rem; font-weight: 300;
+      color: var(--ink-60); max-width: 500px; line-height: 1.8;
+    }
+
+    /* PROJECT DETAILED CARDS */
+    .projects-list { display: flex; flex-direction: column; }
+    .project-full {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      border-bottom: 1px solid var(--ink-12);
+      overflow: hidden;
+      cursor: default;
+    }
+    .project-full-left {
+      padding: 4rem 3.5rem;
+      border-right: 1px solid var(--ink-12);
+      position: relative;
+    }
+    .project-full-right { padding: 4rem 3.5rem; }
+    .project-full-num {
+      font-size: 0.65rem; letter-spacing: 0.18em; text-transform: uppercase;
+      color: var(--ink-30); font-weight: 500;
+      margin-bottom: 1.5rem;
+      display: flex; align-items: center; gap: 0.8rem;
+    }
+    .project-full-num::before {
+      content: '';
+      width: 24px; height: 1.5px;
+      background: var(--gradient);
+    }
+    .project-full-title {
+      font-family: var(--ff-display);
+      font-size: clamp(1.8rem, 3vw, 2.8rem);
+      font-weight: 700; line-height: 1.1;
+      margin-bottom: 1.2rem;
+    }
+    .project-full-subtitle {
+      font-family: var(--ff-display);
+      font-style: italic; font-weight: 300;
+      font-size: 1.1rem; color: var(--ink-60);
+      margin-bottom: 1.5rem;
+    }
+    .project-full-desc {
+      font-size: 0.9rem; font-weight: 300;
+      color: var(--ink-60); line-height: 1.8;
+      margin-bottom: 2rem;
+    }
+    .project-full-desc strong { color: var(--ink); font-weight: 500; }
+    .project-full-tags { display: flex; flex-wrap: wrap; gap: 0.4rem; }
+    .project-impact-box {
+      background: var(--gradient-soft);
+      border: 1px solid rgba(43,74,232,0.15);
+      padding: 2rem;
+      margin-bottom: 2rem;
+      border-radius: 2px;
+    }
+    .impact-label {
+      font-size: 0.65rem; font-weight: 600;
+      letter-spacing: 0.15em; text-transform: uppercase;
+      color: var(--blue); margin-bottom: 1rem;
+    }
+    .impact-text {
+      font-size: 0.9rem; font-weight: 300;
+      color: var(--ink); line-height: 1.8;
+    }
+    .impact-text strong { font-weight: 600; color: var(--blue); }
+    .media-coverage {
+      margin-top: 2rem;
+    }
+    .media-coverage-label {
+      font-size: 0.65rem; font-weight: 600;
+      letter-spacing: 0.15em; text-transform: uppercase;
+      color: var(--ink-30); margin-bottom: 1rem;
+    }
+    .media-links { display: flex; flex-wrap: wrap; gap: 0.5rem; }
+    .media-link {
+      font-size: 0.72rem; font-weight: 500;
+      padding: 0.4rem 0.85rem;
+      border: 1px solid var(--ink-12);
+      color: var(--blue); background: var(--white);
+      text-decoration: none; border-radius: 2px;
+      transition: background 0.2s, border-color 0.2s;
+    }
+    .media-link:hover { background: var(--blue-light); border-color: rgba(43,74,232,0.3); }
+    .project-process-title {
+      font-family: var(--ff-display);
+      font-size: 1.2rem; font-weight: 600;
+      margin-bottom: 1.5rem; color: var(--ink);
+    }
+    .process-step {
+      display: flex; gap: 1.2rem;
+      margin-bottom: 1.5rem;
+      padding-bottom: 1.5rem;
+      border-bottom: 1px solid var(--ink-12);
+    }
+    .process-step:last-child { border-bottom: none; margin-bottom: 0; padding-bottom: 0; }
+    .step-num {
+      font-size: 0.65rem; font-weight: 700;
+      letter-spacing: 0.1em;
+      background: var(--gradient);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      flex-shrink: 0; padding-top: 0.15rem;
+    }
+    .step-title {
+      font-size: 0.85rem; font-weight: 600;
+      color: var(--ink); margin-bottom: 0.4rem;
+    }
+    .step-desc {
+      font-size: 0.82rem; font-weight: 300;
+      color: var(--ink-60); line-height: 1.7;
+    }
+
+    /* ========== PROCESSO UX PAGE ========== */
+    .ux-process-intro {
+      display: grid;
+      grid-template-columns: 1fr 2fr;
+      border-bottom: 1px solid var(--ink-12);
+    }
+    .ux-intro-left {
+      padding: 4rem 3.5rem;
+      border-right: 1px solid var(--ink-12);
+      background: var(--off-white);
+    }
+    .ux-intro-left p {
+      font-size: 0.9rem; font-weight: 300;
+      color: var(--ink-60); line-height: 1.9;
+      margin-top: 1rem;
+    }
+    .ux-intro-right { padding: 4rem 3.5rem; }
+    .ux-intro-right p {
+      font-size: 1.05rem; font-weight: 300;
+      color: var(--ink-60); line-height: 1.9; margin-bottom: 1.5rem;
+    }
+    .ux-intro-right p strong { color: var(--ink); font-weight: 500; }
+
+    .phase-list { display: flex; flex-direction: column; }
+    .phase-item {
+      display: grid;
+      grid-template-columns: 80px 1fr 1fr;
+      gap: 0;
+      border-bottom: 1px solid var(--ink-12);
+    }
+    .phase-num-col {
+      padding: 3rem 2rem;
+      border-right: 1px solid var(--ink-12);
+      display: flex; align-items: flex-start; justify-content: center;
+    }
+    .phase-num {
+      font-family: var(--ff-display);
+      font-size: 2.5rem; font-weight: 700;
+      background: var(--gradient);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      line-height: 1;
+    }
+    .phase-info {
+      padding: 3rem 2.5rem;
+      border-right: 1px solid var(--ink-12);
+    }
+    .phase-title {
+      font-family: var(--ff-display);
+      font-size: 1.6rem; font-weight: 700;
+      margin-bottom: 0.5rem;
+    }
+    .phase-title em {
+      font-style: italic; font-weight: 300;
+      background: var(--gradient);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    .phase-subtitle {
+      font-size: 0.78rem; font-weight: 500;
+      color: var(--blue); letter-spacing: 0.08em;
+      text-transform: uppercase; margin-bottom: 1rem;
+    }
+    .phase-desc {
+      font-size: 0.88rem; font-weight: 300;
+      color: var(--ink-60); line-height: 1.8;
+    }
+    .phase-tools {
+      padding: 3rem 2.5rem;
+    }
+    .tools-label {
+      font-size: 0.65rem; font-weight: 600;
+      letter-spacing: 0.15em; text-transform: uppercase;
+      color: var(--ink-30); margin-bottom: 1rem;
+    }
+    .tools-list { display: flex; flex-direction: column; gap: 0.6rem; }
+    .tool-item {
+      font-size: 0.82rem; font-weight: 400;
+      color: var(--ink);
+      display: flex; align-items: center; gap: 0.6rem;
+    }
+    .tool-dot {
+      width: 5px; height: 5px; border-radius: 50%;
+      background: var(--gradient);
+      flex-shrink: 0;
+    }
+
+    /* ========== CURRÍCULO PAGE ========== */
+    .cv-grid {
+      display: grid;
+      grid-template-columns: 1fr 2fr;
+      border-bottom: 1px solid var(--ink-12);
+    }
+    .cv-sidebar {
+      border-right: 1px solid var(--ink-12);
+      padding: 4rem 3rem;
+      background: var(--off-white);
+      position: sticky; top: 72px;
+      height: fit-content;
+    }
+    .cv-main { padding: 4rem 3.5rem; }
+    .cv-section { margin-bottom: 4rem; }
+    .cv-section-title {
+      font-family: var(--ff-display);
+      font-size: 1.6rem; font-weight: 700;
+      margin-bottom: 2.5rem;
+      padding-bottom: 1rem;
+      border-bottom: 1px solid var(--ink-12);
+    }
+    .cv-section-title em {
+      font-style: italic; font-weight: 300;
+      background: var(--gradient);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .exp-entry { margin-bottom: 2.5rem; }
+    .exp-header-row {
+      display: flex; justify-content: space-between; align-items: flex-start;
+      margin-bottom: 0.4rem; gap: 1rem; flex-wrap: wrap;
+    }
+    .exp-role-title {
+      font-family: var(--ff-display);
+      font-size: 1.2rem; font-weight: 700;
+    }
+    .exp-period-badge {
+      font-size: 0.68rem; font-weight: 500;
+      letter-spacing: 0.1em;
+      padding: 0.3rem 0.7rem;
+      background: var(--blue-light);
+      color: var(--blue);
+      border-radius: 2px;
+      flex-shrink: 0;
+    }
+    .exp-company-name {
+      font-size: 0.8rem; font-weight: 600;
+      color: var(--blue); letter-spacing: 0.05em;
+      text-transform: uppercase; margin-bottom: 0.8rem;
+    }
+    .exp-body {
+      font-size: 0.88rem; font-weight: 300;
+      color: var(--ink-60); line-height: 1.8;
+    }
+
+    .skills-groups { display: flex; flex-direction: column; gap: 2rem; }
+    .skill-group-title {
+      font-size: 0.65rem; font-weight: 700;
+      letter-spacing: 0.18em; text-transform: uppercase;
+      color: var(--blue); margin-bottom: 0.8rem;
+    }
+    .skill-pills { display: flex; flex-wrap: wrap; gap: 0.4rem; }
+    .skill-pill {
+      font-size: 0.75rem; font-weight: 400;
+      padding: 0.4rem 0.8rem;
+      border: 1px solid var(--ink-12);
+      color: var(--ink);
+      border-radius: 2px;
+    }
+    .skill-pill.blue { background: var(--blue-light); border-color: rgba(43,74,232,0.2); color: var(--blue); }
+    .skill-pill.purple { background: var(--purple-light); border-color: rgba(107,63,160,0.2); color: var(--purple); }
+
+    .edu-entry { margin-bottom: 2rem; }
+    .edu-degree {
+      font-family: var(--ff-display);
+      font-size: 1.1rem; font-weight: 700;
+      margin-bottom: 0.3rem;
+    }
+    .edu-school {
+      font-size: 0.8rem; font-weight: 500;
+      color: var(--blue); margin-bottom: 0.5rem; text-transform: uppercase; letter-spacing: 0.05em;
+    }
+    .edu-period {
+      font-size: 0.72rem; color: var(--ink-30); letter-spacing: 0.08em;
+    }
+
+    .cert-item {
+      display: flex; align-items: flex-start; gap: 0.8rem;
+      padding: 1rem 0; border-bottom: 1px solid var(--ink-12);
+    }
+    .cert-item:last-child { border-bottom: none; }
+    .cert-dot {
+      width: 7px; height: 7px; border-radius: 50%;
+      background: var(--gradient); flex-shrink: 0; margin-top: 0.35rem;
+    }
+    .cert-name {
+      font-size: 0.85rem; font-weight: 500;
+      color: var(--ink); line-height: 1.4;
+    }
+    .cert-issuer { font-size: 0.75rem; color: var(--ink-30); }
+
+    /* ========== CONTATO PAGE ========== */
+    .contact-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      min-height: calc(100vh - 72px - 200px);
+    }
+    .contact-left-col {
+      padding: 5rem 3.5rem;
+      border-right: 1px solid var(--ink-12);
+    }
+    .contact-left-col h1 {
+      font-family: var(--ff-display);
+      font-size: clamp(3rem, 5vw, 5rem);
+      font-weight: 700; line-height: 0.95;
+      margin-top: 1.2rem; margin-bottom: 2rem;
+    }
+    .contact-left-col h1 em {
+      font-style: italic; font-weight: 300;
+      background: var(--gradient);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    .contact-left-col > p {
+      font-size: 0.95rem; font-weight: 300;
+      color: var(--ink-60); line-height: 1.85; margin-bottom: 3rem;
+      max-width: 400px;
+    }
+    .contact-items { display: flex; flex-direction: column; gap: 0; }
+    .contact-item {
+      display: flex; align-items: center; gap: 1.5rem;
+      padding: 1.5rem 0;
+      border-bottom: 1px solid var(--ink-12);
+      text-decoration: none; color: inherit;
+      transition: color 0.2s;
+    }
+    .contact-item:hover { color: var(--blue); }
+    .contact-item-icon {
+      width: 42px; height: 42px;
+      border: 1px solid var(--ink-12);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1rem; flex-shrink: 0;
+      transition: background 0.2s, border-color 0.2s;
+      border-radius: 2px;
+    }
+    .contact-item:hover .contact-item-icon {
+      background: var(--blue-light);
+      border-color: rgba(43,74,232,0.3);
+    }
+    .contact-item-meta { flex: 1; }
+    .contact-item-label {
+      font-size: 0.65rem; font-weight: 600;
+      letter-spacing: 0.15em; text-transform: uppercase;
+      color: var(--ink-30); margin-bottom: 0.25rem;
+    }
+    .contact-item-value {
+      font-size: 0.9rem; font-weight: 400;
+    }
+    .contact-right-col {
+      padding: 5rem 3.5rem;
+      background: var(--off-white);
+      display: flex; flex-direction: column; justify-content: center;
+    }
+    .contact-value-prop {
+      background: var(--white);
+      border: 1px solid var(--ink-12);
+      padding: 2.5rem;
+      margin-bottom: 2rem;
+      border-radius: 2px;
+    }
+    .value-label {
+      font-size: 0.65rem; font-weight: 600;
+      letter-spacing: 0.15em; text-transform: uppercase;
+      color: var(--blue); margin-bottom: 1.2rem;
+    }
+    .value-list { display: flex; flex-direction: column; gap: 1rem; }
+    .value-item {
+      display: flex; gap: 0.8rem; align-items: flex-start;
+    }
+    .value-check {
+      color: var(--blue); font-size: 0.9rem; flex-shrink: 0;
+      padding-top: 0.05rem;
+    }
+    .value-text {
+      font-size: 0.88rem; font-weight: 300;
+      color: var(--ink); line-height: 1.6;
+    }
+    .value-text strong { font-weight: 600; }
+    .contact-quote-block {
+      padding: 2rem;
+      border-left: 3px solid transparent;
+      border-image: var(--gradient) 1;
+    }
+    .contact-quote-text {
+      font-family: var(--ff-display);
+      font-size: 1.3rem; font-style: italic; font-weight: 400;
+      color: var(--ink); line-height: 1.6;
+      margin-bottom: 0.8rem;
+    }
+    .contact-quote-by {
+      font-size: 0.7rem; letter-spacing: 0.12em;
+      text-transform: uppercase; color: var(--ink-30);
+    }
+
+    /* ========== ESPECIALIDADES SECTION ========== */
+    .especialidades-section {
+      border-top: 1px solid var(--ink-12);
+      padding: 5rem 3.5rem;
+    }
+    .especialidades-header {
+      margin-bottom: 3rem;
+    }
+    .especialidades-header h2 {
+      font-family: var(--ff-display);
+      font-size: clamp(2rem, 3.5vw, 3rem);
+      font-weight: 700; line-height: 1.05;
+      margin-top: 0.8rem;
+    }
+    .especialidades-header h2 em {
+      font-style: italic; font-weight: 300;
+      background: var(--gradient);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    .especialidades-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 0;
+      border: 1px solid var(--ink-12);
+    }
+    .especialidade-card {
+      padding: 2.2rem 2rem;
+      border-right: 1px solid var(--ink-12);
+      background: var(--white);
+      transition: background 0.25s;
+    }
+    .especialidade-card:last-child { border-right: none; }
+    .especialidade-card:hover { background: var(--gradient-soft); }
+    .espec-icon { font-size: 1.2rem; margin-bottom: 0.8rem; display: block; }
+    .espec-title {
+      font-family: var(--ff-display);
+      font-size: 1.05rem; font-weight: 700;
+      margin-bottom: 0.4rem; color: var(--ink);
+    }
+    .espec-desc {
+      font-size: 0.78rem; font-weight: 300;
+      color: var(--ink-60); line-height: 1.65;
+    }
+    .espec-tags { margin-top: 0.8rem; display: flex; flex-wrap: wrap; gap: 0.3rem; }
+    .espec-tag {
+      font-size: 0.58rem; font-weight: 500;
+      letter-spacing: 0.06em; text-transform: uppercase;
+      padding: 0.18rem 0.5rem;
+      border: 1px solid var(--ink-12);
+      color: var(--ink-60); border-radius: 2px;
+    }
+
+    /* ========== HOME METRICS STRIP ========== */
+    .home-metrics {
+      border-top: 1px solid var(--ink-12);
+      display: grid; grid-template-columns: repeat(4, 1fr);
+      background: var(--off-white);
+    }
+    .home-metric {
+      padding: 2.8rem 2rem;
+      border-right: 1px solid var(--ink-12);
+      text-align: center;
+    }
+    .home-metric:last-child { border-right: none; }
+    .home-metric-num {
+      font-family: var(--ff-display);
+      font-size: 2.8rem; font-weight: 700; line-height: 1;
+      background: var(--gradient);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    .home-metric-label {
+      font-size: 0.72rem; color: var(--ink-60); margin-top: 0.4rem; line-height: 1.4;
+    }
+
+    /* ========== CASE META TABLE ========== */
+    .case-meta-table {
+      display: grid; grid-template-columns: 1fr 1fr;
+      border: 1px solid var(--ink-12);
+      margin-bottom: 2rem;
+    }
+    .case-meta-row {
+      display: flex; align-items: baseline;
+      padding: 0.7rem 1rem;
+      border-bottom: 1px solid var(--ink-12);
+      gap: 0.8rem;
+    }
+    .case-meta-row:nth-child(even) { border-left: 1px solid var(--ink-12); }
+    .case-meta-row:nth-last-child(-n+2) { border-bottom: none; }
+    .case-meta-key {
+      font-size: 0.58rem; font-weight: 700;
+      letter-spacing: 0.14em; text-transform: uppercase;
+      color: var(--ink-30); flex-shrink: 0; min-width: 68px;
+    }
+    .case-meta-val {
+      font-size: 0.8rem; font-weight: 400;
+      color: var(--ink); line-height: 1.4;
+    }
+
+    /* ========== PROCESS DECISION BLOCK ========== */
+    .process-decision {
+      background: var(--gradient-soft);
+      border-left: 3px solid var(--blue);
+      padding: 1.1rem 1.3rem;
+      margin: 1.5rem 0;
+    }
+    .process-decision-label {
+      font-size: 0.58rem; font-weight: 700;
+      letter-spacing: 0.14em; text-transform: uppercase;
+      color: var(--blue); margin-bottom: 0.35rem;
+    }
+    .process-decision p {
+      font-size: 0.83rem; font-weight: 300;
+      color: var(--ink); line-height: 1.7; margin: 0;
+    }
+
+    /* ========== PHILOSOPHY STRIP ========== */
+    .philosophy-strip {
+      border-top: 1px solid var(--ink-12);
+      padding: 4rem 3.5rem;
+      display: grid; grid-template-columns: 160px 1fr; gap: 4rem;
+      align-items: center; background: var(--off-white);
+    }
+    .philosophy-strip-label {
+      font-size: 0.65rem; font-weight: 600;
+      letter-spacing: 0.18em; text-transform: uppercase;
+      color: var(--ink-30);
+    }
+    .philosophy-strip-quote {
+      font-family: var(--ff-display);
+      font-size: clamp(1.2rem, 2vw, 1.75rem);
+      font-style: italic; font-weight: 400;
+      color: var(--ink); line-height: 1.55;
+    }
+    .philosophy-strip-quote strong {
+      font-style: normal; font-weight: 700;
+      background: var(--gradient);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    /* ========== HOME CTA STRIP ========== */
+    .home-cta-strip {
+      border-top: 1px solid var(--ink-12);
+      padding: 5rem 3.5rem;
+      display: flex; justify-content: space-between; align-items: center;
+      gap: 2rem; flex-wrap: wrap;
+    }
+    .home-cta-text h2 {
+      font-family: var(--ff-display);
+      font-size: clamp(1.8rem, 3vw, 2.8rem);
+      font-weight: 700; line-height: 1.1;
+    }
+    .home-cta-text h2 em {
+      font-style: italic; font-weight: 300;
+      background: var(--gradient);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    .home-cta-text p {
+      font-size: 0.9rem; color: var(--ink-60); margin-top: 0.6rem; font-weight: 300;
+    }
+    .home-cta-actions { display: flex; gap: 1rem; align-items: center; flex-wrap: wrap; }
+    .btn-outline {
+      color: var(--blue);
+      font-size: 0.78rem; font-weight: 600;
+      letter-spacing: 0.1em; text-transform: uppercase;
+      text-decoration: none; border: 1.5px solid rgba(43,74,232,0.4);
+      padding: 0.82rem 1.8rem; border-radius: 2px;
+      transition: background 0.2s, border-color 0.2s;
+    }
+    .btn-outline:hover { background: var(--blue-light); border-color: var(--blue); }
+
+    /* ========== PROCESS PHASE: REAL DECISION STYLE ========== */
+    .phase-real-desc {
+      font-size: 0.88rem; font-weight: 300;
+      color: var(--ink-60); line-height: 1.8; margin-bottom: 1rem;
+    }
+    .phase-real-desc strong { color: var(--ink); font-weight: 500; }
+
+    /* FOOTER */
+    footer {
+      padding: 2rem 3.5rem;
+      border-top: 1px solid var(--ink-12);
+      display: flex; justify-content: space-between; align-items: center;
+      flex-wrap: wrap; gap: 1rem;
+    }
+    .footer-copy {
+      font-size: 0.72rem; color: var(--ink-30);
+      letter-spacing: 0.06em;
+    }
+    .footer-links { display: flex; gap: 1.5rem; }
+    .footer-link {
+      font-size: 0.72rem; color: var(--ink-30);
+      text-decoration: none; letter-spacing: 0.06em;
+      transition: color 0.2s;
+    }
+    .footer-link:hover { color: var(--blue); }
+    .footer-gradient-bar {
+      height: 3px;
+      background: var(--gradient);
+    }
+
+    /* ANIMATIONS */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+
+    /* SCROLL REVEAL */
+    .reveal {
+      opacity: 0; transform: translateY(24px);
+      transition: opacity 0.65s ease, transform 0.65s ease;
+    }
+    .reveal.visible { opacity: 1; transform: translateY(0); }
+
+    /* MOBILE NAV OVERLAY */
+    .mobile-nav-overlay {
+      display: none;
+      position: fixed; inset: 0; z-index: 150;
+      background: rgba(250,250,248,0.97);
+      backdrop-filter: blur(16px);
+      flex-direction: column;
+      padding: 6rem 2rem 3rem;
+      gap: 0;
+    }
+    .mobile-nav-overlay.open { display: flex; }
+    .mobile-nav-item {
+      font-family: var(--ff-display);
+      font-size: 2.5rem; font-weight: 700;
+      color: var(--ink); text-decoration: none;
+      padding: 1rem 0;
+      border-bottom: 1px solid var(--ink-12);
+      opacity: 0; transform: translateY(12px);
+      animation: none;
+    }
+    .mobile-nav-item.visible {
+      animation: fadeUp 0.4s ease forwards;
+    }
+    .mobile-nav-item em {
+      font-style: italic; font-weight: 300;
+      background: var(--gradient);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    .mobile-nav-cv {
+      margin-top: 2rem;
+      background: var(--gradient);
+      color: #fff;
+      padding: 1rem 2rem;
+      text-align: center;
+      font-size: 0.85rem; font-weight: 600;
+      letter-spacing: 0.1em; text-transform: uppercase;
+      border-radius: 2px; text-decoration: none;
+    }
+
+    /* RESPONSIVE */
+    @media (max-width: 1024px) {
+      .phase-item { grid-template-columns: 60px 1fr; }
+      .phase-tools { display: none; }
+    }
+
+    @media (max-width: 768px) {
+      nav { padding: 1.1rem 1.5rem; }
+      .nav-links { display: none; }
+      .nav-hamburger { display: flex; }
+
+      .hero { grid-template-columns: 1fr; min-height: auto; }
+      .hero-left { padding: 2.5rem 1.5rem 2rem; }
+      .hero-right {
+        display: flex; height: 420px;
+        border-top: 1px solid rgba(43,74,232,0.1);
+      }
+      .chat-topbar { padding: 0.8rem 1rem; }
+      .chat-feed { padding: 1rem; gap: 0.75rem; }
+      .msg-body { max-width: 82%; }
+      .msg-bubble { font-size: 0.75rem; padding: 0.6rem 0.85rem; }
+      .msg-type { font-size: 0.45rem; }
+      .msg-avatar { width: 20px; height: 20px; font-size: 0.42rem; }
+      .chat-inputbar { padding: 0.7rem 0.9rem; }
+      .hero-bubbles-mobile { display: none; }
+      .hero-scroll { display: none; }
+      .hero-name { font-size: clamp(3rem, 12vw, 4.5rem); }
+
+      .home-about { grid-template-columns: 1fr; }
+      .home-about-left { padding: 2.5rem 1.5rem 1.5rem; border-right: none; border-bottom: 1px solid var(--ink-12); }
+      .home-about-right { padding: 2rem 1.5rem; }
+
+      .especialidades-section { padding: 3rem 1.5rem; }
+      .especialidades-grid { grid-template-columns: 1fr 1fr; }
+      .especialidade-card { border-bottom: 1px solid var(--ink-12); }
+      .especialidade-card:nth-child(even) { border-right: none; }
+
+      .home-metrics { grid-template-columns: 1fr 1fr; }
+      .home-metric { padding: 2rem 1.2rem; }
+      .home-metric:nth-child(2) { border-right: none; }
+      .home-metric:nth-child(3) { border-top: 1px solid var(--ink-12); }
+      .home-metric:nth-child(4) { border-top: 1px solid var(--ink-12); border-right: none; }
+
+      .media-strip { padding: 2.5rem 1.5rem; }
+      .media-strip-inner { flex-direction: column; align-items: flex-start; gap: 1.5rem; }
+      .media-label { padding-right: 0; border-right: none; border-bottom: 1px solid var(--ink-12); padding-bottom: 1rem; width: 100%; }
+      .media-logos { gap: 0.8rem; }
+
+      .featured-projects { padding: 3rem 1.5rem; }
+      .featured-header { flex-direction: column; align-items: flex-start; gap: 1rem; }
+      .project-grid { grid-template-columns: 1fr; border: none; }
+      .proj-card { border-right: none !important; border-bottom: 1px solid var(--ink-12) !important; padding: 2rem 1.5rem; }
+      .proj-card:last-child { border-bottom: none !important; }
+
+      .philosophy-strip { grid-template-columns: 1fr; gap: 1rem; padding: 3rem 1.5rem; }
+      .home-cta-strip { padding: 3rem 1.5rem; flex-direction: column; align-items: flex-start; }
+
+      .page-header { padding: 2.5rem 1.5rem 2rem; }
+      .project-full { grid-template-columns: 1fr; }
+      .project-full-left { border-right: none; border-bottom: 1px solid var(--ink-12); padding: 2rem 1.5rem; }
+      .project-full-right { padding: 2rem 1.5rem; }
+      .case-meta-table { grid-template-columns: 1fr; }
+      .case-meta-row:nth-child(even) { border-left: none; }
+      .case-meta-row:last-child { border-bottom: none; }
+
+      .ux-process-intro { grid-template-columns: 1fr; }
+      .ux-intro-left { border-right: none; border-bottom: 1px solid var(--ink-12); padding: 2.5rem 1.5rem 2rem; }
+      .ux-intro-right { padding: 2rem 1.5rem; }
+      .phase-item { grid-template-columns: 1fr; }
+      .phase-num-col { border-right: none; border-bottom: 1px solid var(--ink-12); padding: 1.2rem 1.5rem; flex-direction: row; align-items: center; gap: 1rem; }
+      .phase-info { padding: 1.8rem 1.5rem; border-right: none; }
+
+      .cv-grid { grid-template-columns: 1fr; }
+      .cv-sidebar { position: static; border-right: none; border-bottom: 1px solid var(--ink-12); padding: 2.5rem 1.5rem; }
+      .cv-main { padding: 2.5rem 1.5rem; }
+
+      .contact-grid { grid-template-columns: 1fr; }
+      .contact-left-col { padding: 2.5rem 1.5rem; border-right: none; border-bottom: 1px solid var(--ink-12); }
+      .contact-right-col { padding: 2.5rem 1.5rem; }
+      .contact-left-col h1 { font-size: clamp(2.2rem, 8vw, 3rem); }
+
+      footer { padding: 1.5rem; flex-direction: column; align-items: flex-start; gap: 0.8rem; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- CURSOR -->
+  <div class="cursor-dot" id="cursorDot"></div>
+  <div class="cursor-ring" id="cursorRing"></div>
+
+  <!-- MOBILE NAV OVERLAY -->
+  <div class="mobile-nav-overlay" id="mobileNav">
+    <a class="mobile-nav-item" href="#" onclick="navigate('home');closeMobileNav();return false;">Home</a>
+    <a class="mobile-nav-item" href="#" onclick="navigate('projetos');closeMobileNav();return false;">Projetos</a>
+    <a class="mobile-nav-item" href="#" onclick="navigate('processo');closeMobileNav();return false;">Processo <em>UX</em></a>
+    <a class="mobile-nav-item" href="#" onclick="navigate('curriculo');closeMobileNav();return false;">Currículo</a>
+    <a class="mobile-nav-item" href="#" onclick="navigate('contato');closeMobileNav();return false;">Contato</a>
+    <a class="mobile-nav-cv" href="mailto:batistaevcr@gmail.com">Falar comigo →</a>
+  </div>
+
+  <!-- NAV -->
+  <nav id="nav">
+    <a class="nav-logo" href="#" onclick="navigate('home');return false;">Evellyn <span>Batista</span></a>
+    <ul class="nav-links">
+      <li><a href="#" onclick="navigate('home');return false;" class="active" id="nav-home">Home</a></li>
+      <li><a href="#" onclick="navigate('projetos');return false;" id="nav-projetos">Projetos</a></li>
+      <li><a href="#" onclick="navigate('processo');return false;" id="nav-processo">Processo UX</a></li>
+      <li><a href="#" onclick="navigate('curriculo');return false;" id="nav-curriculo">Currículo</a></li>
+      <li><a href="#" onclick="navigate('contato');return false;" id="nav-contato">Contato</a></li>
+      <li><a href="mailto:batistaevcr@gmail.com" class="nav-cv">Falar Comigo</a></li>
+    </ul>
+    <button class="nav-hamburger" id="hamburger" onclick="toggleMobileNav()" aria-label="Menu">
+      <span></span><span></span><span></span>
+    </button>
+  </nav>
+
+  <!-- ============================= PAGE: HOME ============================= -->
+  <div class="page active" id="page-home">
+
+    <!-- HERO -->
+    <section class="hero">
+      <div class="hero-left">
+        <div class="hero-eyebrow">
+          <div class="hero-eyebrow-line"></div>
+          UX Writer & Conversational Designer · IA & Chatbots
+        </div>
+        <h1 class="hero-name">
+          Evellyn<br>
+          <em>Batista.</em>
+        </h1>
+        <p class="hero-desc">
+          UX Writer e Designer Conversacional especializada em IA, chatbots e experiências digitais mais humanas. Entre fluxos, linguagem e produto, transformo estratégia em experiências que fazem sentido.
+        </p>
+        <div class="hero-badges">
+          <span class="badge blue">UX Writing · Conversational Design</span>
+          <span class="badge purple">UX/UI · Content Strategy</span>
+          <span class="badge">4+ anos · São Paulo</span>
+        </div>
+        <div class="hero-actions">
+          <a class="btn-primary" href="#" onclick="navigate('projetos');return false;">Explorar Cases →</a>
+          <a class="btn-ghost" href="#" onclick="navigate('processo');return false;">Ver Processo <span class="btn-ghost-arrow">→</span></a>
+        </div>
+        <div class="hero-scroll">
+  <div class="hero-scroll-arrow">↓</div>
+</div>
+      </div>
+      <div class="hero-right">
+        <div class="hero-bg-gradient"></div>
+        <div class="hero-bg-grid"></div>
+
+        <!-- CHAT WINDOW -->
+        <div class="chat-window">
+
+          <!-- Top bar chrome -->
+          <div class="chat-topbar">
+            <div class="chat-topbar-avatar">AI</div>
+            <div class="chat-topbar-info">
+              <div class="chat-topbar-name">Central da Torcida 🇧🇷</div>
+              <div class="chat-topbar-status">
+                <div class="status-dot"></div>
+                Online · WhatsApp Business API
+              </div>
+            </div>
+            <div class="chat-topbar-model">NLU v2</div>
+          </div>
+
+          <!-- Messages feed -->
+       <div class="chat-feed" id="chatFeed"> <div class="chat-date-sep"> <span>Evento Esportivo· Fluxo ao vivo</span> </div> <!-- 1. User intent --> <div class="msg-row" style="animation-delay:0.7s"> <div class="msg-avatar user-av">US</div> <div class="msg-body"> <div class="msg-type intent">Intenção identificada</div> <div class="msg-bubble user">"Quero acompanhar ginástica artística."</div> <div class="msg-meta">14:02 <span class="msg-check">✓✓</span></div> </div> </div> <!-- 2. Memória da conversa --> <div class="msg-row right" style="animation-delay:1.15s"> <div class="msg-avatar bot-av">EB</div> <div class="msg-body"> <div class="msg-type context">Context memory</div> <div class="msg-bubble bot">Usuário acessando durante evento olímpico. Localização: Paris. Idioma: pt-BR.</div> <div class="msg-meta">14:02</div> </div> </div> <!-- 3. Fallback --> <div class="msg-row" style="animation-delay:1.6s"> <div class="msg-avatar user-av">US</div> <div class="msg-body"> <div class="msg-type fallback">Caminho de resposta</div> <div class="msg-bubble warn">Modalidade não encontrada diretamente → expansão semântica para categoria esportiva</div> <div class="msg-meta">14:02</div> </div> </div> <!-- 4. Typing indicator (hidden after response) --> <div class="typing-row" id="typingRow" style="animation-delay:2s"> <div class="msg-avatar bot-av" style="width:24px;height:24px;border-radius:50%;background:var(--gradient);display:flex;align-items:center;justify-content:center;font-size:0.5rem;font-weight:700;color:#fff;flex-shrink:0;margin-top:2px;">EB</div> <div class="typing-bubble"> <div class="typing-dot"></div> <div class="typing-dot"></div> <div class="typing-dot"></div> </div> </div> <!-- 5. Resposta do assistente (initially hidden) --> <div class="msg-row right" id="responseMsg" style="opacity:0; animation:none;"> <div class="msg-avatar bot-av">EB</div> <div class="msg-body"> <div class="msg-type response">AI response</div> <div class="msg-bubble success" id="responseText"></div> <div class="msg-meta">14:02 <span class="msg-check">✓✓</span></div> </div> </div> </div><!-- /chat-feed --> <!-- Decorative input bar --> <div class="chat-inputbar"> <div class="chat-input-field">Digite uma mensagem…</div> <div class="chat-send-btn"> <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z"/></svg> </div> </div> </div><!-- /chat-window --> </div> </section>
+    <!-- MARQUEE -->
+    <div class="marquee-wrap">
+      <div class="marquee-track">
+        <span class="marquee-item">UX Writing</span>
+        <span class="marquee-item marquee-dot">✦</span>
+        <span class="marquee-item">Design Conversacional</span>
+        <span class="marquee-item marquee-dot">✦</span>
+        <span class="marquee-item">Chatbots & Fluxos</span>
+        <span class="marquee-item marquee-dot">✦</span>
+        <span class="marquee-item">Pesquisa de Usuário</span>
+        <span class="marquee-item marquee-dot">✦</span>
+        <span class="marquee-item">Tom & Voz</span>
+        <span class="marquee-item marquee-dot">✦</span>
+        <span class="marquee-item">Estratégia de Produto</span>
+        <span class="marquee-item marquee-dot">✦</span>
+        <span class="marquee-item">IA Generativa</span>
+        <span class="marquee-item marquee-dot">✦</span>
+        <span class="marquee-item">Acessibilidade</span>
+        <span class="marquee-item marquee-dot">✦</span>
+        <!-- repeat -->
+        <span class="marquee-item">UX Writing</span>
+        <span class="marquee-item marquee-dot">✦</span>
+        <span class="marquee-item">Design Conversacional</span>
+        <span class="marquee-item marquee-dot">✦</span>
+        <span class="marquee-item">Chatbots & Fluxos</span>
+        <span class="marquee-item marquee-dot">✦</span>
+        <span class="marquee-item">Pesquisa de Usuário</span>
+        <span class="marquee-item marquee-dot">✦</span>
+        <span class="marquee-item">Tom & Voz</span>
+        <span class="marquee-item marquee-dot">✦</span>
+        <span class="marquee-item">Estratégia de Produto</span>
+        <span class="marquee-item marquee-dot">✦</span>
+        <span class="marquee-item">IA Generativa</span>
+        <span class="marquee-item marquee-dot">✦</span>
+        <span class="marquee-item">Acessibilidade</span>
+        <span class="marquee-item marquee-dot">✦</span>
+      </div>
+    </div>
+
+    <!-- ABOUT STRIP -->
+    <section class="home-about">
+      <div class="home-about-left reveal">
+        <div class="section-label"><span class="section-label-num">01 /</span> Sobre</div>
+        <h2>Pode me<br>chamar de<br><em>Evy.</em></h2>
+      </div>
+      <div class="home-about-right reveal">
+  <p>
+    Sou UX Writer e Designer Conversacional com <strong>mais de 4 anos de experiência</strong> criando experiências digitais mais claras, naturais e humanas.
+  </p>
+  <p>
+    Ao longo da minha trajetória, trabalhei com produtos digitais, interfaces conversacionais e experiências com IA, conectando linguagem, comportamento e estratégia em diferentes contextos.
+  </p>
+  <p>
+    Acredito que boas experiências não começam na interface. Elas começam na forma como as pessoas entendem, interagem e se sentem dentro de um produto.
+  </p>
+</div>
+</section>
+
+    <!-- MEDIA STRIP -->
+   <div class="media-strip reveal">
+     <div class="media-strip-inner">
+       <div class="media-label">Na mídia</div>
+       <div class="media-logos">
+         <a href="https://epocanegocios.globo.com/tecnologia/noticia/2024/07/meta-e-cob-lancam-chatbot-no-whatsapp-para-torcedores-brasileiros-acompanharem-as-olimpiadas.ghtml" target="_blank" rel="noopener noreferrer" class="media-logo">Época Negócios</a>
+         <a href="https://www.tecmundo.com.br/software/287467-olimpiadas-2024-meta-cob-lancam-chatbot-informacoes-torcedores.htm" target="_blank" rel="noopener noreferrer" class="media-logo">Tecmundo</a>
+         <a href="https://www.terra.com.br/byte/jogos-olimpicos-cob-e-meta-lancam-chatbot-para-torcida-interagir-com-mascote-ginga,db02e49e8e7394162dff2150cc72b52b75lbacbo.html" target="_blank" rel="noopener noreferrer" class="media-logo">Terra</a>
+         <a href="https://esginside.com.br/2024/09/14/rock-in-rio-brasil-lanca-chatbot-exclusivo-para-publico-com-deficiencia/" target="_blank" rel="noopener noreferrer" class="media-logo">ESG Inside</a>
+         <a href="https://extra.globo.com/entretenimento/rock-in-rio/noticia/2024/09/acessibilidade-no-rock-in-rio-sala-sensorial-cadeiras-de-rodas-e-mais-saiba-os-servicos-oferecidos-e-como-acessa-los.ghtml" target="_blank" rel="noopener noreferrer" class="media-logo">Extra Globo</a>
+       </div>
+     </div>
+   </div>
+
+    <!-- FEATURED PROJECTS -->
+    <section class="featured-projects">
+      <div class="featured-header reveal">
+        <div>
+          <div class="section-label"><span class="section-label-num">02 /</span> Cases em Destaque</div>
+          <h2>Trabalhos que<br><em>importaram.</em></h2>
+        </div>
+        <a class="view-all-link" href="#" onclick="navigate('projetos');return false;">Ver todos os cases →</a>
+      </div>
+      <div class="project-grid">
+        <a class="proj-card reveal" href="case-time-brasil.html" style="cursor:none;">
+          <div class="proj-card-num">001 — COB × Meta · Time Brasil</div>
+          <div class="proj-card-title">Chatbot Time Brasil: Olimpíadas Paris 2024</div>
+          <p class="proj-card-desc">UX Writing e Conversational Design para o chatbot oficial do Time Brasil no WhatsApp. Criação de jornadas, tom de voz e fluxos conversacionais para milhares de torcedores durante os Jogos Olímpicos Paris 2024.</p>
+          <div class="proj-card-tags">
+            <span class="tag blue">UX WRITING</span>
+            <span class="tag">CONVERSATIONAL AI</span>
+            <span class="tag">WHATSAPP</span>
+          </div>
+          <div class="proj-card-arrow">→</div>
+        </a>
+        <a class="proj-card reveal" href="case-rock-in-rio.html" style="cursor:none;">
+          <div class="proj-card-num">002 — Rock in Rio</div>
+          <div class="proj-card-title">Acessibilidade: Rock in Rio</div>
+          <p class="proj-card-desc">UX Writing e Design Conversacional para o chatbot de acessibilidade do Rock in Rio. Estruturei fluxos, linguagem simples e experiências inclusivas para facilitar o acesso à informação durante o festival.</p>
+          <div class="proj-card-tags">
+            <span class="tag purple">ACESSIBILIDADE</span>
+            <span class="tag">UX WRITING</span>
+            <span class="tag">IA CONVERSACIONAL</span>
+          </div>
+          <div class="proj-card-arrow">→</div>
+        </a>
+        <a class="proj-card reveal" href="case-lacta.html" style="cursor:none;">
+          <div class="proj-card-num">003 — Lacta × IA</div>
+          <div class="proj-card-title">Pedacinhos de Natal: Lacta</div>
+          <p class="proj-card-desc">Experiência digital com IA generativa para a campanha Pedacinhos de Natal da Lacta. Criação da jornada, UX Writing e tom de voz da IA para transformar fotos dos usuários em vídeos personalizados.</p>
+          <div class="proj-card-tags">
+            <span class="tag blue">IA GENERATIVA</span>
+            <span class="tag">UX WRITING</span>
+            <span class="tag">JORNADA DIGITAL</span>
+          </div>
+          <div class="proj-card-arrow">→</div>
+        </a>
+        <a class="proj-card reveal" href="case-evycore.html" style="cursor:none;">
+          <div class="proj-card-num" style="display:flex;align-items:center;justify-content:space-between;">
+            <span>004 — Projeto Pessoal · Evycore</span>
+            <span style="font-size:0.6rem;letter-spacing:0.1em;padding:0.2rem 0.5rem;background:var(--gradient-soft);border:1px solid rgba(107,63,160,0.2);color:var(--purple);border-radius:2px;">LIVE ↗</span>
+          </div>
+          <div class="proj-card-title">Evycore: eu, em forma de app</div>
+          <p class="proj-card-desc">Projeto conceitual que transforma minha rotina em um produto digital. Uma experiência criada do zero para explorar UX Writing, Product Design e UI por meio de uma narrativa interativa sobre quem eu sou.</p>
+          <div class="proj-card-tags">
+            <span class="tag purple">PRODUCT DESIGN</span>
+            <span class="tag purple">UX WRITING</span>
+            <span class="tag">UI DESIGN</span>
+          </div>
+          <div class="proj-card-arrow">→</div>
+        </a>
+      </div>
+    </section>
+
+    <!-- ESPECIALIDADES -->
+    <section class="especialidades-section reveal">
+      <div class="especialidades-header">
+        <div class="section-label"><span class="section-label-num">03 /</span> Especialidades</div>
+        <h2>O que eu faço<br><em>de verdade.</em></h2>
+      </div>
+      <div class="especialidades-grid">
+        <div class="especialidade-card">
+          <span class="espec-icon">💬</span>
+          <div class="espec-title">UX Conversacional</div>
+          <p class="espec-desc">Projeto experiências conversacionais com foco em clareza, comportamento e fluidez de navegação. Estruturo fluxos, intenções e jornadas que tornam interações complexas mais naturais e intuitivas.</p>
+          <div class="espec-tags">
+            <span class="espec-tag">UX Writing</span>
+            <span class="espec-tag">Design Conversacional</span>
+            <span class="espec-tag">Chatbots</span>
+            <span class="espec-tag">WhatsApp Business API</span>
+          </div>
+        </div>
+        <div class="especialidade-card">
+          <span class="espec-icon">🤖</span>
+          <div class="espec-title">UX para IA Generativa</div>
+          <p class="espec-desc">Desenvolvo experiências orientadas por IA generativa, criando prompts, estruturas de linguagem e interações alinhadas ao comportamento do usuário.</p>
+          <div class="espec-tags">
+            <span class="espec-tag">Prompt Design</span>
+            <span class="espec-tag">IA Generativa</span>
+            <span class="espec-tag">LLMs</span>
+            <span class="espec-tag">Experiência Conversacional</span>
+          </div>
+        </div>
+        <div class="especialidade-card">
+          <span class="espec-icon">✍️</span>
+          <div class="espec-title">UX Writing & Content Design</div>
+          <p class="espec-desc">Construo sistemas de linguagem, microcopy e diretrizes de tom de voz que reduzem fricção e tornam produtos mais claros, consistentes e fáceis de usar.</p>
+          <div class="espec-tags">
+            <span class="espec-tag">Content Design</span>
+            <span class="espec-tag">Tom de Voz</span>
+            <span class="espec-tag">Linguagem Simples</span>
+            <span class="espec-tag">Microcopy</span>
+          </div>
+        </div>
+        <div class="especialidade-card">
+          <span class="espec-icon">♿</span>
+          <div class="espec-title">Escrita para Acessibilidade</div>
+          <p class="espec-desc">Crio experiências acessíveis para diferentes contextos de leitura e interação, com foco em acessibilidade cognitiva, leitura assistiva e linguagem clara.</p>
+          <div class="espec-tags">
+            <span class="espec-tag">Acessibilidade Cognitiva</span>
+            <span class="espec-tag">Leitura Assistiva</span>
+            <span class="espec-tag">Experiência PCD</span>
+            <span class="espec-tag">Linguagem Clara</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- METRICS -->
+    <div class="home-metrics reveal">
+      <div class="home-metric">
+        <div class="home-metric-num">4+</div>
+        <div class="home-metric-label">Anos de experiência em UX conversacional</div>
+      </div>
+      <div class="home-metric">
+        <div class="home-metric-num">25+</div>
+        <div class="home-metric-label">Projetos entregues end-to-end</div>
+      </div>
+      <div class="home-metric">
+        <div class="home-metric-num">3×</div>
+        <div class="home-metric-label">Projetos de cobertura nacional e global</div>
+      </div>
+      <div class="home-metric">
+        <div class="home-metric-num">5×</div>
+        <div class="home-metric-label">Veículos de mídia: Época Negócios, Extra Globo, Terra</div>
+      </div>
+    </div>
+
+    <!-- PHILOSOPHY STRIP -->
+    <div class="philosophy-strip reveal">
+      <div class="philosophy-strip-label">Filosofia</div>
+      <p class="philosophy-strip-quote">
+        A melhor experiência é aquela que o usuário nem percebe que está sendo guiada. <strong>Linguagem bem feita é invisível.</strong>
+      </p>
+    </div>
+
+    <!-- HOME CTA STRIP -->
+    <div class="home-cta-strip reveal">
+      <div class="home-cta-text">
+        <h2>Pronta para o<br>próximo <em>desafio.</em></h2>
+        <p>Disponível para projetos, vagas e colaborações em UX, IA e produto.</p>
+      </div>
+      <div class="home-cta-actions">
+        <a class="btn-primary" href="#" onclick="navigate('projetos');return false;">Explorar Cases →</a>
+        <a class="btn-outline" href="#" onclick="navigate('contato');return false;">Falar Comigo</a>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- ============================= PAGE: PROJETOS ============================= -->
+  <!-- CHANGED: replaced inline .project-full content with clean card vitrine -->
+  <!-- Each card links directly to its dedicated case page (case-*.html)        -->
+  <div class="page" id="page-projetos">
+    <div class="page-header">
+      <div class="page-header-bg"></div>
+      <div class="page-header-content">
+        <div class="section-label"><span class="section-label-num">02 /</span> Projetos</div>
+        <h1>Cases de <em>impacto real.</em></h1>
+        <p class="page-header-desc">Projetos que chegaram às manchetes, alcançaram milhões de usuários e foram construídos com intenção, do primeiro fluxo ao último push.</p>
+      </div>
+    </div>
+
+    <section class="featured-projects" style="padding-top:4rem;">
+      <div class="project-grid">
+        <a class="proj-card reveal" href="case-time-brasil.html" style="cursor:none;">
+          <div class="proj-card-num">001 — COB × Meta · Time Brasil</div>
+          <div class="proj-card-title">Chatbot Time Brasil: Olimpíadas Paris 2024</div>
+          <p class="proj-card-desc">UX Writing e Conversational Design para o chatbot oficial do Time Brasil no WhatsApp. Criação de jornadas, tom de voz e fluxos conversacionais para milhares de torcedores durante os Jogos Olímpicos Paris 2024.</p>
+          <div class="proj-card-tags">
+            <span class="tag blue">UX WRITING</span>
+            <span class="tag">CONVERSATIONAL AI</span>
+            <span class="tag">WHATSAPP</span>
+          </div>
+          <div class="proj-card-arrow">→</div>
+        </a>
+        <a class="proj-card reveal" href="case-rock-in-rio.html" style="cursor:none;">
+          <div class="proj-card-num">002 — Rock in Rio</div>
+          <div class="proj-card-title">Acessibilidade: Rock in Rio</div>
+          <p class="proj-card-desc">UX Writing e Design Conversacional para o chatbot de acessibilidade do Rock in Rio. Estruturei fluxos, linguagem simples e experiências inclusivas para facilitar o acesso à informação durante o festival.</p>
+          <div class="proj-card-tags">
+            <span class="tag purple">ACESSIBILIDADE</span>
+            <span class="tag">UX WRITING</span>
+            <span class="tag">IA CONVERSACIONAL</span>
+          </div>
+          <div class="proj-card-arrow">→</div>
+        </a>
+        <a class="proj-card reveal" href="case-lacta.html" style="cursor:none;">
+          <div class="proj-card-num">003 — Lacta × IA</div>
+          <div class="proj-card-title">Pedacinhos de Natal: Lacta</div>
+          <p class="proj-card-desc">Experiência digital com IA generativa para a campanha Pedacinhos de Natal da Lacta. Criação da jornada, UX Writing e tom de voz da IA para transformar fotos dos usuários em vídeos personalizados.</p>
+          <div class="proj-card-tags">
+            <span class="tag blue">IA GENERATIVA</span>
+            <span class="tag">UX WRITING</span>
+            <span class="tag">JORNADA DIGITAL</span>
+          </div>
+          <div class="proj-card-arrow">→</div>
+        </a>
+        <a class="proj-card reveal" href="case-evycore.html" style="cursor:none;">
+          <div class="proj-card-num" style="display:flex;align-items:center;justify-content:space-between;">
+            <span>004 — Projeto Pessoal · Evycore</span>
+            <span style="font-size:0.6rem;letter-spacing:0.1em;padding:0.2rem 0.5rem;background:var(--gradient-soft);border:1px solid rgba(107,63,160,0.2);color:var(--purple);border-radius:2px;">LIVE ↗</span>
+          </div>
+          <div class="proj-card-title">Evycore: eu, em forma de app</div>
+          <p class="proj-card-desc">Projeto conceitual que transforma minha rotina em um produto digital. Uma experiência criada do zero para explorar UX Writing, Product Design e UI por meio de uma narrativa interativa sobre quem eu sou.</p>
+          <div class="proj-card-tags">
+            <span class="tag purple">PRODUCT DESIGN</span>
+            <span class="tag purple">UX WRITING</span>
+            <span class="tag">UI DESIGN</span>
+          </div>
+          <div class="proj-card-arrow">→</div>
+        </a>
+      </div>
+    </section>
+  </div>
+
+  <!-- ============================= PAGE: PROCESSO UX ============================= -->
+  <div class="page" id="page-processo">
+  <div class="page-header">
+    <div class="page-header-bg"></div>
+    <div class="page-header-content">
+      <div class="section-label"><span class="section-label-num">03 /</span> Processo UX</div>
+      <h1>Como eu <em>trabalho.</em></h1>
+      <p class="page-header-desc">Uma metodologia construída na prática, projeto após projeto, com foco em clareza, comportamento e experiência real de uso.</p>
+    </div>
+  </div>
+
+  <div class="ux-process-intro">
+    <div class="ux-intro-left reveal">
+      <div class="section-label"><span class="section-label-num">—</span> Filosofia</div>
+      <p>Não acredito em processos rígidos. Acredito em <strong>estrutura suficiente para criar com clareza, velocidade e consistência</strong>.</p>
+      <p>Cada projeto começa pela mesma pergunta: <em>"o que esse usuário realmente precisa entender aqui?"</em></p>
+    </div>
+    <div class="ux-intro-right reveal">
+      <p>
+        Trabalho na interseção entre <strong>estratégia, linguagem e produto</strong>. Isso significa transformar fluxos complexos em experiências mais claras, intuitivas e funcionais.
+      </p>
+      <p>
+        Minha abordagem combina <strong>pesquisa, comportamento e execução rápida</strong>. Sei quando aprofundar uma investigação e quando iterar com base em hipótese, teste e aprendizado real de uso.
+      </p>
+      <p>
+        Também sei identificar quando uma solução adiciona fricção em vez de resolver o problema. Nem toda feature melhora a experiência. Nem toda copy gera clareza.
+      </p>
+    </div>
+  </div>
+
+  <div class="phase-list">
+    <div class="phase-item reveal">
+      <div class="phase-num-col"><div class="phase-num">01</div></div>
+      <div class="phase-info">
+        <div class="phase-subtitle">Entender antes de fazer</div>
+        <div class="phase-title">Discovery & <em>Pesquisa</em></div>
+        <p class="phase-real-desc">Começo mapeando o contexto: quem é o usuário, quais são suas dores reais, o que o produto promete e onde a experiência começa a gerar dúvida, fricção ou abandono.</p>
+        <p class="phase-real-desc">Uso entrevistas, análise de comportamento, dados existentes e benchmarks para construir hipóteses antes de construir soluções. Em produtos conversacionais, isso significa entender como as pessoas falam, interpretam e tomam decisões durante a interação.</p>
+      </div>
+      <div class="phase-tools">
+        <div class="tools-label">Ferramentas & Métodos</div>
+        <div class="tools-list">
+          <div class="tool-item"><div class="tool-dot"></div>Entrevistas com usuários</div>
+          <div class="tool-item"><div class="tool-dot"></div>Benchmarking</div>
+          <div class="tool-item"><div class="tool-dot"></div>Mapa de jornada</div>
+          <div class="tool-item"><div class="tool-dot"></div>Personas</div>
+          <div class="tool-item"><div class="tool-dot"></div>Análise de dados (GA, Tableau)</div>
+        </div>
+      </div>
+    </div>
+    <div class="phase-item reveal">
+      <div class="phase-num-col"><div class="phase-num">02</div></div>
+      <div class="phase-info">
+        <div class="phase-subtitle">Estrutura antes de copy</div>
+        <div class="phase-title">Arquitetura & <em>Fluxos</em></div>
+        <p class="phase-real-desc">Com o contexto em mãos, estruturo fluxos e arquitetura da experiência antes da escrita. Em chatbots, isso significa mapear intenções, entidades, caminhos felizes, exceções e pontos de abandono. Em produtos digitais, significa organizar hierarquia de informação, navegação e carga cognitiva antes de qualquer interface final.</p>
+        <p class="phase-real-desc"><strong>Grande parte dos problemas de linguagem é resolvida nessa etapa. Fluxo ruim não se corrige com copy boa.</strong></p>
+      </div>
+      <div class="phase-tools">
+        <div class="tools-label">Ferramentas & Métodos</div>
+        <div class="tools-list">
+          <div class="tool-item"><div class="tool-dot"></div>Figma (flows & wireframes)</div>
+          <div class="tool-item"><div class="tool-dot"></div>Miro / FigJam</div>
+          <div class="tool-item"><div class="tool-dot"></div>Fluxogramas conversacionais</div>
+          <div class="tool-item"><div class="tool-dot"></div>Matriz de intenções (NLU)</div>
+        </div>
+      </div>
+    </div>
+    <div class="phase-item reveal">
+      <div class="phase-num-col"><div class="phase-num">03</div></div>
+      <div class="phase-info">
+        <div class="phase-subtitle">Tom de voz como estratégia</div>
+        <div class="phase-title">Escrita & <em>Tom de Voz</em></div>
+        <p class="phase-real-desc">A escrita entra como parte do sistema, não como acabamento visual. Desenvolvo tom de voz, microcopy, diretrizes de linguagem e estruturas de comunicação coerentes com o comportamento do usuário e os objetivos do produto.</p>
+        <p class="phase-real-desc"><strong>Tom de voz não é apenas estilo. É percepção de marca, clareza e confiança durante a experiência.</strong></p>
+      </div>
+      <div class="phase-tools">
+        <div class="tools-label">Ferramentas & Métodos</div>
+        <div class="tools-list">
+          <div class="tool-item"><div class="tool-dot"></div>Guia de tom & voz</div>
+          <div class="tool-item"><div class="tool-dot"></div>Style guide</div>
+          <div class="tool-item"><div class="tool-dot"></div>Content design</div>
+          <div class="tool-item"><div class="tool-dot"></div>Linguagem simples</div>
+        </div>
+      </div>
+    </div>
+    <div class="phase-item reveal">
+      <div class="phase-num-col"><div class="phase-num">04</div></div>
+      <div class="phase-info">
+        <div class="phase-subtitle">Testar faz parte do processo</div>
+        <div class="phase-title">Validação & <em>Testes</em></div>
+        <p class="phase-real-desc">Validação não acontece no final do projeto. Ela acompanha toda a construção da experiência. Realizo testes com usuários reais, análise de comportamento, acompanhamento de métricas e A/B testing de fluxos críticos — especialmente em onboarding, CTAs, mensagens de erro e experiências conversacionais.</p>
+        <p class="phase-real-desc"><strong>Um aprendizado recorrente: usuários raramente leem tudo. Eles escaneiam, interpretam e tomam decisões rapidamente. Os testes existem para confrontar essa realidade.</strong></p>
+      </div>
+      <div class="phase-tools">
+        <div class="tools-label">Ferramentas & Métodos</div>
+        <div class="tools-list">
+          <div class="tool-item"><div class="tool-dot"></div>Testes de usabilidade</div>
+          <div class="tool-item"><div class="tool-dot"></div>A/B Testing</div>
+          <div class="tool-item"><div class="tool-dot"></div>Análise de KPIs</div>
+          <div class="tool-item"><div class="tool-dot"></div>Heatmaps & Session Replay</div>
+        </div>
+      </div>
+    </div>
+    <div class="phase-item reveal">
+      <div class="phase-num-col"><div class="phase-num">05</div></div>
+      <div class="phase-info">
+        <div class="phase-subtitle">Sistemas que escalam</div>
+        <div class="phase-title">Documentação & <em>Entrega</em></div>
+        <p class="phase-real-desc">Ao final de cada projeto, estruturo documentações e sistemas que permitem continuidade sem dependência operacional. Isso inclui guidelines de linguagem, handoff para desenvolvimento, treinamento de equipes e estruturas de conteúdo que mantêm consistência mesmo com evolução do produto.</p>
+        <p class="phase-real-desc"><strong>Uma boa documentação reduz retrabalho, diminui ruído entre times e ajuda a experiência a escalar de forma sustentável.</strong></p>
+      </div>
+      <div class="phase-tools">
+        <div class="tools-label">Ferramentas & Métodos</div>
+        <div class="tools-list">
+          <div class="tool-item"><div class="tool-dot"></div>Design tokens de conteúdo</div>
+          <div class="tool-item"><div class="tool-dot"></div>Guidelines de linguagem</div>
+          <div class="tool-item"><div class="tool-dot"></div>Handoff para desenvolvimento</div>
+          <div class="tool-item"><div class="tool-dot"></div>Treinamento de equipes</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+  <!-- ============================= PAGE: CURRÍCULO ============================= -->
+<div class="page" id="page-curriculo">
+  <div class="page-header">
+    <div class="page-header-bg"></div>
+    <div class="page-header-content">
+      <div class="section-label"><span class="section-label-num">04 /</span> Currículo</div>
+      <h1>Uma trajetória construída com <em>intenção.</em></h1>
+    </div>
+  </div>
+
+  <div class="cv-grid">
+    <div class="cv-sidebar reveal">
+      <div class="section-label"><span class="section-label-num">—</span> Competências</div>
+      <div class="skills-groups">
+        <div>
+          <div class="skill-group-title">UX Writing & Conteúdo</div>
+          <div class="skill-pills">
+            <span class="skill-pill blue">UX Writing</span>
+            <span class="skill-pill blue">Microcopy</span>
+            <span class="skill-pill blue">Tom e Voz</span>
+            <span class="skill-pill blue">Guia de Estilo</span>
+            <span class="skill-pill blue">Estratégia de Conteúdo</span>
+          </div>
+        </div>
+        <div>
+          <div class="skill-group-title">Design Conversacional</div>
+          <div class="skill-pills">
+            <span class="skill-pill purple">Fluxos de Chatbot</span>
+            <span class="skill-pill purple">WhatsApp Business API</span>
+            <span class="skill-pill purple">UX Conversacional</span>
+            <span class="skill-pill purple">Engenharia de Prompt</span>
+            <span class="skill-pill purple">Treinamento de LLMs</span>
+          </div>
+        </div>
+        <div>
+          <div class="skill-group-title">UX Research & Validação</div>
+          <div class="skill-pills">
+            <span class="skill-pill">Entrevistas com Usuários</span>
+            <span class="skill-pill">Testes de Usabilidade</span>
+            <span class="skill-pill">Personas & Jornadas</span>
+            <span class="skill-pill">A/B Testing</span>
+            <span class="skill-pill">Definição de KPIs</span>
+            <span class="skill-pill">Card Sorting</span>
+          </div>
+        </div>
+        <div>
+          <div class="skill-group-title">Ferramentas</div>
+          <div class="skill-pills">
+            <span class="skill-pill">Figma</span>
+            <span class="skill-pill">Miro</span>
+            <span class="skill-pill">Notion</span>
+            <span class="skill-pill">Power BI</span>
+            <span class="skill-pill">Tableau</span>
+            <span class="skill-pill">OpenAI</span>
+          </div>
+        </div>
+        <div>
+          <div class="skill-group-title">Metodologias</div>
+          <div class="skill-pills">
+            <span class="skill-pill">Design Thinking</span>
+            <span class="skill-pill">Agile UX</span>
+            <span class="skill-pill">Scrum / PSPO I</span>
+            <span class="skill-pill">Avaliação Heurística</span>
+          </div>
+        </div>
+        <div>
+          <div class="skill-group-title">Idiomas</div>
+          <div class="skill-pills">
+            <span class="skill-pill blue">Português (nativo)</span>
+            <span class="skill-pill blue">Inglês (intermediário)</span>
+            <span class="skill-pill">Espanhol (intermediário)</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="cv-main">
+      <div class="cv-section reveal">
+        <div class="cv-section-title">Experiência <em>Profissional</em></div>
+
+        <div class="exp-entry">
+          <div class="exp-header-row">
+            <div class="exp-role-title">UX Writer</div>
+            <span class="exp-period-badge">Jun/2025 — atual</span>
+          </div>
+          <div class="exp-company-name">Hogarth · São Paulo</div>
+          <p class="exp-body">Estruturação do fluxo de trabalho e metodologia de UX Writing para o projeto do site desde o zero, estabelecendo operações de conteúdo escaláveis. Liderança da equipe de conteúdo, criação e implementação do manual de tom e voz da marca, escrita de microcopy para interfaces web e apoio na definição de personas, jornadas e testes A/B com foco em melhoria contínua.</p>
+        </div>
+
+        <div class="exp-entry">
+          <div class="exp-header-row">
+            <div class="exp-role-title">UX/UI Designer e Designer Conversacional</div>
+            <span class="exp-period-badge">Mar/2024 — Jan/2025</span>
+          </div>
+          <div class="exp-company-name">Smarters · São Paulo</div>
+          <p class="exp-body">Desenvolvimento de microcopy para chatbots e aplicações em WhatsApp Business API (WABA), com definição de tom e estilo, testes e iterações centradas no usuário. Condução de pesquisas, entrevistas, criação de personas, mapeamento de jornadas e definição de KPIs. Engenharia de prompt e treinamento de LLMs para chatbots e assistentes virtuais. Projetos incluem o chatbot oficial do COB durante as Olimpíadas Paris 2024 e o chatbot de acessibilidade do Rock in Rio.</p>
+        </div>
+
+        <div class="exp-entry">
+          <div class="exp-header-row">
+            <div class="exp-role-title">UX Writer</div>
+            <span class="exp-period-badge">Ago/2022 — Mar/2024</span>
+          </div>
+          <div class="exp-company-name">InBot · São Paulo</div>
+          <p class="exp-body">Construção de fluxogramas, wireframes e microcopy para interfaces conversacionais e aplicativos digitais, com definição de tom, testes e iterações focadas no usuário. Execução de UX Research com entrevistas, personas, testes de usabilidade e definição de KPIs. Atuação como Product Owner com definição e priorização de backlog e acompanhamento contínuo de projetos.</p>
+        </div>
+
+        <div class="exp-entry">
+          <div class="exp-header-row">
+            <div class="exp-role-title">Assistente de Experiência do Cliente II</div>
+            <span class="exp-period-badge">Mai/2021 — Ago/2022</span>
+          </div>
+          <div class="exp-company-name">Westwing Brasil · São Paulo</div>
+          <p class="exp-body">Apoio na jornada de compra e fidelização do usuário. Curadoria de chatbot com pesquisas quantitativas e qualitativas, análise longitudinal de dados, identificação de melhorias e desenvolvimento de planos de ação para otimização contínua da experiência.</p>
+        </div>
+      </div>
+
+      <div class="cv-section reveal">
+        <div class="cv-section-title">Educação & <em>Formação</em></div>
+        <div class="edu-entry">
+          <div class="edu-degree">MBA em Inteligência Competitiva e Inovação em Marketing</div>
+          <div class="edu-school">2022 — 2023</div>
+        </div>
+        <div class="edu-entry">
+          <div class="edu-degree">MBA em Gestão Estratégica de Projetos e Metodologias Ágeis</div>
+          <div class="edu-school">2022 — 2023</div>
+        </div>
+        <div class="edu-entry">
+          <div class="edu-degree">Bacharelado em Design de Moda</div>
+          <div class="edu-school">2012 — 2017</div>
+        </div>
+      </div>
+
+      <div class="cv-section reveal">
+        <div class="cv-section-title">Certificações & <em>Cursos</em></div>
+        <div class="cert-item">
+          <div class="cert-dot"></div>
+          <div>
+            <div class="cert-name">PSPO I — Professional Scrum Product Owner</div>
+            <div class="cert-issuer">Scrum.org</div>
+          </div>
+        </div>
+        <div class="cert-item">
+          <div class="cert-dot"></div>
+          <div>
+            <div class="cert-name">UX Unicórnio</div>
+            <div class="cert-issuer">Certificação</div>
+          </div>
+        </div>
+        <div class="cert-item">
+          <div class="cert-dot"></div>
+          <div>
+            <div class="cert-name">UX Writing</div>
+            <div class="cert-issuer">Certificação</div>
+          </div>
+        </div>
+        <div class="cert-item">
+          <div class="cert-dot"></div>
+          <div>
+            <div class="cert-name">Power BI</div>
+            <div class="cert-issuer">Certificação</div>
+          </div>
+        </div>
+        <div class="cert-item">
+          <div class="cert-dot"></div>
+          <div>
+            <div class="cert-name">Excel & Tableau</div>
+            <div class="cert-issuer">Certificações</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+  <!-- ============================= PAGE: CONTATO ============================= -->
+<div class="page" id="page-contato">
+  <div class="contact-grid">
+    <div class="contact-left-col reveal">
+      <div class="section-label"><span class="section-label-num">05 /</span> Contato</div>
+      <h1>Vamos<br><em>conversar?</em></h1>
+      <p>Aberta para projetos, colaborações e oportunidades em UX Writing, experiências conversacionais e produtos digitais. Respondo rápido.</p>
+      <div class="contact-items">
+        <a class="contact-item" href="mailto:batistaevcr@gmail.com">
+          <div class="contact-item-icon">✉</div>
+          <div class="contact-item-meta">
+            <div class="contact-item-label">Email</div>
+            <div class="contact-item-value">batistaevcr@gmail.com</div>
+          </div>
+          <div>→</div>
+        </a>
+        <a class="contact-item" href="https://www.linkedin.com/in/evellyn-batista/" target="_blank">
+          <div class="contact-item-icon">in</div>
+          <div class="contact-item-meta">
+            <div class="contact-item-label">LinkedIn</div>
+            <div class="contact-item-value">/in/evellyn-batista</div>
+          </div>
+          <div>→</div>
+        </a>
+        <a class="contact-item" href="tel:+5511943483850">
+          <div class="contact-item-icon">☎</div>
+          <div class="contact-item-meta">
+            <div class="contact-item-label">Telefone / WhatsApp</div>
+            <div class="contact-item-value">(11) 94348-3850</div>
+          </div>
+          <div>→</div>
+        </a>
+        <a class="contact-item" href="https://batistaevcr-design.github.io/evycore.exe/" target="_blank">
+          <div class="contact-item-icon">⬡</div>
+          <div class="contact-item-meta">
+            <div class="contact-item-label">Projeto Pessoal</div>
+            <div class="contact-item-value">Evycore →</div>
+          </div>
+          <div>↗</div>
+        </a>
+      </div>
+    </div>
+    <div class="contact-right-col reveal">
+      <div class="contact-value-prop">
+        <div class="value-label">O que levo para os projetos</div>
+        <div class="value-list">
+          <div class="value-item">
+            <div class="value-check">✦</div>
+            <div class="value-text">Estruturas de linguagem pensadas para reduzir fricção, melhorar navegação e tornar experiências mais claras e intuitivas.</div>
+          </div>
+          <div class="value-item">
+            <div class="value-check">✦</div>
+            <div class="value-text">Experiência em projetos de grande escala e alta visibilidade, incluindo iniciativas para marcas como COB, Rock in Rio e Lacta.</div>
+          </div>
+          <div class="value-item">
+            <div class="value-check">✦</div>
+            <div class="value-text">Sistemas de conteúdo e documentação que ajudam times a manter consistência, evoluir produtos e escalar linguagem com autonomia.</div>
+          </div>
+          <div class="value-item">
+            <div class="value-check">✦</div>
+            <div class="value-text">Visão de ponta a ponta da experiência, combinando pesquisa, comportamento, testes e iteração contínua ao longo do projeto.</div>
+          </div>
+        </div>
+      </div>
+      <div class="contact-quote-block">
+        <p class="contact-quote-text">
+          "Nem tudo aqui está finalizado. E talvez essa seja a parte mais honesta do processo."
+        </p>
+        <p class="contact-quote-by">— Evellyn Batista</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+  <!-- FOOTER (shared) -->
+  <div class="footer-gradient-bar"></div>
+  <footer>
+    <p class="footer-copy">© 2025 Evellyn Batista — UX Writer & Designer Conversacional · São Paulo, Brasil</p>
+    <div class="footer-links">
+      <a class="footer-link" href="mailto:batistaevcr@gmail.com">Email</a>
+      <a class="footer-link" href="https://www.linkedin.com/in/evellyn-batista/" target="_blank">LinkedIn</a>
+      <a class="footer-link" href="https://batistaevcr-design.github.io/evycore.exe/" target="_blank">Evycore</a>
+    </div>
+  </footer>
+
+  <script>
+    // ─── Cursor ───
+    const dot = document.getElementById('cursorDot');
+    const ring = document.getElementById('cursorRing');
+    let mx = 0, my = 0, rx = 0, ry = 0;
+    document.addEventListener('mousemove', e => { mx = e.clientX; my = e.clientY; });
+    (function loop() {
+      rx += (mx - rx) * 0.12; ry += (my - ry) * 0.12;
+      dot.style.left = mx + 'px'; dot.style.top = my + 'px';
+      ring.style.left = rx + 'px'; ring.style.top = ry + 'px';
+      requestAnimationFrame(loop);
+    })();
+    document.querySelectorAll('a, button, [onclick]').forEach(el => {
+      el.addEventListener('mouseenter', () => ring.classList.add('hovered'));
+      el.addEventListener('mouseleave', () => ring.classList.remove('hovered'));
+    });
+
+    // ─── Nav scroll ───
+    const nav = document.getElementById('nav');
+    window.addEventListener('scroll', () => nav.classList.toggle('scrolled', window.scrollY > 50));
+
+    // ─── Mobile nav ───
+    function toggleMobileNav() {
+      const overlay = document.getElementById('mobileNav');
+      const btn = document.getElementById('hamburger');
+      const isOpen = overlay.classList.toggle('open');
+      btn.classList.toggle('open', isOpen);
+      document.body.style.overflow = isOpen ? 'hidden' : '';
+      if (isOpen) {
+        overlay.querySelectorAll('.mobile-nav-item').forEach((el, i) => {
+          el.style.animationDelay = (i * 0.06 + 0.05) + 's';
+          el.classList.add('visible');
+        });
+      } else {
+        overlay.querySelectorAll('.mobile-nav-item').forEach(el => el.classList.remove('visible'));
+      }
+    }
+    function closeMobileNav() {
+      document.getElementById('mobileNav').classList.remove('open');
+      document.getElementById('hamburger').classList.remove('open');
+      document.body.style.overflow = '';
+    }
+
+    // ─── SPA Navigation ───
+    function navigate(page) {
+      document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+      document.getElementById('page-' + page).classList.add('active');
+      document.querySelectorAll('.nav-links a').forEach(a => a.classList.remove('active'));
+      const navEl = document.getElementById('nav-' + page);
+      if (navEl) navEl.classList.add('active');
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+      // Re-trigger reveal animations for the new page
+      setTimeout(initReveal, 100);
+    }
+
+    // ─── Scroll reveal ───
+    function initReveal() {
+      const items = document.querySelectorAll('#page-' + getCurrentPage() + ' .reveal:not(.visible)');
+      const observer = new IntersectionObserver(entries => {
+        entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+      }, { threshold: 0.1 });
+      items.forEach(el => observer.observe(el));
+      // Also trigger visible items
+      document.querySelectorAll('#page-' + getCurrentPage() + ' .reveal').forEach(el => {
+        const rect = el.getBoundingClientRect();
+        if (rect.top < window.innerHeight) el.classList.add('visible');
+      });
+    }
+    function getCurrentPage() {
+      const active = document.querySelector('.page.active');
+      return active ? active.id.replace('page-', '') : 'home';
+    }
+    initReveal();
+    window.addEventListener('scroll', () => {
+      document.querySelectorAll('#page-' + getCurrentPage() + ' .reveal').forEach(el => {
+        const rect = el.getBoundingClientRect();
+        if (rect.top < window.innerHeight * 0.9) el.classList.add('visible');
+      });
+    });
+    // ─── Chat typing animation ───
+    (function() {
+    const responseText = `
+Boa! 🤸‍♀️<br><br>
+
+Tem muita emoção rolando na ginástica artística!<br><br>
+
+Se liga no que dá pra acompanhar:<br><br>
+
+• Agenda<br>
+• Resultados ao vivo<br>
+• Destaques dos atletas
+`;
+
+    const typingRow = document.getElementById('typingRow');
+    const responseMsg = document.getElementById('responseMsg');
+    const responseEl = document.getElementById('responseText');
+    if (!typingRow || !responseMsg || !responseEl) return;
+
+    setTimeout(() => {
+      typingRow.style.display = 'flex';
+
+      setTimeout(() => {
+        typingRow.style.opacity = '0';
+        typingRow.style.transition = 'opacity 0.3s ease';
+
+        setTimeout(() => {
+          typingRow.style.display = 'none';
+          responseMsg.style.animation = 'msgIn 0.4s ease forwards';
+          responseMsg.style.opacity = '1';
+
+          // Typewriter effect com HTML
+          let i = 0;
+          const type = () => {
+            if (i < responseText.length) {
+              responseEl.innerHTML = responseText.slice(0, ++i);
+
+              const feed = document.getElementById('chatFeed');
+              if (feed) feed.scrollTop = feed.scrollHeight;
+
+              setTimeout(type, 18 + Math.random() * 14);
+            }
+          };
+
+          type();
+        }, 300);
+      }, 2200);
+    }, 2400);
+  })();
+</script>
+</body>
+</html>
