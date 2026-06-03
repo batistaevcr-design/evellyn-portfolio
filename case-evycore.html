@@ -1,0 +1,357 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Case: Evycore — eu, em forma de app · Evellyn Batista</title>
+<meta name="description" content="Evycore é um projeto pessoal conceitual de Evellyn Batista — UX Writing, UI e Product Design que transforma sua rotina em uma experiência interativa de produto digital." />
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;0,700;1,300;1,400;1,600;1,700&family=Instrument+Sans:ital,wght@0,300;0,400;0,500;0,600;1,300&display=swap" rel="stylesheet"/>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+:root{
+  --white:#FAFAF8;--off-white:#F2F0EC;--ink:#17161A;--ink-60:rgba(23,22,26,0.6);--ink-30:rgba(23,22,26,0.3);--ink-12:rgba(23,22,26,0.12);
+  --blue:#2B4AE8;--blue-light:#E8EEFF;--purple:#6B3FA0;--purple-light:#F2EBFF;
+  --gradient:linear-gradient(135deg,#2B4AE8 0%,#6B3FA0 100%);--gradient-soft:linear-gradient(135deg,#E8EEFF 0%,#F2EBFF 100%);
+  --ff-display:"Cormorant Garamond",Georgia,serif;--ff-body:"Instrument Sans",sans-serif;
+}
+html{scroll-behavior:smooth;font-size:16px;}
+body{background:var(--white);color:var(--ink);font-family:var(--ff-body);line-height:1.6;overflow-x:hidden;cursor:none;}
+.cursor-dot{width:6px;height:6px;background:var(--blue);border-radius:50%;position:fixed;top:0;left:0;pointer-events:none;z-index:9999;transform:translate(-50%,-50%);opacity:.6;}
+.cursor-ring{width:26px;height:26px;border:1px solid var(--blue);border-radius:50%;position:fixed;top:0;left:0;pointer-events:none;z-index:9998;transform:translate(-50%,-50%);transition:width .3s,height .3s,opacity .3s;opacity:.25;}
+.cursor-ring.hovered{width:40px;height:40px;opacity:.15;border-color:var(--purple);}
+@media(hover:none){.cursor-dot,.cursor-ring{display:none;}body{cursor:auto;}}
+nav{position:fixed;top:0;left:0;right:0;z-index:200;display:flex;justify-content:space-between;align-items:center;padding:1.4rem 3.5rem;background:rgba(250,250,248,.92);backdrop-filter:blur(16px);border-bottom:1px solid var(--ink-12);}
+.nav-logo{font-family:var(--ff-display);font-size:1.25rem;font-weight:600;color:var(--ink);text-decoration:none;}
+.nav-logo span{background:var(--gradient);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;}
+.nav-back{font-size:.78rem;font-weight:500;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-60);text-decoration:none;display:flex;align-items:center;gap:.5rem;transition:color .2s;}
+.nav-back:hover{color:var(--blue);}
+.nav-case-label{font-size:.68rem;font-weight:600;letter-spacing:.12em;text-transform:uppercase;background:var(--gradient);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;}
+@keyframes fadeUp{from{opacity:0;transform:translateY(20px);}to{opacity:1;transform:translateY(0);}}
+@keyframes fadeIn{from{opacity:0;}to{opacity:1;}}
+.reveal{opacity:0;transform:translateY(24px);transition:opacity .65s ease,transform .65s ease;}
+.reveal.visible{opacity:1;transform:translateY(0);}
+.case-hero{min-height:calc(100vh - 72px);display:grid;grid-template-columns:1fr 1fr;margin-top:72px;}
+.case-hero-left{display:flex;flex-direction:column;justify-content:center;padding:5rem 4rem 5rem 3.5rem;}
+.case-eyebrow{display:flex;align-items:center;gap:.8rem;font-size:.7rem;font-weight:600;letter-spacing:.18em;text-transform:uppercase;color:var(--purple);margin-bottom:2rem;opacity:0;animation:fadeUp .7s ease .1s forwards;}
+.case-eyebrow-line{width:36px;height:1.5px;background:var(--gradient);}
+.case-title{font-family:var(--ff-display);font-size:clamp(3rem,5.5vw,5.5rem);font-weight:700;line-height:.93;opacity:0;animation:fadeUp .7s ease .25s forwards;}
+.case-title em{font-style:italic;font-weight:300;background:var(--gradient);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;}
+.case-subtitle{margin-top:1.5rem;font-family:var(--ff-display);font-size:1.1rem;font-style:italic;font-weight:300;color:var(--ink-60);opacity:0;animation:fadeUp .7s ease .35s forwards;}
+.case-desc{margin-top:1.5rem;font-size:.95rem;font-weight:300;color:var(--ink-60);line-height:1.85;max-width:460px;opacity:0;animation:fadeUp .7s ease .45s forwards;}
+.case-meta-pills{margin-top:2rem;display:flex;flex-wrap:wrap;gap:.5rem;opacity:0;animation:fadeUp .7s ease .55s forwards;}
+.meta-pill{font-size:.68rem;font-weight:500;letter-spacing:.08em;padding:.4rem .85rem;border:1px solid var(--ink-12);color:var(--ink-60);background:var(--off-white);border-radius:2px;}
+.meta-pill.purple{background:var(--purple-light);border-color:rgba(107,63,160,.2);color:var(--purple);}
+.case-hero-actions{margin-top:2.5rem;opacity:0;animation:fadeUp .7s ease .65s forwards;display:flex;gap:1rem;align-items:center;flex-wrap:wrap;}
+.btn-primary{background:var(--gradient);color:#fff;padding:.85rem 2rem;font-family:var(--ff-body);font-size:.78rem;font-weight:600;letter-spacing:.1em;text-transform:uppercase;text-decoration:none;border-radius:2px;transition:opacity .2s,transform .2s;display:inline-flex;align-items:center;gap:.5rem;}
+.btn-primary:hover{opacity:.88;transform:translateY(-2px);}
+.case-hero-right{position:relative;overflow:hidden;display:flex;align-items:center;justify-content:center;opacity:0;animation:fadeIn .8s ease .4s forwards;}
+.hero-bg-gradient{position:absolute;inset:0;background:linear-gradient(160deg,#F5F0FF 0%,#E8EEFF 55%,#F5F0FF 100%);}
+.hero-bg-grid{position:absolute;inset:0;background-image:linear-gradient(rgba(107,63,160,.055) 1px,transparent 1px),linear-gradient(90deg,rgba(107,63,160,.055) 1px,transparent 1px);background-size:32px 32px;}
+.hero-visual{position:relative;z-index:2;padding:2rem;width:100%;max-width:380px;}
+.section-label{font-size:.68rem;font-weight:600;letter-spacing:.2em;text-transform:uppercase;color:var(--blue);display:flex;align-items:center;gap:.8rem;margin-bottom:1.5rem;}
+.section-label-num{color:var(--ink-30);}
+.content-block{padding:5rem 3.5rem;border-top:1px solid var(--ink-12);}
+.content-block.alt{background:var(--off-white);}
+.two-col{display:grid;grid-template-columns:1fr 1fr;gap:4rem;align-items:start;}
+.block-title{font-family:var(--ff-display);font-size:clamp(2rem,3.5vw,3.2rem);font-weight:700;line-height:1.05;margin-bottom:1.5rem;}
+.block-title em{font-style:italic;font-weight:300;background:var(--gradient);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;}
+.block-text{font-size:.92rem;font-weight:300;color:var(--ink-60);line-height:1.9;margin-bottom:1.2rem;}
+.block-text strong{color:var(--ink);font-weight:500;}
+.case-meta-grid{display:grid;grid-template-columns:repeat(3,1fr);border:1px solid var(--ink-12);}
+.meta-cell{padding:1.8rem 2rem;border-right:1px solid var(--ink-12);}
+.meta-cell:nth-child(3),.meta-cell:nth-child(6){border-right:none;}
+.meta-key{font-size:.62rem;font-weight:700;letter-spacing:.15em;text-transform:uppercase;color:var(--ink-30);margin-bottom:.4rem;}
+.meta-val{font-size:.9rem;font-weight:400;color:var(--ink);line-height:1.4;}
+.meta-cell:nth-child(4),.meta-cell:nth-child(5),.meta-cell:nth-child(6){border-top:1px solid var(--ink-12);}
+.screens-grid{display:grid;grid-template-columns:repeat(4,1fr);border:1px solid var(--ink-12);}
+.screen-card{padding:2rem;border-right:1px solid var(--ink-12);transition:background .25s;}
+.screen-card:last-child{border-right:none;}
+.screen-card:hover{background:var(--gradient-soft);}
+.screen-icon{font-size:1.5rem;margin-bottom:.8rem;display:block;}
+.screen-title{font-size:.85rem;font-weight:600;color:var(--ink);margin-bottom:.5rem;}
+.screen-desc{font-size:.78rem;font-weight:300;color:var(--ink-60);line-height:1.6;}
+.decision-box{background:var(--purple-light);border-left:3px solid var(--purple);padding:1.3rem 1.5rem;margin:1.5rem 0;border-radius:0 4px 4px 0;}
+.decision-label{font-size:.6rem;font-weight:700;letter-spacing:.15em;text-transform:uppercase;color:var(--purple);margin-bottom:.4rem;}
+.decision-text{font-size:.86rem;font-weight:300;color:var(--ink);line-height:1.75;}
+.principles-grid{display:grid;grid-template-columns:repeat(3,1fr);border:1px solid var(--ink-12);}
+.principle-card{padding:2rem;border-right:1px solid var(--ink-12);}
+.principle-card:last-child{border-right:none;}
+.principle-num{font-family:var(--ff-display);font-size:2rem;font-weight:700;line-height:1;background:var(--gradient);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;margin-bottom:.8rem;}
+.principle-title{font-size:.85rem;font-weight:600;color:var(--ink);margin-bottom:.5rem;}
+.principle-desc{font-size:.78rem;font-weight:300;color:var(--ink-60);line-height:1.65;}
+.impact-box{background:var(--purple-light);border:1px solid rgba(107,63,160,.2);padding:2.5rem;margin-bottom:2rem;border-radius:2px;}
+.impact-label{font-size:.65rem;font-weight:600;letter-spacing:.15em;text-transform:uppercase;color:var(--purple);margin-bottom:1rem;}
+.impact-text{font-size:.9rem;font-weight:300;color:var(--ink);line-height:1.8;}
+.impact-text strong{font-weight:600;color:var(--purple);}
+.live-cta-box{border:1px solid rgba(107,63,160,.25);padding:2.5rem;background:linear-gradient(135deg,rgba(107,63,160,.04) 0%,rgba(43,74,232,.04) 100%);border-radius:2px;text-align:center;}
+.live-label{font-size:.62rem;font-weight:700;letter-spacing:.18em;text-transform:uppercase;color:var(--purple);margin-bottom:1.2rem;}
+.live-title{font-family:var(--ff-display);font-size:1.8rem;font-weight:700;margin-bottom:1rem;line-height:1.15;}
+.live-title em{font-style:italic;font-weight:300;background:var(--gradient);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;}
+.live-desc{font-size:.85rem;font-weight:300;color:var(--ink-60);line-height:1.75;margin-bottom:1.8rem;}
+.next-case{display:grid;grid-template-columns:1fr 1fr;border-top:1px solid var(--ink-12);}
+.next-case-left{padding:4rem 3.5rem;border-right:1px solid var(--ink-12);background:var(--off-white);}
+.next-case-label{font-size:.62rem;font-weight:700;letter-spacing:.18em;text-transform:uppercase;color:var(--ink-30);margin-bottom:1.5rem;}
+.next-case-right{padding:4rem 3.5rem;display:flex;flex-direction:column;justify-content:center;}
+.next-case-num{font-size:.65rem;font-weight:500;letter-spacing:.15em;text-transform:uppercase;color:var(--ink-30);margin-bottom:.8rem;}
+.next-case-title{font-family:var(--ff-display);font-size:clamp(2rem,3.5vw,3rem);font-weight:700;line-height:1.05;margin-bottom:1rem;}
+.next-case-title em{font-style:italic;font-weight:300;background:var(--gradient);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;}
+.next-case-desc{font-size:.88rem;font-weight:300;color:var(--ink-60);line-height:1.8;margin-bottom:2rem;}
+.next-case-link{display:inline-flex;align-items:center;gap:.6rem;font-size:.78rem;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--blue);text-decoration:none;border-bottom:1px solid rgba(43,74,232,.3);padding-bottom:2px;transition:gap .2s;}
+.next-case-link:hover{gap:1rem;}
+.case-cta{padding:5rem 3.5rem;border-top:1px solid var(--ink-12);display:flex;justify-content:space-between;align-items:center;gap:2rem;flex-wrap:wrap;}
+.cta-title{font-family:var(--ff-display);font-size:clamp(1.8rem,3vw,2.8rem);font-weight:700;line-height:1.1;}
+.cta-title em{font-style:italic;font-weight:300;background:var(--gradient);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;}
+.cta-sub{font-size:.9rem;color:var(--ink-60);margin-top:.5rem;font-weight:300;}
+.cta-btns{display:flex;gap:1rem;align-items:center;}
+.btn-outline{color:var(--blue);font-size:.78rem;font-weight:600;letter-spacing:.1em;text-transform:uppercase;text-decoration:none;border:1.5px solid rgba(43,74,232,.4);padding:.82rem 1.8rem;border-radius:2px;transition:background .2s;}
+.btn-outline:hover{background:var(--blue-light);}
+.footer-bar{height:3px;background:var(--gradient);}
+footer{padding:2rem 3.5rem;border-top:1px solid var(--ink-12);display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:1rem;}
+.footer-copy{font-size:.72rem;color:var(--ink-30);letter-spacing:.06em;}
+.footer-links{display:flex;gap:1.5rem;}
+.footer-link{font-size:.72rem;color:var(--ink-30);text-decoration:none;letter-spacing:.06em;transition:color .2s;}
+.footer-link:hover{color:var(--blue);}
+@media(max-width:768px){
+  nav{padding:1.1rem 1.5rem;}.nav-case-label{display:none;}
+  .case-hero{grid-template-columns:1fr;min-height:auto;}.case-hero-left{padding:2.5rem 1.5rem 2rem;}.case-hero-right{height:300px;}
+  .content-block{padding:3rem 1.5rem;}.two-col{grid-template-columns:1fr;gap:2rem;}
+  .case-meta-grid{grid-template-columns:1fr;}.meta-cell{border-right:none!important;}
+  .screens-grid{grid-template-columns:1fr 1fr;}.screen-card:nth-child(2){border-right:none;}.screen-card:nth-child(3){border-top:1px solid var(--ink-12);}.screen-card:nth-child(4){border-top:1px solid var(--ink-12);border-right:none;}
+  .principles-grid{grid-template-columns:1fr;}.principle-card{border-right:none;border-bottom:1px solid var(--ink-12);}.principle-card:last-child{border-bottom:none;}
+  .next-case{grid-template-columns:1fr;}.next-case-left{border-right:none;border-bottom:1px solid var(--ink-12);padding:2.5rem 1.5rem;}.next-case-right{padding:2.5rem 1.5rem;}
+  .case-cta{padding:3rem 1.5rem;flex-direction:column;align-items:flex-start;}
+  footer{padding:1.5rem;flex-direction:column;align-items:flex-start;}
+}
+</style>
+</head>
+<body>
+<div class="cursor-dot" id="cd"></div>
+<div class="cursor-ring" id="cr"></div>
+<nav>
+  <a class="nav-logo" href="index.html">Evellyn <span>Batista</span></a>
+  <div style="display:flex;align-items:center;gap:2rem;">
+    <span class="nav-case-label">004 / Evycore</span>
+    <a class="nav-back" href="index.html">← Portfólio</a>
+  </div>
+</nav>
+
+<div class="case-hero">
+  <div class="case-hero-left">
+    <div class="case-eyebrow"><div class="case-eyebrow-line"></div>004 / Projeto Pessoal · UX/UI Design · 2026</div>
+    <h1 class="case-title">Evycore:<br>eu, em forma de <em>app</em></h1>
+    <p class="case-subtitle">Projeto Pessoal · UX/UI Design · Produto Digital</p>
+    <p class="case-desc">O Evycore é um app conceitual que transforma minha rotina em interface. Uma experiência interativa onde o usuário navega por telas de produto enquanto conhece quem eu sou.</p>
+    <div class="case-meta-pills">
+      <span class="meta-pill purple">UX Writing</span>
+      <span class="meta-pill purple">UX/UI Design</span>
+      <span class="meta-pill purple">Product Design</span>
+      <span class="meta-pill">Arquitetura de Informação</span>
+      <span class="meta-pill">Design System</span>
+    </div>
+    <div class="case-hero-actions">
+      <a class="btn-primary" href="https://batistaevcr-design.github.io/evycore.exe/" target="_blank" rel="noopener">Abrir o Evycore ↗</a>
+    </div>
+  </div>
+  <div class="case-hero-right">
+    <div class="hero-bg-gradient"></div>
+    <div class="hero-bg-grid"></div>
+    <div class="hero-visual">
+      <!-- App mockup visual -->
+      <div style="background:#1a1a2e;border:1px solid rgba(107,63,160,.3);border-radius:28px;overflow:hidden;box-shadow:0 32px 80px rgba(107,63,160,.2);padding:0;">
+        <div style="padding:1rem 1.2rem .6rem;display:flex;align-items:center;justify-content:space-between;">
+          <div style="font-size:.6rem;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:rgba(255,255,255,.4);">9:41</div>
+          <div style="display:flex;gap:.4rem;">
+            <div style="width:4px;height:4px;border-radius:50%;background:rgba(255,255,255,.3);"></div>
+            <div style="width:4px;height:4px;border-radius:50%;background:rgba(255,255,255,.3);"></div>
+            <div style="width:4px;height:4px;border-radius:50%;background:rgba(255,255,255,.5);"></div>
+          </div>
+        </div>
+        <div style="padding:.8rem 1.2rem 1.2rem;">
+          <div style="font-size:.58rem;font-weight:600;letter-spacing:.15em;text-transform:uppercase;color:rgba(107,63,160,.8);margin-bottom:.4rem;">Evycore · Hoje</div>
+          <div style="font-family:'Cormorant Garamond',serif;font-size:1.4rem;font-weight:700;color:#fff;line-height:1.15;margin-bottom:1rem;">Boa tarde, Evy.</div>
+          <div style="display:flex;flex-direction:column;gap:.5rem;margin-bottom:1rem;">
+            <div style="background:rgba(107,63,160,.15);border:1px solid rgba(107,63,160,.25);border-radius:10px;padding:.75rem 1rem;display:flex;align-items:center;gap:.7rem;">
+              <div style="width:6px;height:6px;border-radius:50%;background:#9B6DD4;flex-shrink:0;"></div>
+              <div>
+                <div style="font-size:.7rem;font-weight:500;color:#fff;margin-bottom:.1rem;">Portfólio · Revisar cases</div>
+                <div style="font-size:.6rem;color:rgba(255,255,255,.4);">Trabalho · alta prioridade</div>
+              </div>
+            </div>
+            <div style="background:rgba(43,74,232,.12);border:1px solid rgba(43,74,232,.2);border-radius:10px;padding:.75rem 1rem;display:flex;align-items:center;gap:.7rem;">
+              <div style="width:6px;height:6px;border-radius:50%;background:#6883F0;flex-shrink:0;"></div>
+              <div>
+                <div style="font-size:.7rem;font-weight:500;color:#fff;margin-bottom:.1rem;">Leitura · 30 min</div>
+                <div style="font-size:.6rem;color:rgba(255,255,255,.4);">Modo Off · tarde</div>
+              </div>
+            </div>
+            <div style="background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08);border-radius:10px;padding:.75rem 1rem;display:flex;align-items:center;gap:.7rem;">
+              <div style="width:6px;height:6px;border-radius:50%;background:rgba(255,255,255,.3);flex-shrink:0;"></div>
+              <div>
+                <div style="font-size:.7rem;font-weight:400;color:rgba(255,255,255,.6);margin-bottom:.1rem;text-decoration:line-through;">Café + playlist nova</div>
+                <div style="font-size:.6rem;color:rgba(255,255,255,.3);">Concluído às 8:22</div>
+              </div>
+            </div>
+          </div>
+          <div style="display:flex;gap:.5rem;">
+            <div style="flex:1;background:rgba(107,63,160,.1);border:1px solid rgba(107,63,160,.2);border-radius:8px;padding:.6rem;text-align:center;">
+              <div style="font-size:.55rem;color:rgba(255,255,255,.5);margin-bottom:.2rem;">Pets</div>
+              <div style="font-size:.8rem;">🐈</div>
+            </div>
+            <div style="flex:1;background:rgba(43,74,232,.1);border:1px solid rgba(43,74,232,.2);border-radius:8px;padding:.6rem;text-align:center;">
+              <div style="font-size:.55rem;color:rgba(255,255,255,.5);margin-bottom:.2rem;">Shows</div>
+              <div style="font-size:.8rem;">🎵</div>
+            </div>
+            <div style="flex:1;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.1);border-radius:8px;padding:.6rem;text-align:center;">
+              <div style="font-size:.55rem;color:rgba(255,255,255,.5);margin-bottom:.2rem;">Livros</div>
+              <div style="font-size:.8rem;">📖</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="content-block reveal" style="padding-top:3rem;padding-bottom:3rem;">
+  <div class="case-meta-grid">
+    <div class="meta-cell"><div class="meta-key">Tipo</div><div class="meta-val">Projeto Pessoal · Conceitual</div></div>
+    <div class="meta-cell"><div class="meta-key">Escopo</div><div class="meta-val">UX Writing + UI + Product Design</div></div>
+    <div class="meta-cell"><div class="meta-key">Ano</div><div class="meta-val">2026</div></div>
+    <div class="meta-cell"><div class="meta-key">Status</div><div class="meta-val">Live · Disponível online</div></div>
+    <div class="meta-cell"><div class="meta-key">Plataforma</div><div class="meta-val">Web App · Mobile-first</div></div>
+    <div class="meta-cell"><div class="meta-key">Acesso</div><div class="meta-val">batistaevcr-design.github.io</div></div>
+  </div>
+</div>
+
+<section class="content-block reveal">
+  <div class="two-col">
+    <div>
+      <div class="section-label"><span class="section-label-num">01 /</span> A Ideia</div>
+      <h2 class="block-title">E se eu fosse<br>um <em>produto?</em></h2>
+    </div>
+    <div>
+      <p class="block-text">O Evycore é um app conceitual que transforma <strong>minha rotina em interface</strong>. Uma experiência interativa onde o usuário navega por telas de produto — entre onboarding, rotina, modo off, pets, shows e leituras — enquanto conhece quem eu sou através da experiência.</p>
+      <p class="block-text">A ideia surgiu de uma pergunta simples: <em>"e se eu fosse um produto?"</em>. O resultado foi um case construído de ponta a ponta, unindo <strong>UX Writing, UI e Product Design</strong> em uma experiência com personalidade, intenção e consistência visual.</p>
+      <div class="decision-box">
+        <div class="decision-label">Pergunta central</div>
+        <div class="decision-text">Como contar quem você é por meio de decisões de design — e não apenas de palavras? O Evycore testa essa hipótese do onboarding ao perfil.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="content-block alt reveal">
+  <div class="section-label"><span class="section-label-num">02 /</span> O que tem dentro</div>
+  <h2 class="block-title" style="margin-bottom:2rem;">4 telas, uma<br><em>narrativa.</em></h2>
+  <div class="screens-grid">
+    <div class="screen-card">
+      <span class="screen-icon">📱</span>
+      <div class="screen-title">Onboarding com narrativa</div>
+      <p class="screen-desc">4 telas de apresentação que constroem contexto aos poucos, conectando personalidade, rotina e tom de voz desde o primeiro acesso.</p>
+    </div>
+    <div class="screen-card">
+      <span class="screen-icon">🏠</span>
+      <div class="screen-title">Dashboard "Hoje"</div>
+      <p class="screen-desc">Tela principal com tarefas organizadas por contexto da vida real. Microcopy e progressão visual deixam a rotina mais leve e funcional.</p>
+    </div>
+    <div class="screen-card">
+      <span class="screen-icon">✨</span>
+      <div class="screen-title">Modo Off</div>
+      <p class="screen-desc">Seção dedicada a shows, livros e momentos de pausa. Demonstra como o sistema visual sustenta conteúdos diferentes sem perder consistência.</p>
+    </div>
+    <div class="screen-card">
+      <span class="screen-icon">👤</span>
+      <div class="screen-title">Perfil & Achadinhos</div>
+      <p class="screen-desc">Área de conexões e recomendações personalizadas, mantendo continuidade de linguagem e coerência visual em todos os estados da interface.</p>
+    </div>
+  </div>
+</section>
+
+<section class="content-block reveal">
+  <div class="section-label"><span class="section-label-num">03 /</span> Princípios de Design</div>
+  <h2 class="block-title" style="margin-bottom:2rem;">3 decisões que<br><em>definiram tudo.</em></h2>
+  <div class="principles-grid">
+    <div class="principle-card">
+      <div class="principle-num">01</div>
+      <div class="principle-title">Personalidade antes de estética</div>
+      <p class="principle-desc">Cada decisão de UI — do dark mode à tipografia — foi guiada por quem eu sou, não por tendências de design. A consistência visual serve à narrativa, não o contrário.</p>
+    </div>
+    <div class="principle-card">
+      <div class="principle-num">02</div>
+      <div class="principle-title">Microcopy como coluna vertebral</div>
+      <p class="principle-desc">O UX Writing define o ritmo de toda a experiência. Cada label, placeholder e feedback de estado foi pensado para soar natural dentro do universo do app.</p>
+    </div>
+    <div class="principle-card">
+      <div class="principle-num">03</div>
+      <div class="principle-title">Sistema que escala</div>
+      <p class="principle-desc">O design system do Evycore foi construído para funcionar em diferentes contextos dentro do app — rotina, lazer, perfil — sem perder coerência ou identidade visual.</p>
+    </div>
+  </div>
+</section>
+
+<section class="content-block alt reveal">
+  <div class="two-col">
+    <div>
+      <div class="section-label"><span class="section-label-num">04 /</span> Impacto</div>
+      <h2 class="block-title">Uma interface<br>que parece<br><em>vida real.</em></h2>
+      <p class="block-text">Entre rotina, pets, livros, shows e tarefas do dia, o Evycore mistura organização e personalidade em uma experiência mais humana.</p>
+      <p class="block-text">Ao longo da navegação, o projeto conecta <strong>UX Writing, UI e Product Design</strong> em fluxos, microcopys e decisões visuais pensadas para funcionar como um produto real.</p>
+    </div>
+    <div>
+      <div class="impact-box">
+        <div class="impact-label">Uma interface que parece vida real</div>
+        <p class="impact-text">O Evycore é a <strong>prova de conceito mais completa</strong> do meu processo de design. Mostra como eu penso, como estruturo linguagem e como tomo decisões quando tenho liberdade total sobre uma experiência.</p>
+      </div>
+      <div class="live-cta-box">
+        <div class="live-label">Disponível agora</div>
+        <div class="live-title">Explore o <em>Evycore</em></div>
+        <p class="live-desc">Acesse o app e navegue pela experiência completa — do onboarding ao perfil.</p>
+        <a class="btn-primary" href="https://batistaevcr-design.github.io/evycore.exe/" target="_blank" rel="noopener" style="justify-content:center;">Abrir o Evycore ↗</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="next-case reveal">
+  <div class="next-case-left">
+    <div class="next-case-label">Próximo projeto</div>
+    <p style="font-size:.88rem;font-weight:300;color:var(--ink-60);line-height:1.8;">Continue explorando o portfólio. Cada projeto carrega uma decisão de linguagem diferente.</p>
+  </div>
+  <div class="next-case-right">
+    <div class="next-case-num">001 — COB × Meta · Time Brasil</div>
+    <div class="next-case-title">Chatbot<br><em>Time Brasil</em></div>
+    <p class="next-case-desc">UX Writing e Conversational Design para o chatbot oficial do Time Brasil nas Olimpíadas Paris 2024 — o case que começou tudo.</p>
+    <a class="next-case-link" href="case-time-brasil.html">Ver case completo →</a>
+  </div>
+</div>
+
+<div class="case-cta reveal">
+  <div><div class="cta-title">Ver mais<br><em>cases.</em></div><p class="cta-sub">Time Brasil, Rock in Rio, Lacta e outros projetos.</p></div>
+  <div class="cta-btns">
+    <a class="btn-primary" href="index.html">← Voltar ao Portfólio</a>
+    <a class="btn-outline" href="mailto:batistaevcr@gmail.com">Falar Comigo</a>
+  </div>
+</div>
+
+<div class="footer-bar"></div>
+<footer>
+  <p class="footer-copy">© 2025 Evellyn Batista — UX Writer & Designer Conversacional · São Paulo, Brasil</p>
+  <div class="footer-links">
+    <a class="footer-link" href="mailto:batistaevcr@gmail.com">Email</a>
+    <a class="footer-link" href="https://www.linkedin.com/in/evellyn-batista/" target="_blank">LinkedIn</a>
+    <a class="footer-link" href="https://batistaevcr-design.github.io/evycore.exe/" target="_blank">Evycore ↗</a>
+  </div>
+</footer>
+<script>
+const cd=document.getElementById("cd"),cr=document.getElementById("cr");
+let mx=0,my=0,rx=0,ry=0;
+document.addEventListener("mousemove",e=>{mx=e.clientX;my=e.clientY;});
+(function loop(){rx+=(mx-rx)*.12;ry+=(my-ry)*.12;cd.style.left=mx+"px";cd.style.top=my+"px";cr.style.left=rx+"px";cr.style.top=ry+"px";requestAnimationFrame(loop);})();
+document.querySelectorAll("a,button").forEach(el=>{el.addEventListener("mouseenter",()=>cr.classList.add("hovered"));el.addEventListener("mouseleave",()=>cr.classList.remove("hovered"));});
+function reveal(){document.querySelectorAll(".reveal").forEach(el=>{if(el.getBoundingClientRect().top<window.innerHeight*.92)el.classList.add("visible");});}
+window.addEventListener("scroll",reveal);reveal();
+</script>
+</body>
+</html>

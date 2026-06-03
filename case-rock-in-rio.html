@@ -1,0 +1,405 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Case: Chatbot de Acessibilidade Rock in Rio · Evellyn Batista</title>
+<meta name="description" content="UX Writing e Design Conversacional para o chatbot de acessibilidade do Rock in Rio — experiência inclusiva para pessoas com deficiência (PCD) com foco em linguagem simples e leitura assistiva." />
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;0,700;1,300;1,400;1,600;1,700&family=Instrument+Sans:ital,wght@0,300;0,400;0,500;0,600;1,300&display=swap" rel="stylesheet"/>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+:root{
+  --white:#FAFAF8;--off-white:#F2F0EC;--ink:#17161A;--ink-60:rgba(23,22,26,0.6);--ink-30:rgba(23,22,26,0.3);--ink-12:rgba(23,22,26,0.12);
+  --blue:#2B4AE8;--blue-light:#E8EEFF;--purple:#6B3FA0;--purple-light:#F2EBFF;
+  --gradient:linear-gradient(135deg,#2B4AE8 0%,#6B3FA0 100%);--gradient-soft:linear-gradient(135deg,#E8EEFF 0%,#F2EBFF 100%);
+  --ff-display:"Cormorant Garamond",Georgia,serif;--ff-body:"Instrument Sans",sans-serif;
+}
+html{scroll-behavior:smooth;font-size:16px;}
+body{background:var(--white);color:var(--ink);font-family:var(--ff-body);line-height:1.6;overflow-x:hidden;cursor:none;}
+.cursor-dot{width:6px;height:6px;background:var(--blue);border-radius:50%;position:fixed;top:0;left:0;pointer-events:none;z-index:9999;transform:translate(-50%,-50%);opacity:.6;}
+.cursor-ring{width:26px;height:26px;border:1px solid var(--blue);border-radius:50%;position:fixed;top:0;left:0;pointer-events:none;z-index:9998;transform:translate(-50%,-50%);transition:width .3s,height .3s,opacity .3s;opacity:.25;}
+.cursor-ring.hovered{width:40px;height:40px;opacity:.15;border-color:var(--purple);}
+@media(hover:none){.cursor-dot,.cursor-ring{display:none;}body{cursor:auto;}}
+nav{position:fixed;top:0;left:0;right:0;z-index:200;display:flex;justify-content:space-between;align-items:center;padding:1.4rem 3.5rem;background:rgba(250,250,248,.92);backdrop-filter:blur(16px);border-bottom:1px solid var(--ink-12);}
+.nav-logo{font-family:var(--ff-display);font-size:1.25rem;font-weight:600;color:var(--ink);text-decoration:none;}
+.nav-logo span{background:var(--gradient);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;}
+.nav-back{font-size:.78rem;font-weight:500;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-60);text-decoration:none;display:flex;align-items:center;gap:.5rem;transition:color .2s;}
+.nav-back:hover{color:var(--blue);}
+.nav-case-label{font-size:.68rem;font-weight:600;letter-spacing:.12em;text-transform:uppercase;background:var(--gradient);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;}
+@keyframes fadeUp{from{opacity:0;transform:translateY(20px);}to{opacity:1;transform:translateY(0);}}
+@keyframes fadeIn{from{opacity:0;}to{opacity:1;}}
+.reveal{opacity:0;transform:translateY(24px);transition:opacity .65s ease,transform .65s ease;}
+.reveal.visible{opacity:1;transform:translateY(0);}
+.case-hero{min-height:calc(100vh - 72px);display:grid;grid-template-columns:1fr 1fr;margin-top:72px;}
+.case-hero-left{display:flex;flex-direction:column;justify-content:center;padding:5rem 4rem 5rem 3.5rem;}
+.case-eyebrow{display:flex;align-items:center;gap:.8rem;font-size:.7rem;font-weight:600;letter-spacing:.18em;text-transform:uppercase;color:var(--purple);margin-bottom:2rem;opacity:0;animation:fadeUp .7s ease .1s forwards;}
+.case-eyebrow-line{width:36px;height:1.5px;background:var(--gradient);}
+.case-title{font-family:var(--ff-display);font-size:clamp(3rem,5.5vw,5.5rem);font-weight:700;line-height:.93;opacity:0;animation:fadeUp .7s ease .25s forwards;}
+.case-title em{font-style:italic;font-weight:300;background:var(--gradient);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;}
+.case-subtitle{margin-top:1.5rem;font-family:var(--ff-display);font-size:1.1rem;font-style:italic;font-weight:300;color:var(--ink-60);opacity:0;animation:fadeUp .7s ease .35s forwards;}
+.case-desc{margin-top:1.5rem;font-size:.95rem;font-weight:300;color:var(--ink-60);line-height:1.85;max-width:460px;opacity:0;animation:fadeUp .7s ease .45s forwards;}
+.case-meta-pills{margin-top:2rem;display:flex;flex-wrap:wrap;gap:.5rem;opacity:0;animation:fadeUp .7s ease .55s forwards;}
+.meta-pill{font-size:.68rem;font-weight:500;letter-spacing:.08em;padding:.4rem .85rem;border:1px solid var(--ink-12);color:var(--ink-60);background:var(--off-white);border-radius:2px;}
+.meta-pill.purple{background:var(--purple-light);border-color:rgba(107,63,160,.2);color:var(--purple);}
+.case-hero-right{position:relative;overflow:hidden;display:flex;align-items:center;justify-content:center;opacity:0;animation:fadeIn .8s ease .4s forwards;}
+.hero-bg-gradient{position:absolute;inset:0;background:linear-gradient(160deg,#F5F0FF 0%,#EEF1FD 55%,#F5F0FF 100%);}
+.hero-bg-grid{position:absolute;inset:0;background-image:linear-gradient(rgba(107,63,160,.055) 1px,transparent 1px),linear-gradient(90deg,rgba(107,63,160,.055) 1px,transparent 1px);background-size:32px 32px;}
+.hero-visual{position:relative;z-index:2;padding:2rem;width:100%;max-width:420px;}
+.section-label{font-size:.68rem;font-weight:600;letter-spacing:.2em;text-transform:uppercase;color:var(--blue);display:flex;align-items:center;gap:.8rem;margin-bottom:1.5rem;}
+.section-label-num{color:var(--ink-30);}
+.content-block{padding:5rem 3.5rem;border-top:1px solid var(--ink-12);}
+.content-block.alt{background:var(--off-white);}
+.two-col{display:grid;grid-template-columns:1fr 1fr;gap:4rem;align-items:start;}
+.block-title{font-family:var(--ff-display);font-size:clamp(2rem,3.5vw,3.2rem);font-weight:700;line-height:1.05;margin-bottom:1.5rem;}
+.block-title em{font-style:italic;font-weight:300;background:var(--gradient);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;}
+.block-text{font-size:.92rem;font-weight:300;color:var(--ink-60);line-height:1.9;margin-bottom:1.2rem;}
+.block-text strong{color:var(--ink);font-weight:500;}
+.decision-box{background:var(--gradient-soft);border-left:3px solid var(--purple);padding:1.3rem 1.5rem;margin:1.5rem 0;border-radius:0 4px 4px 0;}
+.decision-label{font-size:.6rem;font-weight:700;letter-spacing:.15em;text-transform:uppercase;color:var(--purple);margin-bottom:.4rem;}
+.decision-text{font-size:.86rem;font-weight:300;color:var(--ink);line-height:1.75;}
+.case-meta-grid{display:grid;grid-template-columns:repeat(3,1fr);border:1px solid var(--ink-12);}
+.meta-cell{padding:1.8rem 2rem;border-right:1px solid var(--ink-12);}
+.meta-cell:nth-child(3),.meta-cell:nth-child(6){border-right:none;}
+.meta-key{font-size:.62rem;font-weight:700;letter-spacing:.15em;text-transform:uppercase;color:var(--ink-30);margin-bottom:.4rem;}
+.meta-val{font-size:.9rem;font-weight:400;color:var(--ink);line-height:1.4;}
+.meta-cell:nth-child(4),.meta-cell:nth-child(5),.meta-cell:nth-child(6){border-top:1px solid var(--ink-12);}
+.stats-strip{display:grid;grid-template-columns:repeat(4,1fr);background:var(--off-white);border-top:1px solid var(--ink-12);}
+.stat-cell{padding:2.5rem 2rem;border-right:1px solid var(--ink-12);text-align:center;}
+.stat-cell:last-child{border-right:none;}
+.stat-num{font-family:var(--ff-display);font-size:2.8rem;font-weight:700;line-height:1;background:var(--gradient);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;}
+.stat-label{font-size:.7rem;color:var(--ink-60);margin-top:.4rem;line-height:1.4;}
+.access-grid{display:grid;grid-template-columns:repeat(3,1fr);}
+.access-card{padding:1.8rem;border-right:1px solid var(--ink-12);border-bottom:1px solid var(--ink-12);transition:background .25s;}
+.access-card:nth-child(3),.access-card:nth-child(6){border-right:none;}
+.access-card:nth-child(4),.access-card:nth-child(5),.access-card:nth-child(6){border-bottom:none;}
+.access-card:hover{background:var(--gradient-soft);}
+.access-icon{font-size:1.4rem;margin-bottom:.6rem;display:block;}
+.access-title{font-size:.82rem;font-weight:600;color:var(--ink);margin-bottom:.4rem;}
+.access-text{font-size:.76rem;font-weight:300;color:var(--ink-60);line-height:1.6;}
+.copy-compare{border:1px solid var(--ink-12);}
+.copy-compare-header{display:grid;grid-template-columns:1fr 40px 1fr;border-bottom:1px solid var(--ink-12);}
+.copy-col-head{padding:1.2rem 1.5rem;}
+.copy-col-head.before{border-right:1px solid var(--ink-12);}
+.copy-col-head.after{border-left:1px solid var(--ink-12);}
+.copy-mid{display:flex;align-items:center;justify-content:center;background:var(--off-white);}
+.copy-label{font-size:.58rem;font-weight:700;letter-spacing:.15em;text-transform:uppercase;margin-bottom:.3rem;}
+.before-label{color:var(--ink-30);}
+.after-label{color:var(--purple);}
+.copy-body{display:grid;grid-template-columns:1fr 40px 1fr;}
+.copy-body-col{padding:2rem 1.5rem;}
+.copy-body-col.before{border-right:1px solid var(--ink-12);}
+.copy-body-col.after{border-left:1px solid var(--ink-12);}
+.copy-mid-body{background:var(--off-white);}
+.copy-example{font-family:var(--ff-display);font-size:1.1rem;font-style:italic;color:var(--ink);line-height:1.5;margin-bottom:.8rem;}
+.copy-reason{font-size:.75rem;font-weight:300;color:var(--ink-60);line-height:1.6;}
+.process-list{border:1px solid var(--ink-12);}
+.process-item{display:grid;grid-template-columns:80px 1fr;border-bottom:1px solid var(--ink-12);}
+.process-item:last-child{border-bottom:none;}
+.process-num-col{padding:2.5rem 1.5rem;border-right:1px solid var(--ink-12);display:flex;align-items:flex-start;justify-content:center;}
+.process-num{font-family:var(--ff-display);font-size:2.2rem;font-weight:700;line-height:1;background:var(--gradient);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;}
+.process-content{padding:2.5rem;}
+.process-title{font-size:.88rem;font-weight:600;color:var(--ink);margin-bottom:.4rem;}
+.process-text{font-size:.85rem;font-weight:300;color:var(--ink-60);line-height:1.75;}
+.learning-list{display:flex;flex-direction:column;}
+.learning-item{display:grid;grid-template-columns:60px 1fr;gap:2rem;padding:2rem 0;border-bottom:1px solid var(--ink-12);align-items:start;}
+.learning-item:last-child{border-bottom:none;}
+.learning-num{font-family:var(--ff-display);font-size:2.5rem;font-weight:700;line-height:1;background:var(--gradient);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;}
+.learning-title{font-size:.88rem;font-weight:600;color:var(--ink);margin-bottom:.4rem;}
+.learning-text{font-size:.85rem;font-weight:300;color:var(--ink-60);line-height:1.75;}
+.impact-box{background:var(--purple-light);border:1px solid rgba(107,63,160,.2);padding:2.5rem;margin-bottom:2rem;border-radius:2px;}
+.impact-label{font-size:.65rem;font-weight:600;letter-spacing:.15em;text-transform:uppercase;color:var(--purple);margin-bottom:1rem;}
+.impact-text{font-size:.9rem;font-weight:300;color:var(--ink);line-height:1.8;}
+.impact-text strong{font-weight:600;color:var(--purple);}
+.media-logos{display:flex;flex-wrap:wrap;gap:.6rem;margin-top:1.5rem;}
+.media-btn{font-size:.72rem;font-weight:500;padding:.5rem 1rem;border:1px solid var(--ink-12);color:var(--blue);background:var(--white);text-decoration:none;border-radius:2px;transition:background .2s,border-color .2s;}
+.media-btn:hover{background:var(--blue-light);border-color:rgba(43,74,232,.3);}
+.next-case{display:grid;grid-template-columns:1fr 1fr;border-top:1px solid var(--ink-12);}
+.next-case-left{padding:4rem 3.5rem;border-right:1px solid var(--ink-12);background:var(--off-white);}
+.next-case-label{font-size:.62rem;font-weight:700;letter-spacing:.18em;text-transform:uppercase;color:var(--ink-30);margin-bottom:1.5rem;}
+.next-case-right{padding:4rem 3.5rem;display:flex;flex-direction:column;justify-content:center;}
+.next-case-num{font-size:.65rem;font-weight:500;letter-spacing:.15em;text-transform:uppercase;color:var(--ink-30);margin-bottom:.8rem;}
+.next-case-title{font-family:var(--ff-display);font-size:clamp(2rem,3.5vw,3rem);font-weight:700;line-height:1.05;margin-bottom:1rem;}
+.next-case-title em{font-style:italic;font-weight:300;background:var(--gradient);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;}
+.next-case-desc{font-size:.88rem;font-weight:300;color:var(--ink-60);line-height:1.8;margin-bottom:2rem;}
+.next-case-link{display:inline-flex;align-items:center;gap:.6rem;font-size:.78rem;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--blue);text-decoration:none;border-bottom:1px solid rgba(43,74,232,.3);padding-bottom:2px;transition:gap .2s;}
+.next-case-link:hover{gap:1rem;}
+.case-cta{padding:5rem 3.5rem;border-top:1px solid var(--ink-12);display:flex;justify-content:space-between;align-items:center;gap:2rem;flex-wrap:wrap;}
+.cta-title{font-family:var(--ff-display);font-size:clamp(1.8rem,3vw,2.8rem);font-weight:700;line-height:1.1;}
+.cta-title em{font-style:italic;font-weight:300;background:var(--gradient);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;}
+.cta-sub{font-size:.9rem;color:var(--ink-60);margin-top:.5rem;font-weight:300;}
+.cta-btns{display:flex;gap:1rem;align-items:center;}
+.btn-primary{background:var(--gradient);color:#fff;padding:.85rem 2rem;font-family:var(--ff-body);font-size:.78rem;font-weight:600;letter-spacing:.1em;text-transform:uppercase;text-decoration:none;border-radius:2px;transition:opacity .2s,transform .2s;}
+.btn-primary:hover{opacity:.88;transform:translateY(-2px);}
+.btn-outline{color:var(--blue);font-size:.78rem;font-weight:600;letter-spacing:.1em;text-transform:uppercase;text-decoration:none;border:1.5px solid rgba(43,74,232,.4);padding:.82rem 1.8rem;border-radius:2px;transition:background .2s;}
+.btn-outline:hover{background:var(--blue-light);}
+.footer-bar{height:3px;background:var(--gradient);}
+footer{padding:2rem 3.5rem;border-top:1px solid var(--ink-12);display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:1rem;}
+.footer-copy{font-size:.72rem;color:var(--ink-30);letter-spacing:.06em;}
+.footer-links{display:flex;gap:1.5rem;}
+.footer-link{font-size:.72rem;color:var(--ink-30);text-decoration:none;letter-spacing:.06em;transition:color .2s;}
+.footer-link:hover{color:var(--blue);}
+@media(max-width:768px){
+  nav{padding:1.1rem 1.5rem;}.nav-case-label{display:none;}
+  .case-hero{grid-template-columns:1fr;min-height:auto;}.case-hero-left{padding:2.5rem 1.5rem 2rem;}.case-hero-right{height:280px;}
+  .content-block{padding:3rem 1.5rem;}.two-col{grid-template-columns:1fr;gap:2rem;}
+  .case-meta-grid{grid-template-columns:1fr;}.meta-cell{border-right:none!important;}
+  .stats-strip{grid-template-columns:1fr 1fr;}.stat-cell:nth-child(2){border-right:none;}.stat-cell:nth-child(3){border-top:1px solid var(--ink-12);}.stat-cell:nth-child(4){border-top:1px solid var(--ink-12);border-right:none;}
+  .access-grid{grid-template-columns:1fr 1fr;}.access-card:nth-child(3){border-right:none;}.access-card:nth-child(2){border-right:none!important;}
+  .copy-compare-header,.copy-body{grid-template-columns:1fr;}.copy-col-head.before,.copy-body-col.before{border-right:none;border-bottom:1px solid var(--ink-12);}.copy-col-head.after,.copy-body-col.after{border-left:none;}.copy-mid,.copy-mid-body{display:none;}
+  .process-item{grid-template-columns:1fr;}.process-num-col{border-right:none;border-bottom:1px solid var(--ink-12);padding:1.2rem 1.5rem;}
+  .next-case{grid-template-columns:1fr;}.next-case-left{border-right:none;border-bottom:1px solid var(--ink-12);padding:2.5rem 1.5rem;}.next-case-right{padding:2.5rem 1.5rem;}
+  .case-cta{padding:3rem 1.5rem;flex-direction:column;align-items:flex-start;}
+  footer{padding:1.5rem;flex-direction:column;align-items:flex-start;}
+}
+</style>
+</head>
+<body>
+<div class="cursor-dot" id="cd"></div>
+<div class="cursor-ring" id="cr"></div>
+<nav>
+  <a class="nav-logo" href="index.html">Evellyn <span>Batista</span></a>
+  <div style="display:flex;align-items:center;gap:2rem;">
+    <span class="nav-case-label">002 / Rock in Rio</span>
+    <a class="nav-back" href="index.html">← Portfólio</a>
+  </div>
+</nav>
+
+<div class="case-hero">
+  <div class="case-hero-left">
+    <div class="case-eyebrow"><div class="case-eyebrow-line"></div>002 / Rock in Rio · Acessibilidade</div>
+    <h1 class="case-title">Chatbot de<br><em>Acessibilidade</em></h1>
+    <p class="case-subtitle">Rock in Rio · WhatsApp · 2024</p>
+    <p class="case-desc">Design Conversacional e UX Writing para o chatbot de acessibilidade do Rock in Rio — experiência inclusiva para pessoas com deficiência, com foco em linguagem simples, acessibilidade cognitiva e leitura assistiva.</p>
+    <div class="case-meta-pills">
+      <span class="meta-pill purple">Acessibilidade</span>
+      <span class="meta-pill">UX Writing</span>
+      <span class="meta-pill">Chatbot Conversacional</span>
+      <span class="meta-pill">Linguagem Simples</span>
+      <span class="meta-pill">Treinamento LLM</span>
+    </div>
+  </div>
+  <div class="case-hero-right">
+    <div class="hero-bg-gradient"></div>
+    <div class="hero-bg-grid"></div>
+    <div class="hero-visual">
+      <div style="background:rgba(250,250,248,.9);border:1px solid rgba(107,63,160,.15);border-radius:12px;overflow:hidden;box-shadow:0 24px 64px rgba(107,63,160,.12);">
+        <div style="padding:.9rem 1.2rem;border-bottom:1px solid rgba(107,63,160,.1);background:rgba(107,63,160,.04);display:flex;align-items:center;gap:.7rem;">
+          <div style="width:28px;height:28px;border-radius:50%;background:var(--gradient);display:flex;align-items:center;justify-content:center;font-size:.55rem;font-weight:700;color:#fff;flex-shrink:0;">RiR</div>
+          <div>
+            <div style="font-size:.7rem;font-weight:600;color:var(--ink);">Acessibilidade · Rock in Rio</div>
+            <div style="font-size:.58rem;color:var(--ink-60);">WhatsApp · Chatbot PCD · Online</div>
+          </div>
+        </div>
+        <div style="padding:1.2rem;display:flex;flex-direction:column;gap:.9rem;">
+          <div style="background:rgba(107,63,160,.06);border:1px solid rgba(107,63,160,.12);border-radius:12px 12px 12px 4px;padding:.75rem 1rem;font-size:.78rem;font-weight:300;color:var(--ink);line-height:1.55;max-width:85%;">Olá! Sou o assistente de acessibilidade do Rock in Rio. Como posso te ajudar?</div>
+          <div style="align-self:flex-end;background:rgba(250,250,248,.96);border:1px solid rgba(43,74,232,.14);border-radius:12px 12px 4px 12px;padding:.75rem 1rem;font-size:.78rem;color:var(--ink);line-height:1.55;max-width:80%;">Preciso de informações sobre a área PCD.</div>
+          <div style="background:rgba(107,63,160,.06);border:1px solid rgba(107,63,160,.12);border-radius:12px 12px 12px 4px;padding:.75rem 1rem;font-size:.78rem;font-weight:300;color:var(--ink);line-height:1.6;max-width:90%;">A área PCD fica na frente do palco principal.<br><br>Você encontra lá: rampas de acesso, banheiros adaptados e monitores de apoio.<br><br>O que você precisa?</div>
+          <div style="display:flex;gap:.4rem;flex-wrap:wrap;">
+            <div style="font-size:.65rem;padding:.3rem .7rem;border:1px solid rgba(107,63,160,.25);color:var(--purple);border-radius:4px;background:var(--purple-light);">Como chegar</div>
+            <div style="font-size:.65rem;padding:.3rem .7rem;border:1px solid rgba(107,63,160,.25);color:var(--purple);border-radius:4px;background:var(--purple-light);">Serviços</div>
+            <div style="font-size:.65rem;padding:.3rem .7rem;border:1px solid rgba(107,63,160,.25);color:var(--purple);border-radius:4px;background:var(--purple-light);">Apoio</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="content-block reveal" style="padding-top:3rem;padding-bottom:3rem;">
+  <div class="case-meta-grid">
+    <div class="meta-cell"><div class="meta-key">Papel</div><div class="meta-val">UX Designer + UX Writer</div></div>
+    <div class="meta-cell"><div class="meta-key">Plataforma</div><div class="meta-val">WhatsApp Business API</div></div>
+    <div class="meta-cell"><div class="meta-key">Cliente</div><div class="meta-val">Rock in Rio</div></div>
+    <div class="meta-cell"><div class="meta-key">Escopo</div><div class="meta-val">Fluxos, Linguagem Simples, LLM</div></div>
+    <div class="meta-cell"><div class="meta-key">Público</div><div class="meta-val">Pessoas com Deficiência (PCD)</div></div>
+    <div class="meta-cell"><div class="meta-key">Escala</div><div class="meta-val">+700 mil pessoas por edição</div></div>
+  </div>
+</div>
+
+<section class="content-block reveal">
+  <div class="two-col">
+    <div>
+      <div class="section-label"><span class="section-label-num">01 /</span> Desafio</div>
+      <h2 class="block-title">Acessibilidade<br>como <em>experiência.</em></h2>
+    </div>
+    <div>
+      <p class="block-text">Atuei no desenvolvimento da experiência conversacional do <strong>chatbot de acessibilidade do Rock in Rio</strong>, criado para apoiar pessoas com deficiência durante a jornada no festival.</p>
+      <p class="block-text">O foco era transformar informações críticas em uma experiência <strong>clara, acessível e acolhedora</strong>, considerando diferentes contextos de acessibilidade e leitura assistiva.</p>
+      <p class="block-text">Estruturei fluxos conversacionais, arquitetura de conteúdo e diretrizes de linguagem com foco em <strong>acessibilidade cognitiva</strong>, clareza textual e redução de esforço durante a interação.</p>
+    </div>
+  </div>
+</section>
+
+<div class="stats-strip reveal">
+  <div class="stat-cell"><div class="stat-num">+700k</div><div class="stat-label">Pessoas por edição do festival</div></div>
+  <div class="stat-cell"><div class="stat-num">PCD</div><div class="stat-label">Público central — não complementar</div></div>
+  <div class="stat-cell"><div class="stat-num">LLM</div><div class="stat-label">Modelo treinado com linguagem real</div></div>
+  <div class="stat-cell"><div class="stat-num">2024</div><div class="stat-label">Edição com cobertura nacional</div></div>
+</div>
+
+<section class="content-block alt reveal">
+  <div class="section-label"><span class="section-label-num">02 /</span> Discovery</div>
+  <h2 class="block-title" style="margin-bottom:2rem;">O que a pesquisa<br><em>revelou.</em></h2>
+  <div class="two-col">
+    <div>
+      <p class="block-text">A pesquisa revelou que as principais dores do público PCD não estavam apenas na disponibilidade de recursos, mas na dificuldade de acessar informações críticas com <strong>rapidez, autonomia e clareza</strong> durante o evento.</p>
+      <p class="block-text">A partir de entrevistas e validações com usuários, mapeamos fricções relacionadas a mobilidade, localização de serviços, leitura assistiva e sobrecarga cognitiva em contexto de festival.</p>
+      <div class="decision-box">
+        <div class="decision-label">Hipótese validada</div>
+        <div class="decision-text">Acessibilidade conversacional vai além de simplificar conteúdo. Usuários que utilizavam assistentes de voz relataram dificuldade com mensagens decoradas, emojis e estruturas pouco escaneáveis.</div>
+      </div>
+    </div>
+    <div>
+      <div class="access-grid" style="border:1px solid var(--ink-12);">
+        <div class="access-card"><span class="access-icon">🦯</span><div class="access-title">Mobilidade</div><p class="access-text">Informações sobre acesso físico, rotas adaptadas e pontos de suporte.</p></div>
+        <div class="access-card"><span class="access-icon">📍</span><div class="access-title">Localização</div><p class="access-text">Dificuldade em encontrar serviços específicos com rapidez e autonomia.</p></div>
+        <div class="access-card"><span class="access-icon">🔊</span><div class="access-title">Leitura assistiva</div><p class="access-text">Emojis e formatação excessiva quebram o ritmo em leitores de tela.</p></div>
+        <div class="access-card"><span class="access-icon">🧠</span><div class="access-title">Carga cognitiva</div><p class="access-text">Excesso de informação em contexto de festival gera abandono.</p></div>
+        <div class="access-card"><span class="access-icon">🤝</span><div class="access-title">Suporte humano</div><p class="access-text">Necessidade de acionar monitores com clareza e agilidade.</p></div>
+        <div class="access-card"><span class="access-icon">⚡</span><div class="access-title">Velocidade</div><p class="access-text">Em contexto de festival, clareza imediata é crítica.</p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="content-block reveal">
+  <div class="section-label"><span class="section-label-num">03 /</span> Estratégia de Linguagem</div>
+  <h2 class="block-title" style="margin-bottom:2rem;">Antes e depois:<br><em>linguagem simples.</em></h2>
+  <div class="copy-compare">
+    <div class="copy-compare-header">
+      <div class="copy-col-head before"><div class="copy-label before-label">Antes — Versão inicial</div></div>
+      <div class="copy-mid">→</div>
+      <div class="copy-col-head after"><div class="copy-label after-label">Depois — Versão acessível</div></div>
+    </div>
+    <div class="copy-body">
+      <div class="copy-body-col before">
+        <p class="copy-example">"Para usufruir dos serviços de acessibilidade disponibilizados no evento, dirija-se ao ponto de apoio mais próximo e apresente seu credencial. 🎪✨"</p>
+        <p class="copy-reason">Linguagem formal, emojis desnecessários, verbo "usufruir" gera fricção em leitura assistiva. Cada emoji é lido em voz alta pelo leitor de tela.</p>
+      </div>
+      <div class="copy-mid-body"></div>
+      <div class="copy-body-col after">
+        <p class="copy-example" style="color:var(--purple);">"Para usar os serviços de acessibilidade, vá até o ponto de apoio mais próximo e mostre seu credencial."</p>
+        <p class="copy-reason">Linguagem direta, sem emojis, verbos simples "usar" e "mostrar". Funciona em qualquer leitor de tela sem quebrar o ritmo da leitura.</p>
+      </div>
+    </div>
+    <div style="border-top:1px solid var(--ink-12);background:var(--gradient-soft);padding:2rem 2.5rem;">
+      <div style="font-size:.6rem;font-weight:700;letter-spacing:.15em;text-transform:uppercase;color:var(--purple);margin-bottom:.6rem;">Princípio central</div>
+      <p style="font-size:.9rem;font-weight:300;color:var(--ink);line-height:1.8;">A estratégia foi redesenhada para priorizar <strong>clareza, leitura fluida por tecnologias assistivas, objetividade e acolhimento real</strong> — sem excesso visual ou linguagem performática.</p>
+    </div>
+  </div>
+</section>
+
+<section class="content-block alt reveal">
+  <div class="two-col">
+    <div>
+      <div class="section-label"><span class="section-label-num">04 /</span> Impacto</div>
+      <h2 class="block-title">Acessibilidade no<br><em>centro.</em></h2>
+      <p class="block-text">Em um festival com mais de 700 mil pessoas por edição, o projeto ajudou a reduzir barreiras de acesso à informação para o público PCD por meio de uma experiência conversacional mais clara, autônoma e acessível.</p>
+      <p class="block-text">A iniciativa consolidou a <strong>acessibilidade conversacional como parte da experiência digital do evento</strong>, não apenas como suporte complementar.</p>
+      <div class="media-logos">
+        <a class="media-btn" href="https://esginside.com.br/2024/09/14/rock-in-rio-brasil-lanca-chatbot-exclusivo-para-publico-com-deficiencia/" target="_blank" rel="noopener">ESG Inside ↗</a>
+        <a class="media-btn" href="https://extra.globo.com/entretenimento/rock-in-rio/noticia/2024/09/acessibilidade-no-rock-in-rio-sala-sensorial-cadeiras-de-rodas-e-mais-saiba-os-servicos-oferecidos-e-como-acessa-los.ghtml" target="_blank" rel="noopener">Extra Globo ↗</a>
+      </div>
+    </div>
+    <div>
+      <div class="impact-box">
+        <div class="impact-label">Diferencial do Projeto</div>
+        <p class="impact-text">Este projeto demonstrou que <strong>acessibilidade conversacional</strong> exige uma abordagem específica de design: fluxos mais curtos, linguagem neutra de emojis, estruturas escaneáveis e respostas validadas com usuários reais que utilizam tecnologia assistiva.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="content-block reveal">
+  <div class="section-label"><span class="section-label-num">05 /</span> Processo</div>
+  <h2 class="block-title" style="margin-bottom:2rem;">Como foi<br><em>construído.</em></h2>
+  <div class="process-list">
+    <div class="process-item">
+      <div class="process-num-col"><div class="process-num">01</div></div>
+      <div class="process-content">
+        <div class="process-title">Mapeamento de necessidades PCD</div>
+        <p class="process-text">A pesquisa revelou que as principais dores não estavam apenas na disponibilidade de recursos, mas na dificuldade de acessar informações críticas com rapidez e autonomia. A partir de entrevistas e validações, mapeamos fricções relacionadas a mobilidade, localização, leitura assistiva e sobrecarga cognitiva.</p>
+      </div>
+    </div>
+    <div class="process-item">
+      <div class="process-num-col"><div class="process-num">02</div></div>
+      <div class="process-content">
+        <div class="process-title">Linguagem simples & empática</div>
+        <p class="process-text">Toda a arquitetura de conteúdo foi construída com foco em acessibilidade cognitiva e leitura assistiva. Mensagens mais escaneáveis, sem emojis e com baixa ambiguidade textual, priorizando compreensão imediata em diferentes contextos de uso.</p>
+        <div class="decision-box" style="margin-top:1rem;">
+          <div class="decision-label">Decisão de design</div>
+          <div class="decision-text">As validações com pessoas PCD ajudaram a ajustar tom, estrutura das respostas e carga cognitiva, garantindo uma experiência mais clara, humana e funcional.</div>
+        </div>
+      </div>
+    </div>
+    <div class="process-item">
+      <div class="process-num-col"><div class="process-num">03</div></div>
+      <div class="process-content">
+        <div class="process-title">Treinamento do modelo</div>
+        <p class="process-text">O treinamento conversacional exigiu curadoria de intenções baseada em linguagem real dos usuários, considerando diferentes formas de pedir ajuda e relatar limitações durante o festival. Refinamos respostas e fluxos para reduzir falhas de interpretação em cenários críticos de acessibilidade.</p>
+      </div>
+    </div>
+    <div class="process-item">
+      <div class="process-num-col"><div class="process-num">04</div></div>
+      <div class="process-content">
+        <div class="process-title">Validações com usuários PCD</div>
+        <p class="process-text">Realizamos testes A/B com pessoas com deficiência real — auditiva, visual e motora — para validar clareza textual, funcionamento em leitores de tela e fluidez dos fluxos. As principais decisões de redesign vieram diretamente das sessões com usuários PCD.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="content-block alt reveal">
+  <div class="section-label"><span class="section-label-num">06 /</span> Aprendizados</div>
+  <h2 class="block-title" style="margin-bottom:2rem;">O que esse projeto<br><em>ensinou.</em></h2>
+  <div class="learning-list">
+    <div class="learning-item"><div class="learning-num">01</div><div><div class="learning-title">Acessibilidade não é um add-on</div><p class="learning-text">Quando pensada desde o início como eixo central do design, a acessibilidade melhora a experiência para todo o espectro de usuários. Linguagem clara beneficia a todos.</p></div></div>
+    <div class="learning-item"><div class="learning-num">02</div><div><div class="learning-title">Emojis são barreiras invisíveis</div><p class="learning-text">O que parece uma decisão de tom de voz — usar ou não emojis — tem impacto direto na funcionalidade de leitores de tela. Cada emoji é anunciado em voz alta, quebrando o ritmo e a compreensão.</p></div></div>
+    <div class="learning-item"><div class="learning-num">03</div><div><div class="learning-title">Contexto de evento amplifica tudo</div><p class="learning-text">Em um festival com 700 mil pessoas, o ruído, a ansiedade e a urgência tornam qualquer fricção conversacional muito mais crítica. Clareza e velocidade salvam experiências.</p></div></div>
+    <div class="learning-item"><div class="learning-num">04</div><div><div class="learning-title">Validar com o usuário real é inegociável</div><p class="learning-text">Nenhuma heurística substitui testar com pessoas que usam tecnologia assistiva no dia a dia. As principais decisões de redesign vieram diretamente das sessões com usuários PCD.</p></div></div>
+  </div>
+</section>
+
+<div class="next-case reveal">
+  <div class="next-case-left">
+    <div class="next-case-label">Próximo projeto</div>
+    <p style="font-size:.88rem;font-weight:300;color:var(--ink-60);line-height:1.8;">Continue explorando o portfólio. Cada projeto carrega uma decisão de linguagem diferente.</p>
+  </div>
+  <div class="next-case-right">
+    <div class="next-case-num">003 — Lacta × IA Generativa</div>
+    <div class="next-case-title">Pedacinhos<br>de <em>Natal</em></div>
+    <p class="next-case-desc">Experiência digital com IA generativa para a campanha da Lacta. Jornada do usuário, tom de voz da IA e multicanal — de WhatsApp ao site.</p>
+    <a class="next-case-link" href="case-lacta.html">Ver case completo →</a>
+  </div>
+</div>
+
+<div class="case-cta reveal">
+  <div><div class="cta-title">Ver mais<br><em>cases.</em></div><p class="cta-sub">Time Brasil, Lacta × IA, Evycore e outros projetos.</p></div>
+  <div class="cta-btns">
+    <a class="btn-primary" href="index.html">← Voltar ao Portfólio</a>
+    <a class="btn-outline" href="mailto:batistaevcr@gmail.com">Falar Comigo</a>
+  </div>
+</div>
+
+<div class="footer-bar"></div>
+<footer>
+  <p class="footer-copy">© 2025 Evellyn Batista — UX Writer & Designer Conversacional · São Paulo, Brasil</p>
+  <div class="footer-links">
+    <a class="footer-link" href="mailto:batistaevcr@gmail.com">Email</a>
+    <a class="footer-link" href="https://www.linkedin.com/in/evellyn-batista/" target="_blank">LinkedIn</a>
+    <a class="footer-link" href="https://batistaevcr-design.github.io/evycore.exe/" target="_blank">Evycore</a>
+  </div>
+</footer>
+<script>
+const cd=document.getElementById("cd"),cr=document.getElementById("cr");
+let mx=0,my=0,rx=0,ry=0;
+document.addEventListener("mousemove",e=>{mx=e.clientX;my=e.clientY;});
+(function loop(){rx+=(mx-rx)*.12;ry+=(my-ry)*.12;cd.style.left=mx+"px";cd.style.top=my+"px";cr.style.left=rx+"px";cr.style.top=ry+"px";requestAnimationFrame(loop);})();
+document.querySelectorAll("a,button").forEach(el=>{el.addEventListener("mouseenter",()=>cr.classList.add("hovered"));el.addEventListener("mouseleave",()=>cr.classList.remove("hovered"));});
+function reveal(){document.querySelectorAll(".reveal").forEach(el=>{if(el.getBoundingClientRect().top<window.innerHeight*.92)el.classList.add("visible");});}
+window.addEventListener("scroll",reveal);reveal();
+</script>
+</body>
+</html>

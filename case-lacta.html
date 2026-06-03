@@ -1,0 +1,387 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Case: Pedacinhos de Natal — Lacta × IA · Evellyn Batista</title>
+<meta name="description" content="UX Design e UX Writing para a campanha Pedacinhos de Natal da Lacta — experiência com IA generativa que transformava fotos em vídeos personalizados. Jornada, TOV da IA e multicanal." />
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;0,700;1,300;1,400;1,600;1,700&family=Instrument+Sans:ital,wght@0,300;0,400;0,500;0,600;1,300&display=swap" rel="stylesheet"/>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+:root{
+  --white:#FAFAF8;--off-white:#F2F0EC;--ink:#17161A;--ink-60:rgba(23,22,26,0.6);--ink-30:rgba(23,22,26,0.3);--ink-12:rgba(23,22,26,0.12);
+  --blue:#2B4AE8;--blue-light:#E8EEFF;--purple:#6B3FA0;--purple-light:#F2EBFF;
+  --gradient:linear-gradient(135deg,#2B4AE8 0%,#6B3FA0 100%);--gradient-soft:linear-gradient(135deg,#E8EEFF 0%,#F2EBFF 100%);
+  --ff-display:"Cormorant Garamond",Georgia,serif;--ff-body:"Instrument Sans",sans-serif;
+}
+html{scroll-behavior:smooth;font-size:16px;}
+body{background:var(--white);color:var(--ink);font-family:var(--ff-body);line-height:1.6;overflow-x:hidden;cursor:none;}
+.cursor-dot{width:6px;height:6px;background:var(--blue);border-radius:50%;position:fixed;top:0;left:0;pointer-events:none;z-index:9999;transform:translate(-50%,-50%);opacity:.6;}
+.cursor-ring{width:26px;height:26px;border:1px solid var(--blue);border-radius:50%;position:fixed;top:0;left:0;pointer-events:none;z-index:9998;transform:translate(-50%,-50%);transition:width .3s,height .3s,opacity .3s;opacity:.25;}
+.cursor-ring.hovered{width:40px;height:40px;opacity:.15;border-color:var(--purple);}
+@media(hover:none){.cursor-dot,.cursor-ring{display:none;}body{cursor:auto;}}
+nav{position:fixed;top:0;left:0;right:0;z-index:200;display:flex;justify-content:space-between;align-items:center;padding:1.4rem 3.5rem;background:rgba(250,250,248,.92);backdrop-filter:blur(16px);border-bottom:1px solid var(--ink-12);}
+.nav-logo{font-family:var(--ff-display);font-size:1.25rem;font-weight:600;color:var(--ink);text-decoration:none;}
+.nav-logo span{background:var(--gradient);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;}
+.nav-back{font-size:.78rem;font-weight:500;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-60);text-decoration:none;display:flex;align-items:center;gap:.5rem;transition:color .2s;}
+.nav-back:hover{color:var(--blue);}
+.nav-case-label{font-size:.68rem;font-weight:600;letter-spacing:.12em;text-transform:uppercase;background:var(--gradient);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;}
+@keyframes fadeUp{from{opacity:0;transform:translateY(20px);}to{opacity:1;transform:translateY(0);}}
+@keyframes fadeIn{from{opacity:0;}to{opacity:1;}}
+.reveal{opacity:0;transform:translateY(24px);transition:opacity .65s ease,transform .65s ease;}
+.reveal.visible{opacity:1;transform:translateY(0);}
+.case-hero{min-height:calc(100vh - 72px);display:grid;grid-template-columns:1fr 1fr;margin-top:72px;}
+.case-hero-left{display:flex;flex-direction:column;justify-content:center;padding:5rem 4rem 5rem 3.5rem;}
+.case-eyebrow{display:flex;align-items:center;gap:.8rem;font-size:.7rem;font-weight:600;letter-spacing:.18em;text-transform:uppercase;color:var(--blue);margin-bottom:2rem;opacity:0;animation:fadeUp .7s ease .1s forwards;}
+.case-eyebrow-line{width:36px;height:1.5px;background:var(--gradient);}
+.case-title{font-family:var(--ff-display);font-size:clamp(3rem,5.5vw,5.5rem);font-weight:700;line-height:.93;opacity:0;animation:fadeUp .7s ease .25s forwards;}
+.case-title em{font-style:italic;font-weight:300;background:var(--gradient);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;}
+.case-subtitle{margin-top:1.5rem;font-family:var(--ff-display);font-size:1.1rem;font-style:italic;font-weight:300;color:var(--ink-60);opacity:0;animation:fadeUp .7s ease .35s forwards;}
+.case-desc{margin-top:1.5rem;font-size:.95rem;font-weight:300;color:var(--ink-60);line-height:1.85;max-width:460px;opacity:0;animation:fadeUp .7s ease .45s forwards;}
+.case-meta-pills{margin-top:2rem;display:flex;flex-wrap:wrap;gap:.5rem;opacity:0;animation:fadeUp .7s ease .55s forwards;}
+.meta-pill{font-size:.68rem;font-weight:500;letter-spacing:.08em;padding:.4rem .85rem;border:1px solid var(--ink-12);color:var(--ink-60);background:var(--off-white);border-radius:2px;}
+.meta-pill.blue{background:var(--blue-light);border-color:rgba(43,74,232,.2);color:var(--blue);}
+.case-hero-right{position:relative;overflow:hidden;display:flex;align-items:center;justify-content:center;opacity:0;animation:fadeIn .8s ease .4s forwards;}
+.hero-bg-gradient{position:absolute;inset:0;background:linear-gradient(160deg,#EEF1FD 0%,#FFF5F0 55%,#EEF1FD 100%);}
+.hero-bg-grid{position:absolute;inset:0;background-image:linear-gradient(rgba(43,74,232,.055) 1px,transparent 1px),linear-gradient(90deg,rgba(43,74,232,.055) 1px,transparent 1px);background-size:32px 32px;}
+.hero-visual{position:relative;z-index:2;padding:2rem;width:100%;max-width:420px;}
+.section-label{font-size:.68rem;font-weight:600;letter-spacing:.2em;text-transform:uppercase;color:var(--blue);display:flex;align-items:center;gap:.8rem;margin-bottom:1.5rem;}
+.section-label-num{color:var(--ink-30);}
+.content-block{padding:5rem 3.5rem;border-top:1px solid var(--ink-12);}
+.content-block.alt{background:var(--off-white);}
+.two-col{display:grid;grid-template-columns:1fr 1fr;gap:4rem;align-items:start;}
+.block-title{font-family:var(--ff-display);font-size:clamp(2rem,3.5vw,3.2rem);font-weight:700;line-height:1.05;margin-bottom:1.5rem;}
+.block-title em{font-style:italic;font-weight:300;background:var(--gradient);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;}
+.block-text{font-size:.92rem;font-weight:300;color:var(--ink-60);line-height:1.9;margin-bottom:1.2rem;}
+.block-text strong{color:var(--ink);font-weight:500;}
+.decision-box{background:var(--gradient-soft);border-left:3px solid var(--blue);padding:1.3rem 1.5rem;margin:1.5rem 0;border-radius:0 4px 4px 0;}
+.decision-label{font-size:.6rem;font-weight:700;letter-spacing:.15em;text-transform:uppercase;color:var(--blue);margin-bottom:.4rem;}
+.decision-text{font-size:.86rem;font-weight:300;color:var(--ink);line-height:1.75;}
+.case-meta-grid{display:grid;grid-template-columns:repeat(3,1fr);border:1px solid var(--ink-12);}
+.meta-cell{padding:1.8rem 2rem;border-right:1px solid var(--ink-12);}
+.meta-cell:nth-child(3),.meta-cell:nth-child(6){border-right:none;}
+.meta-key{font-size:.62rem;font-weight:700;letter-spacing:.15em;text-transform:uppercase;color:var(--ink-30);margin-bottom:.4rem;}
+.meta-val{font-size:.9rem;font-weight:400;color:var(--ink);line-height:1.4;}
+.meta-cell:nth-child(4),.meta-cell:nth-child(5),.meta-cell:nth-child(6){border-top:1px solid var(--ink-12);}
+.stats-strip{display:grid;grid-template-columns:repeat(4,1fr);background:var(--off-white);border-top:1px solid var(--ink-12);}
+.stat-cell{padding:2.5rem 2rem;border-right:1px solid var(--ink-12);text-align:center;}
+.stat-cell:last-child{border-right:none;}
+.stat-num{font-family:var(--ff-display);font-size:2.8rem;font-weight:700;line-height:1;background:var(--gradient);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;}
+.stat-label{font-size:.7rem;color:var(--ink-60);margin-top:.4rem;line-height:1.4;}
+.journey-grid{display:grid;grid-template-columns:repeat(4,1fr);border:1px solid var(--ink-12);}
+.journey-step{padding:2rem;border-right:1px solid var(--ink-12);}
+.journey-step:last-child{border-right:none;}
+.journey-step-num{font-size:.58rem;font-weight:700;letter-spacing:.15em;text-transform:uppercase;background:var(--gradient);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;margin-bottom:.5rem;}
+.journey-step-title{font-size:.85rem;font-weight:600;color:var(--ink);margin-bottom:.4rem;}
+.journey-step-desc{font-size:.76rem;font-weight:300;color:var(--ink-60);line-height:1.6;}
+.channel-grid{display:grid;grid-template-columns:repeat(3,1fr);border:1px solid var(--ink-12);}
+.channel-card{padding:2rem;border-right:1px solid var(--ink-12);transition:background .25s;}
+.channel-card:last-child{border-right:none;}
+.channel-card:hover{background:var(--gradient-soft);}
+.channel-icon{font-size:1.3rem;margin-bottom:.7rem;display:block;}
+.channel-title{font-size:.85rem;font-weight:600;color:var(--ink);margin-bottom:.4rem;}
+.channel-desc{font-size:.78rem;font-weight:300;color:var(--ink-60);line-height:1.6;}
+.process-list{border:1px solid var(--ink-12);}
+.process-item{display:grid;grid-template-columns:80px 1fr;border-bottom:1px solid var(--ink-12);}
+.process-item:last-child{border-bottom:none;}
+.process-num-col{padding:2.5rem 1.5rem;border-right:1px solid var(--ink-12);display:flex;align-items:flex-start;justify-content:center;}
+.process-num{font-family:var(--ff-display);font-size:2.2rem;font-weight:700;line-height:1;background:var(--gradient);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;}
+.process-content{padding:2.5rem;}
+.process-title{font-size:.88rem;font-weight:600;color:var(--ink);margin-bottom:.4rem;}
+.process-text{font-size:.85rem;font-weight:300;color:var(--ink-60);line-height:1.75;}
+.learning-list{display:flex;flex-direction:column;}
+.learning-item{display:grid;grid-template-columns:60px 1fr;gap:2rem;padding:2rem 0;border-bottom:1px solid var(--ink-12);align-items:start;}
+.learning-item:last-child{border-bottom:none;}
+.learning-num{font-family:var(--ff-display);font-size:2.5rem;font-weight:700;line-height:1;background:var(--gradient);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;}
+.learning-title{font-size:.88rem;font-weight:600;color:var(--ink);margin-bottom:.4rem;}
+.learning-text{font-size:.85rem;font-weight:300;color:var(--ink-60);line-height:1.75;}
+.impact-box{background:var(--blue-light);border:1px solid rgba(43,74,232,.2);padding:2.5rem;margin-bottom:2rem;border-radius:2px;}
+.impact-label{font-size:.65rem;font-weight:600;letter-spacing:.15em;text-transform:uppercase;color:var(--blue);margin-bottom:1rem;}
+.impact-text{font-size:.9rem;font-weight:300;color:var(--ink);line-height:1.8;}
+.impact-text strong{font-weight:600;color:var(--blue);}
+.media-logos{display:flex;flex-wrap:wrap;gap:.6rem;margin-top:1.5rem;}
+.media-btn{font-size:.72rem;font-weight:500;padding:.5rem 1rem;border:1px solid var(--ink-12);color:var(--blue);background:var(--white);text-decoration:none;border-radius:2px;transition:background .2s,border-color .2s;}
+.media-btn:hover{background:var(--blue-light);border-color:rgba(43,74,232,.3);}
+.next-case{display:grid;grid-template-columns:1fr 1fr;border-top:1px solid var(--ink-12);}
+.next-case-left{padding:4rem 3.5rem;border-right:1px solid var(--ink-12);background:var(--off-white);}
+.next-case-label{font-size:.62rem;font-weight:700;letter-spacing:.18em;text-transform:uppercase;color:var(--ink-30);margin-bottom:1.5rem;}
+.next-case-right{padding:4rem 3.5rem;display:flex;flex-direction:column;justify-content:center;}
+.next-case-num{font-size:.65rem;font-weight:500;letter-spacing:.15em;text-transform:uppercase;color:var(--ink-30);margin-bottom:.8rem;}
+.next-case-title{font-family:var(--ff-display);font-size:clamp(2rem,3.5vw,3rem);font-weight:700;line-height:1.05;margin-bottom:1rem;}
+.next-case-title em{font-style:italic;font-weight:300;background:var(--gradient);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;}
+.next-case-desc{font-size:.88rem;font-weight:300;color:var(--ink-60);line-height:1.8;margin-bottom:2rem;}
+.next-case-link{display:inline-flex;align-items:center;gap:.6rem;font-size:.78rem;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--blue);text-decoration:none;border-bottom:1px solid rgba(43,74,232,.3);padding-bottom:2px;transition:gap .2s;}
+.next-case-link:hover{gap:1rem;}
+.case-cta{padding:5rem 3.5rem;border-top:1px solid var(--ink-12);display:flex;justify-content:space-between;align-items:center;gap:2rem;flex-wrap:wrap;}
+.cta-title{font-family:var(--ff-display);font-size:clamp(1.8rem,3vw,2.8rem);font-weight:700;line-height:1.1;}
+.cta-title em{font-style:italic;font-weight:300;background:var(--gradient);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;}
+.cta-sub{font-size:.9rem;color:var(--ink-60);margin-top:.5rem;font-weight:300;}
+.cta-btns{display:flex;gap:1rem;align-items:center;}
+.btn-primary{background:var(--gradient);color:#fff;padding:.85rem 2rem;font-family:var(--ff-body);font-size:.78rem;font-weight:600;letter-spacing:.1em;text-transform:uppercase;text-decoration:none;border-radius:2px;transition:opacity .2s,transform .2s;}
+.btn-primary:hover{opacity:.88;transform:translateY(-2px);}
+.btn-outline{color:var(--blue);font-size:.78rem;font-weight:600;letter-spacing:.1em;text-transform:uppercase;text-decoration:none;border:1.5px solid rgba(43,74,232,.4);padding:.82rem 1.8rem;border-radius:2px;transition:background .2s;}
+.btn-outline:hover{background:var(--blue-light);}
+.footer-bar{height:3px;background:var(--gradient);}
+footer{padding:2rem 3.5rem;border-top:1px solid var(--ink-12);display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:1rem;}
+.footer-copy{font-size:.72rem;color:var(--ink-30);letter-spacing:.06em;}
+.footer-links{display:flex;gap:1.5rem;}
+.footer-link{font-size:.72rem;color:var(--ink-30);text-decoration:none;letter-spacing:.06em;transition:color .2s;}
+.footer-link:hover{color:var(--blue);}
+@media(max-width:768px){
+  nav{padding:1.1rem 1.5rem;}.nav-case-label{display:none;}
+  .case-hero{grid-template-columns:1fr;min-height:auto;}.case-hero-left{padding:2.5rem 1.5rem 2rem;}.case-hero-right{height:280px;}
+  .content-block{padding:3rem 1.5rem;}.two-col{grid-template-columns:1fr;gap:2rem;}
+  .case-meta-grid{grid-template-columns:1fr;}.meta-cell{border-right:none!important;}
+  .stats-strip{grid-template-columns:1fr 1fr;}.stat-cell:nth-child(2){border-right:none;}.stat-cell:nth-child(3){border-top:1px solid var(--ink-12);}.stat-cell:nth-child(4){border-top:1px solid var(--ink-12);border-right:none;}
+  .journey-grid{grid-template-columns:1fr 1fr;}.journey-step:nth-child(2){border-right:none;}.journey-step:nth-child(3){border-top:1px solid var(--ink-12);}.journey-step:nth-child(4){border-top:1px solid var(--ink-12);border-right:none;}
+  .channel-grid{grid-template-columns:1fr;}.channel-card{border-right:none;border-bottom:1px solid var(--ink-12);}.channel-card:last-child{border-bottom:none;}
+  .process-item{grid-template-columns:1fr;}.process-num-col{border-right:none;border-bottom:1px solid var(--ink-12);padding:1.2rem 1.5rem;}
+  .next-case{grid-template-columns:1fr;}.next-case-left{border-right:none;border-bottom:1px solid var(--ink-12);padding:2.5rem 1.5rem;}.next-case-right{padding:2.5rem 1.5rem;}
+  .case-cta{padding:3rem 1.5rem;flex-direction:column;align-items:flex-start;}
+  footer{padding:1.5rem;flex-direction:column;align-items:flex-start;}
+}
+</style>
+</head>
+<body>
+<div class="cursor-dot" id="cd"></div>
+<div class="cursor-ring" id="cr"></div>
+<nav>
+  <a class="nav-logo" href="index.html">Evellyn <span>Batista</span></a>
+  <div style="display:flex;align-items:center;gap:2rem;">
+    <span class="nav-case-label">003 / Lacta × IA</span>
+    <a class="nav-back" href="index.html">← Portfólio</a>
+  </div>
+</nav>
+
+<div class="case-hero">
+  <div class="case-hero-left">
+    <div class="case-eyebrow"><div class="case-eyebrow-line"></div>003 / Lacta · Campanha · 2024</div>
+    <h1 class="case-title">Pedacinhos<br>de <em>Natal</em></h1>
+    <p class="case-subtitle">Lacta · IA Generativa · Multicanal</p>
+    <p class="case-desc">Atuei como UX Designer e UX Writer na campanha Pedacinhos de Natal da Lacta — experiência digital com IA generativa que transformava fotos dos usuários em vídeos animados personalizados.</p>
+    <div class="case-meta-pills">
+      <span class="meta-pill blue">UX Designer</span>
+      <span class="meta-pill blue">UX Writer</span>
+      <span class="meta-pill">IA Generativa</span>
+      <span class="meta-pill">Jornada do Usuário</span>
+      <span class="meta-pill">Multicanal</span>
+    </div>
+  </div>
+  <div class="case-hero-right">
+    <div class="hero-bg-gradient"></div>
+    <div class="hero-bg-grid"></div>
+    <div class="hero-visual">
+      <div style="background:rgba(250,250,248,.9);border:1px solid rgba(43,74,232,.12);border-radius:12px;overflow:hidden;box-shadow:0 24px 64px rgba(43,74,232,.1);">
+        <div style="padding:.9rem 1.2rem;border-bottom:1px solid rgba(43,74,232,.08);background:rgba(43,74,232,.03);display:flex;align-items:center;gap:.7rem;">
+          <div style="width:28px;height:28px;border-radius:50%;background:var(--gradient);display:flex;align-items:center;justify-content:center;font-size:.65rem;color:#fff;font-weight:700;">🍫</div>
+          <div>
+            <div style="font-size:.7rem;font-weight:600;color:var(--ink);">Pedacinhos de Natal · Lacta</div>
+            <div style="font-size:.58rem;color:var(--ink-60);">IA Generativa · Campanha Nacional</div>
+          </div>
+        </div>
+        <div style="padding:1.2rem;display:flex;flex-direction:column;gap:.85rem;">
+          <div style="background:rgba(43,74,232,.05);border:1px solid rgba(43,74,232,.1);border-radius:12px 12px 12px 4px;padding:.75rem 1rem;font-size:.78rem;font-weight:300;color:var(--ink);line-height:1.55;max-width:85%;">Oi! Envie uma foto sua ou da sua família para criar um vídeo de Natal personalizado. É só você e a magia da IA. 🎄</div>
+          <div style="display:flex;flex-direction:column;gap:.4rem;">
+            <div style="background:rgba(43,74,232,.05);border:1px dashed rgba(43,74,232,.2);border-radius:8px;padding:.8rem;text-align:center;">
+              <div style="font-size:.62rem;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--blue);margin-bottom:.3rem;">Enviar foto</div>
+              <div style="font-size:.7rem;color:var(--ink-30);">JPG ou PNG · até 5MB</div>
+            </div>
+          </div>
+          <div style="background:rgba(43,74,232,.05);border:1px solid rgba(43,74,232,.1);border-radius:12px 12px 12px 4px;padding:.75rem 1rem;font-size:.78rem;font-weight:300;color:var(--ink);line-height:1.55;max-width:90%;">Recebi sua foto! Estou criando seu vídeo personalizado. Isso leva cerca de 2 minutinhos.</div>
+          <div style="background:rgba(43,74,232,.04);border:1px solid rgba(43,74,232,.08);border-radius:8px;padding:.8rem;display:flex;align-items:center;gap:.6rem;">
+            <div style="width:8px;height:8px;border-radius:50%;background:var(--gradient);flex-shrink:0;"></div>
+            <div style="font-size:.72rem;color:var(--ink-60);">Gerando vídeo com IA generativa...</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="content-block reveal" style="padding-top:3rem;padding-bottom:3rem;">
+  <div class="case-meta-grid">
+    <div class="meta-cell"><div class="meta-key">Papel</div><div class="meta-val">UX Designer + UX Writer</div></div>
+    <div class="meta-cell"><div class="meta-key">Tecnologia</div><div class="meta-val">IA Generativa (LLM)</div></div>
+    <div class="meta-cell"><div class="meta-key">Cliente</div><div class="meta-val">Lacta · Mondelez</div></div>
+    <div class="meta-cell"><div class="meta-key">Escopo</div><div class="meta-val">Jornada, TOV da IA, Push, Multicanal</div></div>
+    <div class="meta-cell"><div class="meta-key">Tipo</div><div class="meta-val">Campanha sazonal</div></div>
+    <div class="meta-cell"><div class="meta-key">Mídia</div><div class="meta-val">Meio &amp; Mensagem · Tecmundo</div></div>
+  </div>
+</div>
+
+<section class="content-block reveal">
+  <div class="two-col">
+    <div>
+      <div class="section-label"><span class="section-label-num">01 /</span> O Projeto</div>
+      <h2 class="block-title">IA generativa<br>para <em>Natal.</em></h2>
+    </div>
+    <div>
+      <p class="block-text">Atuei como <strong>UX Designer e UX Writer</strong> na campanha Pedacinhos de Natal da Lacta, uma experiência digital com IA generativa que transformava fotos dos usuários em vídeos animados personalizados.</p>
+      <p class="block-text">Fui responsável pela jornada do site, estruturação da experiência, UX Writing, push notifications e <strong>adaptação do tom de voz da IA</strong> ao contexto emocional da campanha.</p>
+      <p class="block-text">O desafio central era criar uma experiência que equilibrasse <strong>tecnologia, emoção e interação</strong> ao longo de toda a jornada — do envio da foto à entrega do vídeo personalizado.</p>
+    </div>
+  </div>
+</section>
+
+<section class="content-block alt reveal">
+  <div class="section-label"><span class="section-label-num">02 /</span> Jornada do Usuário</div>
+  <h2 class="block-title" style="margin-bottom:2rem;">4 momentos,<br><em>uma experiência.</em></h2>
+  <div class="journey-grid">
+    <div class="journey-step">
+      <div class="journey-step-num">01 — Descoberta</div>
+      <div class="journey-step-title">Acesso ao site</div>
+      <p class="journey-step-desc">Contexto da campanha, proposta da experiência e CTA para envio da foto. Primeiro contato com a marca e a IA.</p>
+    </div>
+    <div class="journey-step">
+      <div class="journey-step-num">02 — Envio</div>
+      <div class="journey-step-title">Upload da foto</div>
+      <p class="journey-step-desc">Fluxo simplificado de envio com feedback imediato. Mensagens de processamento que reduzem ansiedade durante a espera.</p>
+    </div>
+    <div class="journey-step">
+      <div class="journey-step-num">03 — Geração</div>
+      <div class="journey-step-title">IA em ação</div>
+      <p class="journey-step-desc">Notificações via WhatsApp — validação de código, status do vídeo e entrega. Tom acolhedor, direto e coerente com Natal.</p>
+    </div>
+    <div class="journey-step">
+      <div class="journey-step-num">04 — Compartilhamento</div>
+      <div class="journey-step-title">Recebimento e difusão</div>
+      <p class="journey-step-desc">Vídeo entregue com copy de compartilhamento pensada para amplificar o alcance orgânico da campanha.</p>
+    </div>
+  </div>
+</section>
+
+<div class="stats-strip reveal">
+  <div class="stat-cell"><div class="stat-num">IA</div><div class="stat-label">Generativa como eixo central da experiência</div></div>
+  <div class="stat-cell"><div class="stat-num">3×</div><div class="stat-label">Canais: site, WhatsApp e push notifications</div></div>
+  <div class="stat-cell"><div class="stat-num">3</div><div class="stat-label">Frases máximas por resposta — decisão de UX</div></div>
+  <div class="stat-cell"><div class="stat-num">Natal</div><div class="stat-label">Tom sazonal adaptado para a IA generativa</div></div>
+</div>
+
+<section class="content-block reveal">
+  <div class="section-label"><span class="section-label-num">03 /</span> Multicanal</div>
+  <h2 class="block-title" style="margin-bottom:2rem;">Consistência entre<br><em>canais.</em></h2>
+  <div class="channel-grid">
+    <div class="channel-card">
+      <span class="channel-icon">🌐</span>
+      <div class="channel-title">Site</div>
+      <p class="channel-desc">Jornada completa — contexto, envio, espera e entrega do vídeo. Fluxo pensado para ser simples e sem fricção.</p>
+    </div>
+    <div class="channel-card">
+      <span class="channel-icon">💬</span>
+      <div class="channel-title">WhatsApp</div>
+      <p class="channel-desc">Validação de código, notificações de status e entrega do vídeo final. Tom acolhedor e coerente com Natal.</p>
+    </div>
+    <div class="channel-card">
+      <span class="channel-icon">🔔</span>
+      <div class="channel-title">Push Notifications</div>
+      <p class="channel-desc">Alertas de progresso da geração do vídeo com copy otimizado para alta taxa de abertura e engajamento.</p>
+    </div>
+  </div>
+</section>
+
+<section class="content-block alt reveal">
+  <div class="section-label"><span class="section-label-num">04 /</span> Processo</div>
+  <h2 class="block-title" style="margin-bottom:2rem;">O que foi<br><em>entregue.</em></h2>
+  <div class="process-list">
+    <div class="process-item">
+      <div class="process-num-col"><div class="process-num">01</div></div>
+      <div class="process-content">
+        <div class="process-title">Jornada do site</div>
+        <p class="process-text">Estruturei a jornada e os copys da experiência, acompanhando o usuário desde o envio da foto até o recebimento do vídeo personalizado com IA. O fluxo foi pensado para ser simples, fluido e fácil de acompanhar, reduzindo fricções ao longo da navegação. Também desenvolvi as mensagens enviadas via WhatsApp, incluindo validação de código, notificações e entrega do vídeo final.</p>
+      </div>
+    </div>
+    <div class="process-item">
+      <div class="process-num-col"><div class="process-num">02</div></div>
+      <div class="process-content">
+        <div class="process-title">Tom de voz da IA</div>
+        <p class="process-text">Desenvolvi os copys e direcionamentos de linguagem da experiência, adaptando o tom da Lacta para interações com IA, push notifications e momentos-chave da jornada. O tom precisava ser quente, acolhedor e coerente com o contexto emocional do Natal, sem perder a clareza necessária para guiar o usuário.</p>
+        <div class="decision-box" style="margin-top:1rem;">
+          <div class="decision-label">Trade-off resolvido</div>
+          <div class="decision-text">Durante os testes, percebemos que mensagens longas geradas pela IA aumentavam fricção e dificultavam o compartilhamento. A solução foi limitar as respostas em até 3 frases, equilibrando personalização, velocidade e facilidade de uso.</div>
+        </div>
+      </div>
+    </div>
+    <div class="process-item">
+      <div class="process-num-col"><div class="process-num">03</div></div>
+      <div class="process-content">
+        <div class="process-title">IA & experiência multicanal</div>
+        <p class="process-text">Participei da construção da experiência entre site, chatbot e notificações, garantindo consistência de comunicação e fluidez entre os diferentes pontos de contato da campanha. Cada canal tinha suas especificidades de tom e formato, mas todos deveriam soar como uma única voz coerente da marca.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="content-block reveal">
+  <div class="two-col">
+    <div>
+      <div class="section-label"><span class="section-label-num">05 /</span> Impacto</div>
+      <h2 class="block-title">Alcance<br><em>nacional.</em></h2>
+      <p class="block-text">Em uma campanha de alcance nacional da Lacta, a <strong>IA generativa</strong> foi usada para transformar fotos dos consumidores em experiências personalizadas e compartilháveis.</p>
+      <p class="block-text">A campanha conectou <strong>tecnologia, emoção e interação</strong> ao longo da jornada, com cobertura em veículos especializados de marketing e tecnologia.</p>
+      <div class="media-logos">
+        <a class="media-btn" href="#" target="_blank" rel="noopener">Meio &amp; Mensagem ↗</a>
+        <a class="media-btn" href="#" target="_blank" rel="noopener">Tecmundo ↗</a>
+      </div>
+    </div>
+    <div>
+      <div class="impact-box">
+        <div class="impact-label">Impacto & Alcance</div>
+        <p class="impact-text">Uma campanha de alcance nacional que usou <strong>IA generativa</strong> para criar momentos personalizados e compartilháveis, conectando tecnologia e emoção durante o Natal.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="content-block alt reveal">
+  <div class="section-label"><span class="section-label-num">06 /</span> Aprendizados</div>
+  <h2 class="block-title" style="margin-bottom:2rem;">O que esse projeto<br><em>ensinou.</em></h2>
+  <div class="learning-list">
+    <div class="learning-item"><div class="learning-num">01</div><div><div class="learning-title">Brevidade é personalização</div><p class="learning-text">Mensagens mais curtas geradas pela IA não sacrificam personalização — na verdade, facilitam o compartilhamento e reduzem a percepção de geração automática. Menos texto, mais impacto.</p></div></div>
+    <div class="learning-item"><div class="learning-num">02</div><div><div class="learning-title">Tom sazonal exige adaptação real</div><p class="learning-text">Adaptar o tom de voz de uma marca para um contexto emocional específico como o Natal exige mais do que trocar palavras. Requer entender o estado emocional do usuário em cada ponto da jornada.</p></div></div>
+    <div class="learning-item"><div class="learning-num">03</div><div><div class="learning-title">Espera bem gerenciada é experiência</div><p class="learning-text">O tempo de geração do vídeo pela IA poderia ser um ponto de abandono. Mensagens de progresso bem escritas transformam a espera em antecipação — e antecipação em engajamento.</p></div></div>
+  </div>
+</section>
+
+<div class="next-case reveal">
+  <div class="next-case-left">
+    <div class="next-case-label">Próximo projeto</div>
+    <p style="font-size:.88rem;font-weight:300;color:var(--ink-60);line-height:1.8;">Continue explorando o portfólio. Cada projeto carrega uma decisão de linguagem diferente.</p>
+  </div>
+  <div class="next-case-right">
+    <div class="next-case-num">004 — Projeto Pessoal</div>
+    <div class="next-case-title">Evycore: eu,<br>em forma de <em>app</em></div>
+    <p class="next-case-desc">Um projeto conceitual que transforma minha rotina em interface. UX Writing, UI e Product Design em uma experiência com personalidade e consistência.</p>
+    <a class="next-case-link" href="case-evycore.html">Ver case completo →</a>
+  </div>
+</div>
+
+<div class="case-cta reveal">
+  <div><div class="cta-title">Ver mais<br><em>cases.</em></div><p class="cta-sub">Time Brasil, Rock in Rio, Evycore e outros projetos.</p></div>
+  <div class="cta-btns">
+    <a class="btn-primary" href="index.html">← Voltar ao Portfólio</a>
+    <a class="btn-outline" href="mailto:batistaevcr@gmail.com">Falar Comigo</a>
+  </div>
+</div>
+
+<div class="footer-bar"></div>
+<footer>
+  <p class="footer-copy">© 2025 Evellyn Batista — UX Writer & Designer Conversacional · São Paulo, Brasil</p>
+  <div class="footer-links">
+    <a class="footer-link" href="mailto:batistaevcr@gmail.com">Email</a>
+    <a class="footer-link" href="https://www.linkedin.com/in/evellyn-batista/" target="_blank">LinkedIn</a>
+    <a class="footer-link" href="https://batistaevcr-design.github.io/evycore.exe/" target="_blank">Evycore</a>
+  </div>
+</footer>
+<script>
+const cd=document.getElementById("cd"),cr=document.getElementById("cr");
+let mx=0,my=0,rx=0,ry=0;
+document.addEventListener("mousemove",e=>{mx=e.clientX;my=e.clientY;});
+(function loop(){rx+=(mx-rx)*.12;ry+=(my-ry)*.12;cd.style.left=mx+"px";cd.style.top=my+"px";cr.style.left=rx+"px";cr.style.top=ry+"px";requestAnimationFrame(loop);})();
+document.querySelectorAll("a,button").forEach(el=>{el.addEventListener("mouseenter",()=>cr.classList.add("hovered"));el.addEventListener("mouseleave",()=>cr.classList.remove("hovered"));});
+function reveal(){document.querySelectorAll(".reveal").forEach(el=>{if(el.getBoundingClientRect().top<window.innerHeight*.92)el.classList.add("visible");});}
+window.addEventListener("scroll",reveal);reveal();
+</script>
+</body>
+</html>
